@@ -1,0 +1,51 @@
+<!--miniprogram/pages/publish/publish.wxml-->
+
+
+<view class="public-item">
+  <text class="public-title">需求：</text>
+  <picker bindchange="onChangeTarget" value="{{index}}" range="{{targetArray}}">
+    <text>当前选择：{{targetArray[targetIndex]}}</text>
+  </picker>
+</view>
+
+<view class="public-item">
+  <text class="public-title">类目：</text>
+  <picker bindchange="onChangeTarget" value="{{index}}" range="{{typeArray}}">
+    <text>当前选择：{{typeArray[typeIndex]}}</text>
+  </picker>
+</view>
+
+<view class="public-item">
+  <text class="public-title">产品名称：</text>
+  <input type="text" bindinput="inputProductName" placeholder="请输入产品名称" value="{{productName}}" />
+</view>
+
+<view class="public-item">
+  <text class="public-title">产品描述：</text>
+  <textarea type="text" bindinput="inputProductDiscribe" placeholder="产品描述" value="{{productDiscribe}}"
+    class="discribe" />
+  </view>
+
+  <view class="public-item">
+    <text class="public-title">商家：</text>
+    <input type="text" bindinput="inputBusinessName" placeholder="请输入商家" value="{{businessName}}" />
+  </view>
+
+  <view class="public-item">
+    <text class="public-title">联系方式：</text>
+    <input type="number" bindinput="inputPhone" placeholder="请输入联系方式" value="{{phone}}" />
+  </view>
+
+  <view class="public-item">
+    <text class="public-title">图片：</text>
+    <View class="image-wrapper" wx:for="{{imgList}}" wx:key="index">
+      <View class="default-img" wx:if="{{!item}}" bindtap="upload">
+        <View>+</View>
+        <View>上传图片</View>
+      </View>
+      <image src="{{item}}" wx:else class="product-img"></image>
+
+    </View>
+  </view>
+
+ 
