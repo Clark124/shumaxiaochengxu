@@ -15,7 +15,9 @@
     "pages/im/room/room",
     "pages/publish/publish",
     "pages/userCenter/userCenter",
-    "pages/myPublic/myPublic"
+    "pages/myStock/myStock",
+    "pages/myNeeds/myNeeds",
+    "pages/myQuotedPrice/myQuotedPrice"
   ],
   "tabBar": {
     "color": "#777777",

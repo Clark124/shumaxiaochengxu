@@ -1,0 +1,10 @@
+<!--miniprogram/pages/myStock/myStock.wxml-->
+<text>我的库存</text>
+<view class="stock-item" wx:for="{{stockList}}" wx:key="index">
+  <image src="{{item.imgList[0]}}" class="stock-img"></image>
+  <view class="item-info-wrapper">
+      <view class="item-info">{{item.productName}}</view>
+      <view class="item-info">价格：{{item.productPirce}}元</view>
+      <view class="item-info"> 库存：{{item.productCount}}</view>
+  </view>
+</view>

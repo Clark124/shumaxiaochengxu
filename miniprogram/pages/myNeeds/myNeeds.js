@@ -1,4 +1,4 @@
-// miniprogram/pages/myPublic/myPublic.js
+// miniprogram/pages/myNeeds/myNeeds.js
 Page({
 
   /**

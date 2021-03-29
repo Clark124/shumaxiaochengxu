@@ -17,8 +17,8 @@
 <!-- 库存类目 -->
 <view class="public-item" wx:if="{{targetIndex==0}}">
   <text class="public-title">类目：</text>
-  <picker bindchange="onChangeType" value="{{index}}" range="{{stocType}}" range-key="name" data-type="stockTypeIndex">
-    <text>{{stockTypeIndex>-1?stocType[stockTypeIndex].name:'请选择'}}</text>
+  <picker bindchange="onChangeType" value="{{index}}" range="{{stockType}}" range-key="name" data-type="stockTypeIndex">
+    <text>{{stockTypeIndex>-1?stockType[stockTypeIndex].name:'请选择'}}</text>
   </picker>
 </view>
 
@@ -77,6 +77,8 @@
   <input type="number" bindinput="inputPhone" placeholder="请输入联系方式(必填)" value="{{phone}}" />
 </view>
 
+
+<!-- 商品图片 -->
 <view class="public-item img" wx:if="{{targetIndex==0||targetIndex==2}}">
   <text class="public-title">图片：</text>
   <View class="image-wrapper" wx:for="{{imgList}}" wx:key="index" bindtap="upload" data-index="{{index}}">
@@ -89,6 +91,21 @@
   </View>
 </view>
 
-<view class="btn-">
+
+<!-- 商品细节 -->
+<view class="public-item img" wx:if="{{targetIndex==0}}">
+  <text class="public-title">产品细节：</text>
+  <View class="image-wrapper" wx:for="{{productDetailImg}}" wx:key="index" bindtap="uploadDetail" data-index="{{index}}">
+    <View class="default-img" wx:if="{{!item}}">
+      <View>+</View>
+      <View>上传图片</View>
+    </View>
+    <image src="{{item}}" wx:else class="product-img"></image>
+    <view class="delete-img" wx:if="{{item}}" catchtap="cancelDetailImg" data-index="{{index}}">X</view>
+  </View>
+</view>
+
+
+<view class="btn-wrapper">
   <button type="primary" bindtap="onSubmit" class="submit">提交</button>
 </view>

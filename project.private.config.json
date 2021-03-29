@@ -27,6 +27,12 @@
         {
           "name": "发布",
           "pathName": "pages/publish/publish",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "我的库存",
+          "pathName": "pages/myStock/myStock",
           "scene": null
         }
       ]

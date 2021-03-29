@@ -21,10 +21,8 @@
 
 </view>
 
-<view class="get-openid" bindtap="getOpenid">
-  获取openid
-</view>
+<navigator class="nav-my-publish" url="/pages/myStock/myStock">我的库存</navigator>
 
-<navigator class="nav-my-publish" url="/pages/myPublic/myPublic">我的库存</navigator>
+<navigator class="nav-my-publish" url="/pages/myNeeds/myNeeds">我的需求</navigator>
 
-<navigator class="nav-my-publish" url="/pages/myPublic/myPublic">我的需求</navigator>
+<navigator class="nav-my-publish" url="/pages/myQuotedPrice/myQuotedPrice">我的报价</navigator>
