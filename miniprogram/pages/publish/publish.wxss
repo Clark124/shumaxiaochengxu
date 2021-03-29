@@ -4,6 +4,9 @@
   align-items: flex-start;
   margin-top: 30rpx;
 }
+.public-item.img{
+  flex-wrap: wrap;
+}
 
 .public-title {
   margin-right: 20rpx;
@@ -19,16 +22,34 @@
 }
 
 .image-wrapper {
+  position: relative;
   width: 200rpx;
   height: 200rpx;
   border: 1px solid #eee;
-  
+  margin-right: 30rpx;
   text-align: center;
 }
 .default-img{
-  margin-top: 30rpx;
+  width: 200rpx;
+  height: 200rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .product-img{
   width: 200rpx;
   height: 200rpx;
+}
+.delete-img{
+  position: absolute;
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%;
+  right: -15rpx;
+  top: -15rpx;
+  background-color: #eee;
+}
+.submit{
+  margin-top: 30rpx;
 }

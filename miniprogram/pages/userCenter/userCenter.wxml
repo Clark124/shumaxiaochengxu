@@ -25,4 +25,6 @@
   获取openid
 </view>
 
-<navigator class="nav-my-publish" url="/pages/myPublic/myPublic">我的发布</navigator>
+<navigator class="nav-my-publish" url="/pages/myPublic/myPublic">我的库存</navigator>
+
+<navigator class="nav-my-publish" url="/pages/myPublic/myPublic">我的需求</navigator>

@@ -2,7 +2,7 @@
 const app = getApp()
 Page({
   data: {
-    avatarUrl: './user-unlogin.png',
+    avatarUrl: '/images/user-unlogin.png',
     userInfo: {},
     hasUserInfo: false,
     logged: false,
@@ -18,6 +18,8 @@ Page({
         canIUseGetUserProfile: true,
       })
     }
+    let base64 = wx.getFileSystemManager().readFileSync(this.data.avatarUrl, 'base64');
+    this.setData({avatarUrl:'data:image/jpg;base64,' + base64})
   },
 
   getUserProfile() {
