@@ -1,4 +1,25 @@
 /* miniprogram/pages/myStock/myStock.wxss */
+.tab{
+  box-sizing: border-box;
+  height: 70rpx;
+  padding: 0 20rpx;
+  width: 100%;
+  white-space: nowrap;
+}
+.tab-item{
+  display: inline-block;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size:24rpx;
+  color: #999;
+  margin-right: 20rpx;
+
+}
+
+.stock-list{
+  height: calc(100vh - 70rpx);
+}
+
 .stock-item{
   display: flex;
   height: 200rpx;

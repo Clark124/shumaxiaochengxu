@@ -1,5 +1,27 @@
 <!--miniprogram/pages/myStock/myStock.wxml-->
-<text>我的库存</text>
+<scroll-view scroll-x="true" class="tab">
+  <view class="tab-item">国行手机</view>
+  <view class="tab-item">国行手机</view>
+  <view class="tab-item">国行手机</view>
+  <view class="tab-item">国行手机</view>
+  <view class="tab-item">国行手机</view>
+  <view class="tab-item">国行手机</view>
+  <view class="tab-item">国行手机</view>
+  <view class="tab-item">国行手机</view>
+
+</scroll-view>
+
+<scroll-view  class="stock-list" scroll-y="true"
+  
+  refresher-enabled="{{true}}"
+  refresher-threshold="{{80}}"
+  refresher-default-style="black"
+  refresher-background="#eee"
+  refresher-triggered="{{triggered}}"
+  bindrefresherrefresh="onRefresh"
+  bindscrolltolower="loadMore"
+  
+ >
 <view class="stock-item" wx:for="{{stockList}}" wx:key="index">
   <image src="{{item.imgList[0]}}" class="stock-img"></image>
   <view class="item-info-wrapper">
@@ -8,3 +30,4 @@
       <view class="item-info"> 库存：{{item.productCount}}</view>
   </view>
 </view>
+</scroll-view>

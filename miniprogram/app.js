@@ -13,7 +13,7 @@ App({
         traceUser: true,
       })
     }
-    this.login()
+    // this.login()
   },
   login(){
     wx.cloud.callFunction({

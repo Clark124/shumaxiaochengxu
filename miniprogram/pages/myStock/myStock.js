@@ -4,7 +4,16 @@ const app = getApp()
 Page({
   data: {
     openid:"",
-    stockList:[],
+    stockList:[
+      {imgList:['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/my-image1617022427701.jpg'],productName:"组装电脑",productPirce:1000,productCount:10},
+      {imgList:['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/my-image1617022427701.jpg'],productName:"组装电脑",productPirce:1000,productCount:10},
+      {imgList:['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/my-image1617022427701.jpg'],productName:"组装电脑",productPirce:1000,productCount:10},
+      {imgList:['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/my-image1617022427701.jpg'],productName:"组装电脑",productPirce:1000,productCount:10},
+      {imgList:['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/my-image1617022427701.jpg'],productName:"组装电脑",productPirce:1000,productCount:10},
+      {imgList:['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/my-image1617022427701.jpg'],productName:"组装电脑",productPirce:1000,productCount:10},
+      {imgList:['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/my-image1617022427701.jpg'],productName:"组装电脑",productPirce:1000,productCount:10},
+    ],
+    triggered:true,
     page:1,
     pageSize:10,
     isDataArrive:true,
@@ -14,10 +23,10 @@ Page({
   
   onLoad: function (options) {
    
-    const openid = app.globalData.openid
-    this.setData({openid})
+    // const openid = app.globalData.openid
+    // this.setData({openid})
     //需求类目
-    this.getStockList()
+    // this.getStockList()
    
   },
 
@@ -33,6 +42,32 @@ Page({
         this.setData({stockList:res.data})
       }
     })
+  },
+  onPulling(e) {
+    // console.log('onPulling:', e)
+  },
+
+  onRefresh() {
+    console.log(123)
+    if (this._freshing) return
+    this._freshing = true
+    setTimeout(() => {
+      this.setData({
+        triggered: false,
+      })
+      this._freshing = false
+    }, 3000)
+  },
+
+  onRestore(e) {
+    console.log('onRestore:', e)
+  },
+
+  onAbort(e) {
+    console.log('onAbort', e)
+  },
+  loadMore(e){
+    console.log(321)
   },
 
 
