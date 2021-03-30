@@ -15,6 +15,9 @@
   margin-right: 20rpx;
 
 }
+.tab-item.active{
+  color: red;
+}
 
 .stock-list{
   height: calc(100vh - 70rpx);
@@ -23,7 +26,7 @@
 .stock-item{
   display: flex;
   height: 200rpx;
-  margin-bottom: 30rpx;
+  margin-bottom: 20rpx;
   background: #eee;
 }
 .stock-img{
@@ -36,5 +39,15 @@
   font-size: 24rpx;
 }
 .item-info{
-  margin-bottom: 20rpx;
+  margin-bottom: 10rpx;
+}
+.no-data{
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+}
+.not-more{
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
 }

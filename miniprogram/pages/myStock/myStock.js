@@ -1,18 +1,13 @@
 // miniprogram/pages/myStock/myStock.js
 const app = getApp()
-
+const moment = require('../../utils/moment')
 Page({
   data: {
+    scrollTop:0,
     openid:"",
-    stockList:[
-      {imgList:['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/my-image1617022427701.jpg'],productName:"组装电脑",productPirce:1000,productCount:10},
-      {imgList:['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/my-image1617022427701.jpg'],productName:"组装电脑",productPirce:1000,productCount:10},
-      {imgList:['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/my-image1617022427701.jpg'],productName:"组装电脑",productPirce:1000,productCount:10},
-      {imgList:['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/my-image1617022427701.jpg'],productName:"组装电脑",productPirce:1000,productCount:10},
-      {imgList:['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/my-image1617022427701.jpg'],productName:"组装电脑",productPirce:1000,productCount:10},
-      {imgList:['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/my-image1617022427701.jpg'],productName:"组装电脑",productPirce:1000,productCount:10},
-      {imgList:['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/my-image1617022427701.jpg'],productName:"组装电脑",productPirce:1000,productCount:10},
-    ],
+    typeList:[],
+    typeIndex:0,
+    stockList:[],
     triggered:true,
     page:1,
     pageSize:10,
@@ -22,52 +17,83 @@ Page({
 
   
   onLoad: function (options) {
-   
-    // const openid = app.globalData.openid
-    // this.setData({openid})
-    //需求类目
-    // this.getStockList()
-   
-  },
-
-  //getStockList
-  getStockList(){
     const db = wx.cloud.database()
-    const {openid,page,pageSize} = this.data
-    db.collection('stock').skip((page-1)*pageSize).limit(pageSize).where({
-      _openid: openid,
-    }).get({
-      success: (res) => {
-        console.log(res)
-        this.setData({stockList:res.data})
+    const openid = app.globalData.openid
+    this.setData({openid})
+    db.collection('stockType').get({
+      success:(res)=>{
+        this.setData({typeList:res.data})
+        this.getStockList()
       }
     })
   },
-  onPulling(e) {
-    // console.log('onPulling:', e)
+
+  //获取我的库存列表
+  getStockList(callback){
+    const db = wx.cloud.database()
+    const {openid,page,pageSize,typeList,typeIndex} = this.data
+    db.collection('stock').orderBy('updateDate','desc').skip((page-1)*pageSize).limit(pageSize).where({
+      _openid: openid,
+      typeId:typeList[typeIndex]._id
+    }).get({
+      success: (res) => {
+        let dataList = res.data
+        dataList.forEach(item=>{
+          item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss')
+        })
+        this.setData({stockList:dataList,page:2,isDataOver:false,isDataArrive:true})
+        if(res.data.length<10){
+          this.setData({isDataOver:true})
+        }
+        if(callback){
+          callback()
+        }
+      }
+    })
+  },
+  //切换tab
+  onChangeTab(e){
+    this.setData({typeIndex:e.currentTarget.dataset.index,page:1,isDataArrive:true,isDataOver:false,scrollTop:0})
+    this.getStockList()
   },
 
+  //下拉刷新
   onRefresh() {
-    console.log(123)
     if (this._freshing) return
     this._freshing = true
-    setTimeout(() => {
-      this.setData({
-        triggered: false,
-      })
+    this.setData({isDataArrive:true,isDataOver:false,page:1})
+    this.getStockList(()=>{
+      this.setData({triggered:false})
       this._freshing = false
-    }, 3000)
+      wx.showToast({
+        title: '刷新成功',
+        icon:"success"
+      })
+    })
   },
-
-  onRestore(e) {
-    console.log('onRestore:', e)
-  },
-
-  onAbort(e) {
-    console.log('onAbort', e)
-  },
+  //加载更多
   loadMore(e){
-    console.log(321)
+    const {isDataArrive,isDataOver,stockList,openid,page,pageSize,typeList,typeIndex} = this.data
+    if(page===1||!isDataArrive||isDataOver){
+      return
+    }
+    this.setData({isDataArrive:false})
+    const db = wx.cloud.database()
+    db.collection('stock').orderBy('updateDate','desc').skip((page-1)*pageSize).limit(pageSize).where({
+      _openid: openid,
+      typeId:typeList[typeIndex]._id
+    }).get({
+      success: (res) => {
+        let dataList = res.data
+        dataList.forEach(item=>{
+          item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss')
+        })
+        this.setData({stockList:[...stockList,...dataList],page:page+1,isDataArrive:true})
+        if(res.data.length<10){
+          this.setData({isDataOver:true})
+        }
+      }
+    })
   },
 
 
@@ -77,25 +103,6 @@ Page({
 
  
   onHide: function () {
-
-  },
-
-
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
 
   },
 })

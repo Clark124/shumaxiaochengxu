@@ -1,2 +1,25 @@
 <!--miniprogram/pages/myNeeds/myNeeds.wxml-->
-<text>miniprogram/pages/myNeeds/myNeeds.wxml</text>
+<!--miniprogram/pages/myStock/myStock.wxml-->
+<scroll-view scroll-x="true" class="tab">
+  <view class="{{index===typeIndex? 'tab-item active':'tab-item'}}" wx:for="{{typeList}}" wx:key="index"
+    data-index="{{index}}" bindtap="onChangeTab">{{item.name}}</view>
+</scroll-view>
+
+<scroll-view class="stock-list" scroll-y="true" refresher-enabled="{{true}}" refresher-threshold="{{80}}"
+  refresher-default-style="black" refresher-background="#eee" refresher-triggered="{{triggered}}"
+  bindrefresherrefresh="onRefresh" bindscrolltolower="loadMore" scroll-top="{{scrollTop}}" >
+  <view class="stock-item" wx:for="{{needsList}}" wx:key="index">
+    <view class="item-info-wrapper">
+      <view class="item-info">{{item.productName}}</view>
+      <view class="item-info">价格：{{item.productPirce}}元</view>
+      <view class="item-info"> 库存：{{item.productCount}}</view>
+      <view class="item-info"> 时间：{{item.updateDate}}</view>
+    </view>
+  </view>
+  <view class="no-data" wx:if="{{needsList.length===0}}">
+    暂无数据
+  </view>
+  <view class="not-more" wx:if="{{isDataOver&&needsList.length>5}}">
+    暂无数据
+  </view>
+</scroll-view>
