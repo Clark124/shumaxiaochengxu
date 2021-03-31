@@ -12,3 +12,8 @@
 .img-detail{
   width: 100%;
 }
+.btn-wrapper{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30rpx;
+}

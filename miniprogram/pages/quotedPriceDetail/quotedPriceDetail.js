@@ -1,4 +1,4 @@
-const COLLECTION = 'stock'
+const COLLECTION = 'quotedPrice'
 const moment = require('../../utils/moment')
 const app = getApp()
 Page({
@@ -34,18 +34,10 @@ Page({
     })
   },
 
-  previewDetail(e){
-    let {productDetailImg} = this.data
-    productDetailImg = productDetailImg.filter((item)=>item.url).map(item=>item.url)
-    wx.previewImage({
-      current: e.currentTarget.dataset.url, // 当前显示图片的http链接
-      urls: productDetailImg
-    })
-  },
 
   toEdit(){
     const {id} = this.data
-    const url = '/pages/edit/edit?id='+id+"&collection=stock"
+    const url = '/pages/edit/edit?id='+id+"&collection=quotedPrice"
     wx.navigateTo({
       url: url,
     })

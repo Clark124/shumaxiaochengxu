@@ -87,7 +87,7 @@
       <View>上传图片</View>
     </View>
     <image src="{{item.url}}" wx:else class="product-img"></image>
-    <view class="delete-img" wx:if="{{item}}" catchtap="cancelImg" data-index="{{index}}">X</view>
+    <view class="delete-img" wx:if="{{item.url}}" catchtap="cancelImg" data-index="{{index}}">X</view>
   </View>
 </view>
 
@@ -101,7 +101,7 @@
       <View>上传图片</View>
     </View>
     <image src="{{item.url}}" wx:else class="product-img"></image>
-    <view class="delete-img" wx:if="{{item}}" catchtap="cancelDetailImg" data-index="{{index}}">X</view>
+    <view class="delete-img" wx:if="{{item.url}}" catchtap="cancelDetailImg" data-index="{{index}}">X</view>
   </View>
 </view>
 

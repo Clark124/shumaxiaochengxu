@@ -1,4 +1,3 @@
-<!--miniprogram/pages/myStock/myStock.wxml-->
 <scroll-view scroll-x="true" class="tab">
   <view class="{{index===typeIndex? 'tab-item active':'tab-item'}}" wx:for="{{typeList}}" wx:key="index"
     data-index="{{index}}" bindtap="onChangeTab">{{item.name}}</view>
@@ -8,26 +7,20 @@
   refresher-default-style="black" refresher-background="#eee" refresher-triggered="{{triggered}}"
   bindrefresherrefresh="onRefresh" bindscrolltolower="loadMore" scroll-top="{{scrollTop}}">
 
-  <view class="stock-item {{item.isTouchMove ? 'touch-move-active' : ''}}"
-  data-index="{{index}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtap="navToDetail"
-  wx:for="{{stockList}}" wx:key="index" data-id="{{item._id}}">
+  <view class="stock-item " data-index="{{index}}" bindtap="navToDetail" wx:for="{{stockList}}" wx:key="index"
+    data-id="{{item._id}}">
     <view class="content">
       <image src="{{item.imgList[0].url}}" class="stock-img"></image>
       <view class="item-info-wrapper">
-        <view class="item-info">{{item.productName}}</view>
-        <view class="item-info">价格：{{item.productPirce}}元</view>
-        <view class="item-info">库存：{{item.productCount}}</view>
-        <view class="item-info">发布时间：{{item.updateDate}}</view>
+        <view class="item-info">{{item.quotedPriceTitle}}</view>
+        <view class="item-info"> 商家：{{item.businessName}}</view>
+        <view class="item-info"> 发布时间：{{item.createDate}}</view>
       </view>
     </view>
-    <view class="del" catchtap="del" data-index="{{index}}">删除</view>
-
   </view>
-
   <view class="no-data" wx:if="{{stockList.length===0}}">
     暂无数据
   </view>
-
   <view class="not-more" wx:if="{{isDataOver&&stockList.length>5}}">
     暂无数据
   </view>

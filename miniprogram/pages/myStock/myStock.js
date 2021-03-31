@@ -21,11 +21,16 @@ Page({
 
 
   onLoad: function (options) {
-    const db = wx.cloud.database()
+  
     const openid = app.globalData.openid
     this.setData({
       openid
     })
+   
+  },
+  onShow:function(){
+    this.setData({page:1,isDataArrive:true,isDataOver:false})
+    const db = wx.cloud.database()
     db.collection('stockType').get({
       success: (res) => {
         this.setData({
@@ -83,6 +88,13 @@ Page({
       scrollTop: 0
     })
     this.getStockList()
+  },
+  navToDetail(e){
+    const id = e.currentTarget.dataset.id
+    const url = '/pages/stockDetail/stockDetail?id='+id
+    wx.navigateTo({
+      url,
+    })
   },
 
   //下拉刷新

@@ -25,7 +25,6 @@ Page({
     productDetailImg: [{}], //商品细节图片
   },
 
- 
   onLoad:function(options) {
     const id = options.id
     const COLLECTION = options.collection
@@ -71,37 +70,51 @@ Page({
     const db = wx.cloud.database()
     
     //需求类目
-    const promise1= db.collection('needsType').get({
-      success: (res) => {
-        this.setData({
-          needsType: res.data
-        })
-      }
+    const promise1= new Promise((resolve,reject)=>{
+      db.collection('needsType').get({
+        success: (res) => {
+          this.setData({
+            needsType: res.data
+          })
+          resolve()
+        }
+      })
     })
     //库存类目
-    const promise2 = db.collection('stockType').get({
-      success: (res) => {
-        this.setData({
-          stockType: res.data
-        })
-      }
+    const promise2 = new Promise((resolve,reject)=>{
+      db.collection('stockType').get({
+        success: (res) => {
+          this.setData({
+            stockType: res.data
+          })
+          resolve()
+        }
+      })
     })
     //报价类目
-    const promise3 = db.collection('quotedPriceType').get({
-      success: (res) => {
-        this.setData({
-          quotedPirceType: res.data
-        })
-      }
+    const promise3 = new Promise((resolve,reject)=>{
+      db.collection('quotedPriceType').get({
+        success: (res) => {
+          this.setData({
+            quotedPirceType: res.data
+          })
+          resolve()
+        }
+      })
     })
+    
     //区域列表
-    const promise4 = db.collection('region').get({
-      success: (res) => {
-        this.setData({
-          regionList: res.data
-        })
-      }
+    const promise4 = new Promise((resolve,reject)=>{
+      db.collection('region').get({
+        success: (res) => {
+          this.setData({
+            regionList: res.data
+          })
+          resolve()
+        }
+      })
     })
+    
     const task = [promise1,promise2,promise3,promise4]
     Promise.all(task).then(res=>{
       callback()
@@ -379,8 +392,11 @@ Page({
           title: "更新成功",
           icon: "success",
           duration: 2000,
+          mask:true,
           success:res=>{
-            wx.navigateBack()
+            setTimeout(()=>{
+              wx.navigateBack()
+            },2000)
           }
         })
       },
@@ -512,7 +528,13 @@ Page({
         wx.showToast({
           title: "更新成功",
           icon: "success",
-          duration: 2000
+          duration: 2000,
+          mask:true,
+          success:res=>{
+            setTimeout(()=>{
+              wx.navigateBack()
+            },2000)
+          }
         })
       },
       fail: err => {
@@ -622,7 +644,13 @@ Page({
         wx.showToast({
           title: "更新成功",
           icon: "success",
-          duration: 2000
+          duration: 2000,
+          mask:true,
+          success:res=>{
+           setTimeout(()=>{
+            wx.navigateBack()
+           },2000)
+          }
         })
       },
       fail: err => {

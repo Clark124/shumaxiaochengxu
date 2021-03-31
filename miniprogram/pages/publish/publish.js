@@ -339,7 +339,8 @@ Page({
         wx.showToast({
           title: "发布成功",
           icon: "success",
-          duration: 2000
+          duration: 2000,
+          mask:true
         })
       },
       fail: err => {
@@ -471,7 +472,8 @@ Page({
         wx.showToast({
           title: "发布成功",
           icon: "success",
-          duration: 2000
+          duration: 2000,
+          mask:true
         })
       },
       fail: err => {
@@ -582,7 +584,8 @@ Page({
         wx.showToast({
           title: "发布成功",
           icon: "success",
-          duration: 2000
+          duration: 2000,
+          mask:true
         })
       },
       fail: err => {

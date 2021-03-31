@@ -1,4 +1,4 @@
-const COLLECTION = 'stock'
+const COLLECTION = 'needs'
 const moment = require('../../utils/moment')
 const app = getApp()
 Page({
@@ -13,7 +13,9 @@ Page({
   },
   
   onShow: function () {
-    
+    wx.pageScrollTo({
+      scrollTop:0
+    })
     const db = wx.cloud.database()
     db.collection(COLLECTION).doc(this.data.id).get({
       success:res=>{
@@ -24,28 +26,9 @@ Page({
     })
   },
 
-  //预览轮播图
-  previewSwiper(e){
-    let {imgList} = this.data
-    imgList = imgList.filter((item)=>item.url).map(item=>item.url)
-    wx.previewImage({
-      current: e.currentTarget.dataset.url, // 当前显示图片的http链接
-      urls: imgList // 需要预览的图片http链接列表
-    })
-  },
-
-  previewDetail(e){
-    let {productDetailImg} = this.data
-    productDetailImg = productDetailImg.filter((item)=>item.url).map(item=>item.url)
-    wx.previewImage({
-      current: e.currentTarget.dataset.url, // 当前显示图片的http链接
-      urls: productDetailImg
-    })
-  },
-
   toEdit(){
     const {id} = this.data
-    const url = '/pages/edit/edit?id='+id+"&collection=stock"
+    const url = '/pages/edit/edit?id='+id+"&collection=needs"
     wx.navigateTo({
       url: url,
     })

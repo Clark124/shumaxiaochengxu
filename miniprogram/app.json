@@ -19,7 +19,11 @@
     "pages/myNeeds/myNeeds",
     "pages/myQuotedPrice/myQuotedPrice",
     "pages/stockDetail/stockDetail",
-    "pages/edit/edit"
+    "pages/edit/edit",
+    "pages/needsDetail/needsDetail",
+    "pages/quotedPriceDetail/quotedPriceDetail",
+    "pages/quotedPrice/quotedPrice",
+    "pages/stock/stock"
   ],
   "tabBar": {
     "color": "#777777",
@@ -32,8 +36,16 @@
         "text": "首页"
       },
       {
+        "pagePath": "pages/quotedPrice/quotedPrice",
+        "text": "报价"
+      },
+      {
         "pagePath": "pages/publish/publish",
         "text": "发布"
+      },
+      {
+        "pagePath": "pages/stock/stock",
+        "text": "分类"
       },
       {
         "pagePath": "pages/userCenter/userCenter",
