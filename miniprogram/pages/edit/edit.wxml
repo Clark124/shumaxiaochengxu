@@ -1,9 +1,8 @@
-<!--miniprogram/pages/publish/publish.wxml-->
-
+<!--miniprogram/pages/edit/edit.wxml-->
 
 <view class="public-item">
   <text class="public-title">发布：</text>
-  <picker bindchange="onChangeTarget" value="{{index}}" range="{{targetArray}}">
+  <picker bindchange="onChangeTarget" value="{{index}}" range="{{targetArray}}" disabled="{{true}}">
     <text>{{targetIndex>-1?targetArray[targetIndex]:'请选择'}}</text>
   </picker>
 </view>
@@ -87,7 +86,7 @@
       <View>上传图片</View>
     </View>
     <image src="{{item.url}}" wx:else class="product-img"></image>
-    <view class="delete-img" wx:if="{{item}}" catchtap="cancelImg" data-index="{{index}}">X</view>
+    <view class="delete-img" wx:if="{{item.url}}" catchtap="cancelImg" data-index="{{index}}">X</view>
   </View>
 </view>
 
@@ -101,7 +100,7 @@
       <View>上传图片</View>
     </View>
     <image src="{{item.url}}" wx:else class="product-img"></image>
-    <view class="delete-img" wx:if="{{item}}" catchtap="cancelDetailImg" data-index="{{index}}">X</view>
+    <view class="delete-img" wx:if="{{item.url}}" catchtap="cancelDetailImg" data-index="{{index}}">X</view>
   </View>
 </view>
 

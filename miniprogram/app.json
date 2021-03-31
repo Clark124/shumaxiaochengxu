@@ -17,7 +17,9 @@
     "pages/userCenter/userCenter",
     "pages/myStock/myStock",
     "pages/myNeeds/myNeeds",
-    "pages/myQuotedPrice/myQuotedPrice"
+    "pages/myQuotedPrice/myQuotedPrice",
+    "pages/stockDetail/stockDetail",
+    "pages/edit/edit"
   ],
   "tabBar": {
     "color": "#777777",
@@ -43,7 +45,7 @@
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "数码产品",
+    "navigationBarTitleText": "市场大数据",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",

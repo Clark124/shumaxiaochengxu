@@ -13,15 +13,15 @@ App({
         traceUser: true,
       })
     }
-    this.login()
+    // this.login()
   },
   login(){
     wx.cloud.callFunction({
       name: 'login',
       data: {},
       success: res => {
-        console.log(res.result)
-        console.log('[云函数] [login] user openid: ', res.result.openid)
+        // console.log(res.result)
+        // console.log('[云函数] [login] user openid: ', res.result.openid)
         this.globalData.openid = res.result.openid
       },
       fail: err => {

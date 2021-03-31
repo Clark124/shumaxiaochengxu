@@ -1,7 +1,7 @@
-// miniprogram/pages/publish/publish.js
+// miniprogram/pages/edit/edit.js
 const moment = require('../../utils/moment')
-
 Page({
+
   data: {
     targetArray: ['库存', '需求', '报价'], //发布类型
     targetIndex: -1,
@@ -13,7 +13,6 @@ Page({
     quotedPirceTypeIndex: -1,
     regionList: [], //区域选择列表
     regionIndex: -1,
-
     productName: "",
     quotedPriceTitle: "", //发布报价标题
     quotedPriceTitlePlaceholder: `例:${moment().format('MM.DD')}苹果国行报价`,
@@ -26,16 +25,53 @@ Page({
     productDetailImg: [{}], //商品细节图片
   },
 
-  onLoad: function (options) {
-    this.getSelectList()
+ 
+  onLoad:function(options) {
+    const id = options.id
+    const COLLECTION = options.collection
+    this.getSelectList(()=>{
+      const db = wx.cloud.database()
+      db.collection(COLLECTION).doc(id).get({
+        success:res=>{
+          this.setData({...this.data,...res.data})
+          const {typeId,regionId} = res.data
+        
+          if(COLLECTION==='stock'){
+            this.data.stockType.forEach((item,index)=>{
+              if(item._id===typeId){
+                this.setData({targetIndex:0,stockTypeIndex:index})
+              }
+            })
+          }else if(COLLECTION==='needs'){
+            this.data.needsType.forEach((item,index)=>{
+              if(item._id===typeId){
+                this.setData({targetIndex:1,needsTypeIndex:index})
+              }
+            })
+          }else if(COLLECTION==='quotedPrice'){
+            this.data.quotedPirceType.forEach((item,index)=>{
+              if(item._id===typeId){
+                this.setData({targetIndex:2,quotedPirceTypeIndex:index})
+              }
+            })
+          }
+          this.data.regionList.forEach((item,index)=>{
+            if(item._id===regionId){
+              this.setData({regionIndex:index})
+            }
+          })
+        }
+      })
+    })
+   
+
   },
 
-
-  //获取选择列表
-  getSelectList() {
+  getSelectList(callback) {
     const db = wx.cloud.database()
+    
     //需求类目
-    db.collection('needsType').get({
+    const promise1= db.collection('needsType').get({
       success: (res) => {
         this.setData({
           needsType: res.data
@@ -43,7 +79,7 @@ Page({
       }
     })
     //库存类目
-    db.collection('stockType').get({
+    const promise2 = db.collection('stockType').get({
       success: (res) => {
         this.setData({
           stockType: res.data
@@ -51,7 +87,7 @@ Page({
       }
     })
     //报价类目
-    db.collection('quotedPriceType').get({
+    const promise3 = db.collection('quotedPriceType').get({
       success: (res) => {
         this.setData({
           quotedPirceType: res.data
@@ -59,12 +95,16 @@ Page({
       }
     })
     //区域列表
-    db.collection('region').get({
+    const promise4 = db.collection('region').get({
       success: (res) => {
         this.setData({
           regionList: res.data
         })
       }
+    })
+    const task = [promise1,promise2,promise3,promise4]
+    Promise.all(task).then(res=>{
+      callback()
     })
   },
 
@@ -316,9 +356,9 @@ Page({
 
     const db = wx.cloud.database()
     wx.showLoading({
-      title: '发布中...',
+      title: '更新中...',
     })
-    db.collection('stock').add({
+    db.collection('stock').doc(this.data._id).update({
       data: {
         typeName: stockType[stockTypeIndex].name,
         typeId: stockType[stockTypeIndex]._id,
@@ -332,20 +372,22 @@ Page({
         phone,
         imgList,
         productDetailImg,
-        createDate: new Date(),
         updateDate: new Date(),
       },
       success: (res) => {
         wx.showToast({
-          title: "发布成功",
+          title: "更新成功",
           icon: "success",
-          duration: 2000
+          duration: 2000,
+          success:res=>{
+            wx.navigateBack()
+          }
         })
       },
       fail: err => {
         wx.showToast({
           icon: 'none',
-          title: '发布失败',
+          title: '更新失败',
           duration: 2000
         })
       },
@@ -450,9 +492,9 @@ Page({
 
     const db = wx.cloud.database()
     wx.showLoading({
-      title: '发布中...',
+      title: '更新中...',
     })
-    db.collection('needs').add({
+    db.collection('needs').doc(this.data._id).update({
       data: {
         typeName: needsType[needsTypeIndex].name,
         typeId: needsType[needsTypeIndex]._id,
@@ -464,12 +506,11 @@ Page({
         productDiscribe,
         businessName,
         phone,
-        createDate: new Date(),
         updateDate: new Date(),
       },
       success: (res) => {
         wx.showToast({
-          title: "发布成功",
+          title: "更新成功",
           icon: "success",
           duration: 2000
         })
@@ -477,7 +518,7 @@ Page({
       fail: err => {
         wx.showToast({
           icon: 'none',
-          title: '发布失败',
+          title: '更新失败',
           duration: 2000
         })
       },
@@ -563,9 +604,9 @@ Page({
 
     const db = wx.cloud.database()
     wx.showLoading({
-      title: '发布中...',
+      title: '更新中...',
     })
-    db.collection('quotedPrice').add({
+    db.collection('quotedPrice').doc(this.data._id).update({
       data: {
         typeName: quotedPirceType[quotedPirceTypeIndex].name,
         typeId: quotedPirceType[quotedPirceTypeIndex]._id,
@@ -575,12 +616,11 @@ Page({
         businessName,
         phone,
         imgList,
-        createDate: new Date(),
         updateDate: new Date(),
       },
       success: (res) => {
         wx.showToast({
-          title: "发布成功",
+          title: "更新成功",
           icon: "success",
           duration: 2000
         })
@@ -588,7 +628,7 @@ Page({
       fail: err => {
         wx.showToast({
           icon: 'none',
-          title: '发布失败',
+          title: '更新失败',
           duration: 2000
         })
       },
@@ -648,4 +688,6 @@ Page({
     }
     return true
   }
+
+  
 })

@@ -33,6 +33,13 @@
         {
           "name": "我的库存",
           "pathName": "pages/myStock/myStock",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "库存详情",
+          "pathName": "pages/stockDetail/stockDetail",
+          "query": "id=17453ede60641d7a001fe4ba13dfc669",
           "scene": null
         }
       ]

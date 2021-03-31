@@ -8,7 +8,7 @@
   refresher-default-style="black" refresher-background="#eee" refresher-triggered="{{triggered}}"
   bindrefresherrefresh="onRefresh" bindscrolltolower="loadMore" scroll-top="{{scrollTop}}" >
   <view class="stock-item" wx:for="{{stockList}}" wx:key="index">
-    <image src="{{item.imgList[0]}}" class="stock-img"></image>
+    <image src="{{item.imgList[0].url}}" class="stock-img"></image>
     <view class="item-info-wrapper">
       <view class="item-info">{{item.quotedPriceTitle}}</view>
       <view class="item-info"> 商家：{{item.businessName}}</view>
