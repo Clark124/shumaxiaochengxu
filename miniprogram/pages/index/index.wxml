@@ -1,2 +1,57 @@
 <!--index.wxml-->
-<text>首页</text>
+<swiper indicator-dots="{{true}}" autoplay="{{false}}" interval="{{2000}}" duration="{{500}}" class="swiper">
+  <block wx:for="{{imgList}}" wx:key="index" wx:if="{{item.url}}">
+    <swiper-item>
+      <view class="swiper-item" bindtap="navSwiperDetail" data-url="{{item.url}}">
+        <image src="{{item.url}}" class="swiper-img"></image>
+      </view>
+    </swiper-item>
+  </block>
+</swiper>
+
+<view class="title">
+  <text>发布的最新需求</text>
+  <text bindtap="navToNeedsList">更多</text>
+</view>
+
+<view class="stock-item" data-index="{{index}}" bindtap="navToNeedsDetail" wx:for="{{needsList}}" wx:key="index"
+  data-id="{{item._id}}">
+  <view class="item-info-wrapper">
+    <view class="item-info">需求：{{item.productName}}</view>
+    <view class="item-info">价格：{{item.productPirce}}元</view>
+    <view class="item-info"> 数量：{{item.productCount}}</view>
+    <view class="item-info"> {{item.productDiscribe}}</view>
+  </view>
+</view>
+
+
+<view class="title">
+  <text>发布的最新库存</text>
+  <text bindtap="navToStockList">更多</text>
+</view>
+
+<view class="stock-item" data-index="{{index}}" bindtap="navToStockDetail" wx:for="{{stockList}}" wx:key="index"
+  data-id="{{item._id}}">
+  <image src="{{item.imgList[0].url}}" class="stock-img"></image>
+  <view class="item-info-wrapper">
+    <view class="item-info">{{item.productName}}</view>
+    <view class="item-info">价格：{{item.productPirce}}元</view>
+    <view class="item-info">库存：{{item.productCount}}</view>
+   
+  </view>
+</view>
+
+<view class="title">
+  <text>发布的最新报价</text>
+  <text bindtap="navToQuotedPrice">更多</text>
+</view>
+
+<view class="stock-item " data-index="{{index}}" bindtap="navToQuotedPriceDetail" wx:for="{{quotedPriceList}}" wx:key="index"
+  data-id="{{item._id}}">
+  <image src="{{item.imgList[0].url}}" class="stock-img"></image>
+  <view class="item-info-wrapper">
+    <view class="item-info">{{item.quotedPriceTitle}}</view>
+    <view class="item-info"> 商家：{{item.businessName}}</view>
+  </view>
+
+</view>

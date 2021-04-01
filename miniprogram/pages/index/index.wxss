@@ -1,0 +1,30 @@
+.swiper-img{
+  width: 100%;
+  height: 500rpx;
+}
+.swiper{
+  height: 500rpx;
+}
+.title{
+  margin-top: 30rpx;
+  display: flex;
+  justify-content: space-between;
+  padding: 10rpx 20rpx;
+}
+.stock-item{
+  display: flex;
+  width: 100%;
+  background: #eee;
+  border-bottom: 1rpx solid #aaa;
+}
+.item-info-wrapper {
+  box-sizing: border-box;
+  height: 200rpx;
+  font-size:24rpx;
+  padding: 20rpx 10rpx;
+}
+.stock-img {
+  width: 240rpx;
+  height: 200rpx;
+  margin-right: 20rpx;
+}

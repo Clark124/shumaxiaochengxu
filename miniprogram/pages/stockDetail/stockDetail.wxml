@@ -1,5 +1,5 @@
 <!--miniprogram/pages/stockDetail/stockDetail.wxml-->
-<swiper indicator-dots="{{true}}" autoplay="{{ffalse}}" interval="{{2000}}" duration="{{500}}" class="swiper">
+<swiper indicator-dots="{{true}}" autoplay="{{false}}" interval="{{2000}}" duration="{{500}}" class="swiper">
   <block wx:for="{{imgList}}" wx:key="index" wx:if="{{item.url}}">
     <swiper-item>
       <view class="swiper-item" bindtap="previewSwiper" data-url="{{item.url}}">

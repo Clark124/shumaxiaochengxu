@@ -41,6 +41,12 @@
           "pathName": "pages/stockDetail/stockDetail",
           "query": "id=17453ede60641d7a001fe4ba13dfc669",
           "scene": null
+        },
+        {
+          "name": "需求列表",
+          "pathName": "pages/needs/needs",
+          "query": "",
+          "scene": null
         }
       ]
     }

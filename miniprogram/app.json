@@ -23,7 +23,8 @@
     "pages/needsDetail/needsDetail",
     "pages/quotedPriceDetail/quotedPriceDetail",
     "pages/quotedPrice/quotedPrice",
-    "pages/stock/stock"
+    "pages/stock/stock",
+    "pages/needs/needs"
   ],
   "tabBar": {
     "color": "#777777",
@@ -33,23 +34,33 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页"
+        "text": "首页",
+        "iconPath": "images/sy.png",
+        "selectedIconPath": "images/sy_selected.png"
       },
       {
         "pagePath": "pages/quotedPrice/quotedPrice",
-        "text": "报价"
+        "text": "报价",
+        "iconPath": "images/bj.png",
+        "selectedIconPath": "images/bj_selected.png"
       },
       {
         "pagePath": "pages/publish/publish",
-        "text": "发布"
+        "text": "发布",
+        "iconPath": "images/fb.png",
+        "selectedIconPath": "images/fb_selected.png"
       },
       {
         "pagePath": "pages/stock/stock",
-        "text": "分类"
+        "text": "分类",
+        "iconPath": "images/fl.png",
+        "selectedIconPath": "images/fl_selected.png"
       },
       {
         "pagePath": "pages/userCenter/userCenter",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "images/wd.png",
+        "selectedIconPath": "images/wd_selected.png"
       }
     ]
   },

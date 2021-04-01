@@ -1,5 +1,5 @@
 
-<view>商品名称：{{productName}}</view>
+<view>需求：{{productName}}</view>
 <view>类型：{{typeName}}</view>
 <view>价格：{{productPirce}}</view>
 <view>数量：{{productCount}}</view>

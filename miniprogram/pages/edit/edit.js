@@ -152,7 +152,7 @@ Page({
   // 输入商品数量
   inputProductCount(e) {
     this.setData({
-      productCount: Number(e.detail.value)
+      productCount: e.detail.value
     })
   },
 
@@ -379,7 +379,7 @@ Page({
         regionId: regionList[regionIndex]._id,
         productName,
         productPirce,
-        productCount,
+        productCount:Number(productCount),
         productDiscribe,
         businessName,
         phone,
@@ -518,7 +518,7 @@ Page({
         regionId: regionList[regionIndex]._id,
         productName,
         productPirce,
-        productCount,
+        productCount:Number(productCount),
         productDiscribe,
         businessName,
         phone,
