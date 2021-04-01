@@ -1,3 +1,4 @@
+/* miniprogram/pages/search/search.wxss */
 .search-wrapper{
   position: relative;
   box-sizing: border-box;
@@ -23,29 +24,8 @@
   z-index: 2;
 }
 
-.tab {
-  box-sizing: border-box;
-  height: 70rpx;
-  padding: 0 20rpx;
-  width: 100%;
-  white-space: nowrap;
-}
-
-.tab-item {
-  display: inline-block;
-  height: 70rpx;
-  line-height: 70rpx;
-  font-size: 24rpx;
-  color: #999;
-  margin-right: 20rpx;
-}
-
-.tab-item.active {
-  color: red;
-}
-
 .stock-list {
-  height: calc(100vh - 130rpx);
+  height: 100vh;
 }
 
 .stock-img {

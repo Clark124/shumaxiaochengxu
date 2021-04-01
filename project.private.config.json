@@ -47,6 +47,11 @@
           "pathName": "pages/needs/needs",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "库存列表",
+          "pathName": "pages/stock/stock",
+          "scene": null
         }
       ]
     }

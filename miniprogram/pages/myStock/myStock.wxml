@@ -29,6 +29,6 @@
   </view>
 
   <view class="not-more" wx:if="{{isDataOver&&stockList.length>5}}">
-    暂无数据
+    达到底部了
   </view>
 </scroll-view>

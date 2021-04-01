@@ -1,15 +1,9 @@
-// miniprogram/pages/myStock/myStock.js
-const app = getApp()
+// miniprogram/pages/search/search.js
 const moment = require('../../utils/moment')
-const COLLECTION = 'stock'
-
 Page({
   data: {
-    search:"",
+    key:"",
     scrollTop: 0,
-    openid: "",
-    typeList: [],
-    typeIndex: 0,
     stockList: [],
     triggered: true,
     page: 1,
@@ -18,45 +12,42 @@ Page({
     isDataOver: false
   },
 
+
   onLoad: function (options) {
-  
+    const {collection,key,typeId} = options
+    this.setData({collection,key,typeId})
+   
   },
   onShow:function(){
-    this.setData({page:1,isDataArrive:true,isDataOver:false})
-    const db = wx.cloud.database()
-    db.collection('stockType').get({
-      success: (res) => {
-        this.setData({
-          typeList: res.data
-        })
-        this.getStockList()
-      }
-    })
+    this.setData({page:1,isDataArrive:true,isDataOver:false,scrollTop:0})
+    this.getDataList()
   },
 
-  //获取我的库存列表
-  getStockList(callback) {
+  getDataList(callback){
+    const {page,pageSize,collection,key,typeId} = this.data
     const db = wx.cloud.database()
-    const {
-      page,
-      pageSize,
-      typeList,
-      typeIndex
-    } = this.data
-    db.collection(COLLECTION).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
-      typeId: typeList[typeIndex]._id
-    }).get({
-      success: (res) => {
+    const _ = db.command
+    db.collection(collection).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where(
+      _.or([
+        {
+        productName: db.RegExp({
+          regexp: '.*' + key,
+          options: 'i',
+        })
+      },{
+        productDiscribe: db.RegExp({
+          regexp: '.*' + key,
+          options: 'i',
+        })
+      }
+    ]).and([{typeId:typeId}])).get({
+      success:res=>{
+        console.log(res)
         let dataList = res.data
         dataList.forEach(item => {
           item.createDate = moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')
         })
-        this.setData({
-          stockList: dataList,
-          page: 2,
-          isDataOver: false,
-          isDataArrive: true
-        })
+        this.setData({stockList:dataList, isDataOver: false,isDataArrive: true,page:2})
         if (res.data.length < 10) {
           this.setData({
             isDataOver: true
@@ -68,17 +59,7 @@ Page({
       }
     })
   },
-  //切换tab
-  onChangeTab(e) {
-    this.setData({
-      typeIndex: e.currentTarget.dataset.index,
-      page: 1,
-      isDataArrive: true,
-      isDataOver: false,
-      scrollTop: 0
-    })
-    this.getStockList()
-  },
+
   navToDetail(e){
     const id = e.currentTarget.dataset.id
     const url = '/pages/stockDetail/stockDetail?id='+id
@@ -96,7 +77,7 @@ Page({
       isDataOver: false,
       page: 1
     })
-    this.getStockList(() => {
+    this.getDataList(() => {
       this.setData({
         triggered: false
       })
@@ -115,8 +96,9 @@ Page({
       stockList,
       page,
       pageSize,
-      typeList,
-      typeIndex
+      typeId,
+      collection,
+      key
     } = this.data
     if (page === 1 || !isDataArrive || isDataOver) {
       return
@@ -125,9 +107,21 @@ Page({
       isDataArrive: false
     })
     const db = wx.cloud.database()
-    db.collection(COLLECTION).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
-      typeId: typeList[typeIndex]._id
-    }).get({
+    db.collection(collection).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where(
+      _.or([
+        {
+        productName: db.RegExp({
+          regexp: '.*' + key,
+          options: 'i',
+        })
+      },{
+        productDiscribe: db.RegExp({
+          regexp: '.*' + key,
+          options: 'i',
+        })
+      }
+    ]).and([{typeId:typeId}])
+    ).get({
       success: (res) => {
         let dataList = res.data
         dataList.forEach(item => {

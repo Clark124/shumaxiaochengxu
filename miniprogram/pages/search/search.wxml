@@ -1,14 +1,9 @@
-<!--miniprogram/pages/myStock/myStock.wxml-->
-<view class="search-wrapper">
-  <input type="text" class="search-input" confirm-type="search" bindinput="onChangeInput" value="{{search}}"
+<!--miniprogram/pages/search/search.wxml-->
+<!-- <view class="search-wrapper">
+  <input type="text" class="search-input" confirm-type="search" bindinput="onChangeInput" value="{{key}}"
     bindconfirm="onConfirmSearch" placeholder="搜索" />
     <image src="../../images/ss.png" class="search-icon" bindtap="onConfirmSearch"></image>
-</view>
-
-<scroll-view scroll-x="true" class="tab">
-  <view class="{{index===typeIndex? 'tab-item active':'tab-item'}}" wx:for="{{typeList}}" wx:key="index"
-    data-index="{{index}}" bindtap="onChangeTab">{{item.name}}</view>
-</scroll-view>
+</view> -->
 
 <scroll-view class="stock-list" scroll-y="true" refresher-enabled="{{true}}" refresher-threshold="{{80}}"
   refresher-default-style="black" refresher-background="#eee" refresher-triggered="{{triggered}}"

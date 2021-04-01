@@ -145,7 +145,7 @@ Page({
   //输入产品价格
   inputProductPrice(e) {
     this.setData({
-      productPirce: Number(e.detail.value)
+      productPirce: e.detail.value
     })
   },
 
@@ -378,7 +378,7 @@ Page({
         regionName: regionList[regionIndex].name,
         regionId: regionList[regionIndex]._id,
         productName,
-        productPirce,
+        productPirce:Number(productPirce),
         productCount:Number(productCount),
         productDiscribe,
         businessName,
@@ -517,7 +517,7 @@ Page({
         regionName: regionList[regionIndex].name,
         regionId: regionList[regionIndex]._id,
         productName,
-        productPirce,
+        productPirce:Number(productPirce),
         productCount:Number(productCount),
         productDiscribe,
         businessName,
