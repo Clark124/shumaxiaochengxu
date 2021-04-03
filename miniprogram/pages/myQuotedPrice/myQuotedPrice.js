@@ -49,6 +49,7 @@ Page({
         dataList.forEach(item => {
           item.isTouchMove = false
           item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss')
+          item.isExpire = new Date()>item.expireDate
         })
         this.setData({ stockList: dataList, page: 2, isDataOver: false, isDataArrive: true })
         if (res.data.length < 10) {
@@ -95,7 +96,9 @@ Page({
       success: (res) => {
         let dataList = res.data
         dataList.forEach(item => {
+          item.isTouchMove = false
           item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss')
+          item.isExpire = new Date()>item.expireDate
         })
         this.setData({ stockList: [...stockList, ...dataList], page: page + 1, isDataArrive: true })
         if (res.data.length < 10) {

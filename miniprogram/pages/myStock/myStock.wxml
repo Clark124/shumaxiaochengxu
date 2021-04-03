@@ -14,7 +14,7 @@
     <view class="content">
       <image src="{{item.imgList[0].url}}" class="stock-img"></image>
       <view class="item-info-wrapper">
-        <view class="item-info">{{item.productName}}</view>
+        <view class="item-info">{{item.productName}}{{item.isExpire?'(已过期)':''}}</view>
         <view class="item-info">价格：{{item.productPirce}}元</view>
         <view class="item-info">库存：{{item.productCount}}</view>
         <view class="item-info">发布时间：{{item.updateDate}}</view>

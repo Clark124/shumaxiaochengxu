@@ -62,7 +62,9 @@
 .item-info {
   margin-bottom: 10rpx;
 }
-
+.item-info.active{
+  color: red;
+}
 .no-data {
   height: 100rpx;
   line-height: 100rpx;

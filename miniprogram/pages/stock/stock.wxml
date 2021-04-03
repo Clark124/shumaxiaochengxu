@@ -19,6 +19,7 @@
     <view class="content">
       <image src="{{item.imgList[0].url}}" class="stock-img"></image>
       <view class="item-info-wrapper">
+        <view class="item-info active" wx:if="{{item.isTop}}">已置顶</view>
         <view class="item-info">{{item.productName}}</view>
         <view class="item-info">价格：{{item.productPirce}}元</view>
         <view class="item-info">库存：{{item.productCount}}</view>

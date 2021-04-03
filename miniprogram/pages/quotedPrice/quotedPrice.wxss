@@ -1,3 +1,28 @@
+.search-wrapper{
+  position: relative;
+  box-sizing: border-box;
+  height: 60rpx;
+  padding-top: 10rpx;
+}
+.search-input {
+  width: 600rpx;
+  margin: 0 auto;
+  border: 1px solid #eee;
+  height: 50rpx;
+  border-radius: 25rpx;
+  padding-left: 20rpx;
+  font-size: 24rpx;
+  background:#eee;
+}
+.search-icon{
+  position: absolute;
+  right: 76rpx;
+  top: 17rpx;
+  width: 40rpx;
+  height: 40rpx;
+  z-index: 2;
+}
+
 .tab {
   box-sizing: border-box;
   height: 70rpx;
@@ -20,7 +45,7 @@
 }
 
 .stock-list {
-  height: calc(100vh - 70rpx);
+  height: calc(100vh - 130rpx);
 }
 
 .stock-img {

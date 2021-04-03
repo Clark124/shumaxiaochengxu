@@ -1,5 +1,3 @@
-// miniprogram/pages/myStock/myStock.js
-const app = getApp()
 const moment = require('../../utils/moment')
 const COLLECTION = 'stock'
 
@@ -37,19 +35,22 @@ Page({
   //获取我的库存列表
   getStockList(callback) {
     const db = wx.cloud.database()
+    const _ = db.command
     const {
       page,
       pageSize,
       typeList,
       typeIndex
     } = this.data
-    db.collection(COLLECTION).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
-      typeId: typeList[typeIndex]._id
+    db.collection(COLLECTION).orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
+      typeId: typeList[typeIndex]._id,
+      expireDate: _.gte(new Date())
     }).get({
       success: (res) => {
         let dataList = res.data
         dataList.forEach(item => {
           item.createDate = moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')
+          item.isTop = item.topExpireDate>new Date()
         })
         this.setData({
           stockList: dataList,
@@ -125,13 +126,16 @@ Page({
       isDataArrive: false
     })
     const db = wx.cloud.database()
-    db.collection(COLLECTION).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
-      typeId: typeList[typeIndex]._id
+    const _ = db.command
+    db.collection(COLLECTION).orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
+      typeId: typeList[typeIndex]._id,
+      expireDate: _.gte(new Date())
     }).get({
       success: (res) => {
         let dataList = res.data
         dataList.forEach(item => {
           item.createDate = moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')
+          item.isTop = item.topExpireDate>new Date()
         })
         this.setData({
           stockList: [...stockList, ...dataList],

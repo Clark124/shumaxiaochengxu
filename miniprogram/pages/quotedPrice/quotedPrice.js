@@ -1,9 +1,9 @@
-const app = getApp()
 const moment = require('../../utils/moment')
 const COLLECTION = 'quotedPrice'
 
 Page({
   data: {
+    search:"",
     scrollTop: 0,
     openid: "",
     typeList: [],
@@ -36,9 +36,11 @@ Page({
   //获取我的库存列表
   getStockList(callback) {
     const db = wx.cloud.database()
+    const _ = db.command
     const { page, pageSize, typeList, typeIndex } = this.data
     db.collection(COLLECTION).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
-      typeId: typeList[typeIndex]._id
+      typeId: typeList[typeIndex]._id,
+      expireDate: _.gte(new Date())
     }).get({
       success: (res) => {
         let dataList = res.data
@@ -83,8 +85,10 @@ Page({
     }
     this.setData({ isDataArrive: false })
     const db = wx.cloud.database()
+    const _ = db.command
     db.collection(COLLECTION).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
-      typeId: typeList[typeIndex]._id
+      typeId: typeList[typeIndex]._id,
+      expireDate: _.gte(new Date())
     }).get({
       success: (res) => {
         let dataList = res.data
@@ -102,6 +106,26 @@ Page({
   navToDetail(e){
     const id = e.currentTarget.dataset.id
     const url = '/pages/quotedPriceDetail/quotedPriceDetail?id='+id
+    wx.navigateTo({
+      url,
+    })
+  },
+
+  //搜索框输入
+  onChangeInput(e){
+    this.setData({search:e.detail.value})
+  },
+  onConfirmSearch(){
+    const {search,typeList,typeIndex} = this.data
+    if(!search.trim()){
+      wx.showToast({
+        title: '请输入搜索内容',
+        icon:"none"
+      })
+      return
+    }
+    console.log(search)
+    const url = `/pages/search/search?key=${search}&collection=${COLLECTION}&typeId=${typeList[typeIndex]._id}`
     wx.navigateTo({
       url,
     })

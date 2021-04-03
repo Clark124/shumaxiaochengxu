@@ -334,6 +334,9 @@ Page({
         productDetailImg,
         createDate: new Date(),
         updateDate: new Date(),
+        expireDate: new Date(moment().add(1, 'month')),   //1个月后过期
+        topExpireDate:new Date(),   //置顶到期时间
+        isTop:false,
       },
       success: (res) => {
         wx.showToast({
@@ -467,6 +470,10 @@ Page({
         phone,
         createDate: new Date(),
         updateDate: new Date(),
+        expireDate: new Date(moment().add(1, 'month')),   //1个月后过期
+        topExpireDate:new Date(),
+        isTop:false,
+
       },
       success: (res) => {
         wx.showToast({
@@ -579,6 +586,9 @@ Page({
         imgList,
         createDate: new Date(),
         updateDate: new Date(),
+        expireDate: new Date(moment().add(1, 'month')),   //1个月后过期
+        topExpireDate:new Date(),
+        isTop:false,
       },
       success: (res) => {
         wx.showToast({

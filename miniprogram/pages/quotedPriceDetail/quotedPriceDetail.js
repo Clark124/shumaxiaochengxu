@@ -14,10 +14,14 @@ Page({
   
   onShow: function () {
     
+    
+  },
+  getData(){
     const db = wx.cloud.database()
     db.collection(COLLECTION).doc(this.data.id).get({
       success:res=>{
-        this.setData({...this.data,...res.data,
+        const isTop = res.data.topExpireDate>new Date()
+        this.setData({...this.data,...res.data,isTop,
           createDate:moment(res.data.createDate).format('YYYY-MM-DD HH:mm:ss')
         })
       }
@@ -44,8 +48,32 @@ Page({
   },
 
   //置顶
-  toAddTop(){
-
+  toAddTop() {
+    wx.showModal({
+      title: '提示',
+      content: '5元置顶一天',
+      success:res=> {
+        if (res.confirm) {
+          const {id} = this.data
+          const db = wx.cloud.database()
+          db.collection(COLLECTION).doc(id).update({
+            data:{
+                topExpireDate: new Date(moment().add(1,'days')),
+                updateDate:new Date(),
+                expireDate: new Date(moment().add(1, 'month')),   //1个月后过期
+            },
+            success:res=>{
+              wx.showToast({
+                title: '置顶成功',
+              })
+              this.getData()
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
   },
 
   /**

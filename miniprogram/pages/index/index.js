@@ -17,6 +17,16 @@ Page({
   onLoad: function() {
     this.getDataList()
   },
+  onPullDownRefresh:function(){
+    this.getDataList()
+    setTimeout(()=>{
+      wx.stopPullDownRefresh()
+      wx.showToast({
+        title: '刷新成功',
+        icon:"success"
+      })
+    },1000)
+  },
   getDataList(){
     const db = wx.cloud.database()
     db.collection('needs').orderBy('createDate', 'desc').limit(3).get({
@@ -90,6 +100,4 @@ Page({
       url: url,
     })
   }
-
- 
 })

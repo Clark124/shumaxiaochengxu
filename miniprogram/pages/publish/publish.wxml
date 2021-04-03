@@ -89,7 +89,11 @@
     <image src="{{item.url}}" wx:else class="product-img"></image>
     <view class="delete-img" wx:if="{{item.url}}" catchtap="cancelImg" data-index="{{index}}">X</view>
   </View>
+ 
 </view>
+<view class="mark" wx:if="{{targetIndex==0||targetIndex==2}}">最多5张</view>
+
+
 
 
 <!-- 商品细节 -->
@@ -104,6 +108,9 @@
     <view class="delete-img" wx:if="{{item.url}}" catchtap="cancelDetailImg" data-index="{{index}}">X</view>
   </View>
 </view>
+
+<view class="mark" wx:if="{{targetIndex==0}}">最多5张</view>
+
 
 
 <view class="btn-wrapper">

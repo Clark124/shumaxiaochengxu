@@ -30,7 +30,6 @@ Page({
         this.setData({
           typeList: res.data
         })
-        console.log(this.data.typeList)
         this.getNeedsList()
       }
     })
@@ -39,9 +38,11 @@ Page({
   //获取我的库存列表
   getNeedsList(callback) {
     const db = wx.cloud.database()
+    const _ = db.command
     const { page, pageSize, typeList, typeIndex } = this.data
     db.collection('needs').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
-      typeId: typeList[typeIndex]._id
+      typeId: typeList[typeIndex]._id,
+      expireDate: _.gte(new Date())
     }).get({
       success: (res) => {
         let dataList = res.data
@@ -86,8 +87,10 @@ Page({
     }
     this.setData({ isDataArrive: false })
     const db = wx.cloud.database()
+    const _ = db.command
     db.collection('needs').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
-      typeId: typeList[typeIndex]._id
+      typeId: typeList[typeIndex]._id,
+      expireDate: _.gte(new Date())
     }).get({
       success: (res) => {
         let dataList = res.data
@@ -109,4 +112,26 @@ Page({
       url,
     })
   },
+
+  //搜索框输入
+  onChangeInput(e){
+    this.setData({search:e.detail.value})
+  },
+  onConfirmSearch(){
+    const {search,typeList,typeIndex} = this.data
+    if(!search.trim()){
+      wx.showToast({
+        title: '请输入搜索内容',
+        icon:"none"
+      })
+      return
+    }
+    console.log(search)
+    const url = `/pages/search/search?key=${search}&collection=${COLLECTION}&typeId=${typeList[typeIndex]._id}`
+    wx.navigateTo({
+      url,
+    })
+  },
+
+  
 })

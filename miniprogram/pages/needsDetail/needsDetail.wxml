@@ -12,5 +12,6 @@
 
 <view class="btn-wrapper">
   <button type="primary" bindtap="toEdit" wx:if="{{openid===_openid}}">修改</button>
-  <button type="primary" bindtap="toAddTop" wx:if="{{openid===_openid}}">5元置顶</button>
+  <button type="primary" bindtap="toAddTop" wx:if="{{(openid===_openid)&&!isTop}}">5元置顶</button>
+  <button type="default"  wx:if="{{(openid===_openid)&&isTop}}">已置顶</button>
 </view>

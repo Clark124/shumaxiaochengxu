@@ -59,7 +59,8 @@ Page({
         let dataList = res.data
         dataList.forEach(item => {
           item.isTouchMove = false
-          item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss')
+          item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss'),
+          item.isExpire = new Date()>item.expireDate
         })
         this.setData({
           stockList: dataList,
@@ -144,7 +145,8 @@ Page({
         let dataList = res.data
         dataList.forEach(item => {
           item.isTouchMove = false
-          item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss')
+          item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss'),
+          item.isExpire = new Date()>item.expireDate
         })
         this.setData({
           stockList: [...stockList, ...dataList],
