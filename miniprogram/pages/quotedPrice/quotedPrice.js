@@ -1,6 +1,6 @@
 const moment = require('../../utils/moment')
 const COLLECTION = 'quotedPrice'
-
+const app = getApp()
 Page({
   data: {
     search:"",
@@ -18,7 +18,10 @@ Page({
 
 
   onLoad: function (options) {
-
+    if(app.globalData.typeIndex){
+      this.setData({typeIndex:Number(app.globalData.typeIndex)})
+      app.globalData.typeIndex = ""
+    }
   },
   onShow: function () {
     this.setData({ page: 1, isDataArrive: true, isDataOver: false })

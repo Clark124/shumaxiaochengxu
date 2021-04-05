@@ -51,6 +51,7 @@
         {
           "name": "库存列表",
           "pathName": "pages/stock/stock",
+          "query": "",
           "scene": null
         }
       ]

@@ -1,5 +1,6 @@
 // miniprogram/pages/publish/publish.js
 const moment = require('../../utils/moment')
+const app = getApp()
 
 Page({
   data: {
@@ -143,7 +144,6 @@ Page({
         wx.showLoading({
           title: '上传中',
         })
-        console.log(res)
         const filePath = res.tempFilePaths[0]
         // 上传图片
         const cloudPath = `product-image${new Date().getTime()}${filePath.match(/\.[^.]+?$/)[0]}`
@@ -347,6 +347,7 @@ Page({
         })
         setTimeout(() => {
           const url = '/pages/stock/stock'
+          app.globalData.typeIndex = stockTypeIndex
           wx.switchTab({
             url: url,
           })
@@ -491,6 +492,7 @@ Page({
         })
         setTimeout(() => {
           const url = '/pages/needs/needs'
+          app.globalData.typeIndex = needsTypeIndex
           wx.navigateTo({
             url: url,
           })
@@ -613,6 +615,7 @@ Page({
         })
         setTimeout(() => {
           const url = '/pages/quotedPrice/quotedPrice'
+          app.globalData.typeIndex = quotedPirceTypeIndex
           wx.switchTab({
             url: url,
           })
@@ -684,23 +687,23 @@ Page({
   },
 
   //清空数据
-  clearData(){
+  clearData() {
     this.setData({
-    targetIndex: -1,
-    stockTypeIndex: -1,
-    needsTypeIndex: -1,
-    quotedPirceTypeIndex: -1,
-    regionIndex: -1,
-    productName: "",
-    quotedPriceTitle: "", //发布报价标题
-    quotedPriceTitlePlaceholder: `例:${moment().format('MM.DD')}苹果国行报价`,
-    productPirce: null,
-    productCount: null,
-    productDiscribe: "",
-    businessName: "", //商家名称
-    phone: null,
-    imgList: [{}], //产品图片
-    productDetailImg: [{}], //商品细节图片
+      targetIndex: -1,
+      stockTypeIndex: -1,
+      needsTypeIndex: -1,
+      quotedPirceTypeIndex: -1,
+      regionIndex: -1,
+      productName: "",
+      quotedPriceTitle: "", //发布报价标题
+      quotedPriceTitlePlaceholder: `例:${moment().format('MM.DD')}苹果国行报价`,
+      productPirce: null,
+      productCount: null,
+      productDiscribe: "",
+      businessName: "", //商家名称
+      phone: null,
+      imgList: [{}], //产品图片
+      productDetailImg: [{}], //商品细节图片
     })
   }
 })

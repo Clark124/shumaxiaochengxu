@@ -19,8 +19,10 @@ Page({
 
 
   onLoad: function (options) {
-    // const openid = app.globalData.openid
-    // this.setData({ openid })
+    if(app.globalData.typeIndex){
+      this.setData({typeIndex:Number(app.globalData.typeIndex)})
+      app.globalData.typeIndex = ""
+    }
   },
   onShow: function () {
     this.setData({ page: 1, isDataArrive: true, isDataOver: false ,scrollTop:0})
