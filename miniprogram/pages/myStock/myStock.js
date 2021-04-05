@@ -61,6 +61,7 @@ Page({
           item.isTouchMove = false
           item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss'),
           item.isExpire = new Date()>item.expireDate
+          item.isTop = item.topExpireDate>new Date()
         })
         this.setData({
           stockList: dataList,
@@ -147,6 +148,7 @@ Page({
           item.isTouchMove = false
           item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss'),
           item.isExpire = new Date()>item.expireDate
+          item.isTop = item.topExpireDate>new Date()
         })
         this.setData({
           stockList: [...stockList, ...dataList],

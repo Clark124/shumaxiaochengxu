@@ -55,12 +55,15 @@
 }
 
 .item-info-wrapper {
-  padding: 20rpx 10rpx;
+  padding: 20rpx 20rpx;
   font-size: 24rpx;
+  width: 100%;
 }
 
 .item-info {
   margin-bottom: 10rpx;
+  display: flex;
+  justify-content: space-between;
 }
 .item-info.active{
   color: red;

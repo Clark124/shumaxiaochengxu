@@ -159,10 +159,10 @@ Page({
                   imgList
                 } = _this.data
                 const len = imgList.length
-                
+
                 const url = res.fileList[0].tempFileURL
 
-                imgList[index] = {fileId,url}
+                imgList[index] = { fileId, url }
                 if (len < 5 && imgList[len - 1] !== "") {
                   imgList.push({})
                 }
@@ -221,7 +221,7 @@ Page({
                 } = _this.data
                 const len = productDetailImg.length
                 const url = res.fileList[0].tempFileURL
-                productDetailImg[index] = {fileId,url}
+                productDetailImg[index] = { fileId, url }
                 if (len < 5 && productDetailImg[len - 1] !== "") {
                   productDetailImg.push({})
                 }
@@ -325,8 +325,8 @@ Page({
         regionName: regionList[regionIndex].name,
         regionId: regionList[regionIndex]._id,
         productName,
-        productPirce:Number(productPirce),
-        productCount:Number(productCount),
+        productPirce: Number(productPirce),
+        productCount: Number(productCount),
         productDiscribe,
         businessName,
         phone,
@@ -335,16 +335,23 @@ Page({
         createDate: new Date(),
         updateDate: new Date(),
         expireDate: new Date(moment().add(1, 'month')),   //1个月后过期
-        topExpireDate:new Date(),   //置顶到期时间
-        isTop:false,
+        topExpireDate: new Date(),   //置顶到期时间
+        isTop: false,
       },
       success: (res) => {
         wx.showToast({
           title: "发布成功",
           icon: "success",
           duration: 2000,
-          mask:true
+          mask: true
         })
+        setTimeout(() => {
+          const url = '/pages/stock/stock'
+          wx.switchTab({
+            url: url,
+          })
+          this.clearData()
+        }, 2000)
       },
       fail: err => {
         wx.showToast({
@@ -463,16 +470,16 @@ Page({
         regionName: regionList[regionIndex].name,
         regionId: regionList[regionIndex]._id,
         productName,
-        productPirce:Number(productPirce),
-        productCount:Number(productCount),
+        productPirce: Number(productPirce),
+        productCount: Number(productCount),
         productDiscribe,
         businessName,
         phone,
         createDate: new Date(),
         updateDate: new Date(),
         expireDate: new Date(moment().add(1, 'month')),   //1个月后过期
-        topExpireDate:new Date(),
-        isTop:false,
+        topExpireDate: new Date(),
+        isTop: false,
 
       },
       success: (res) => {
@@ -480,8 +487,15 @@ Page({
           title: "发布成功",
           icon: "success",
           duration: 2000,
-          mask:true
+          mask: true
         })
+        setTimeout(() => {
+          const url = '/pages/needs/needs'
+          wx.navigateTo({
+            url: url,
+          })
+          this.clearData()
+        }, 2000)
       },
       fail: err => {
         wx.showToast({
@@ -587,16 +601,23 @@ Page({
         createDate: new Date(),
         updateDate: new Date(),
         expireDate: new Date(moment().add(1, 'month')),   //1个月后过期
-        topExpireDate:new Date(),
-        isTop:false,
+        topExpireDate: new Date(),
+        isTop: false,
       },
       success: (res) => {
         wx.showToast({
           title: "发布成功",
           icon: "success",
           duration: 2000,
-          mask:true
+          mask: true
         })
+        setTimeout(() => {
+          const url = '/pages/quotedPrice/quotedPrice'
+          wx.switchTab({
+            url: url,
+          })
+          this.clearData()
+        }, 2000)
       },
       fail: err => {
         wx.showToast({
@@ -660,5 +681,26 @@ Page({
       return false
     }
     return true
+  },
+
+  //清空数据
+  clearData(){
+    this.setData({
+    targetIndex: -1,
+    stockTypeIndex: -1,
+    needsTypeIndex: -1,
+    quotedPirceTypeIndex: -1,
+    regionIndex: -1,
+    productName: "",
+    quotedPriceTitle: "", //发布报价标题
+    quotedPriceTitlePlaceholder: `例:${moment().format('MM.DD')}苹果国行报价`,
+    productPirce: null,
+    productCount: null,
+    productDiscribe: "",
+    businessName: "", //商家名称
+    phone: null,
+    imgList: [{}], //产品图片
+    productDetailImg: [{}], //商品细节图片
+    })
   }
 })

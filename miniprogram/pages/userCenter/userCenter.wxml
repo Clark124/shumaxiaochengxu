@@ -21,8 +21,17 @@
 
 </view>
 
-<navigator class="nav-my-publish" url="/pages/myStock/myStock">我的库存</navigator>
+<navigator class="nav-my-publish" url="/pages/myStock/myStock">
+  <text>我的库存</text>
+  <text>></text>
+</navigator>
 
-<navigator class="nav-my-publish" url="/pages/myNeeds/myNeeds">我的需求</navigator>
+<navigator class="nav-my-publish" url="/pages/myNeeds/myNeeds">
+  <text>我的需求</text>
+  <text>></text>
+</navigator>
 
-<navigator class="nav-my-publish" url="/pages/myQuotedPrice/myQuotedPrice">我的报价</navigator>
+<navigator class="nav-my-publish" url="/pages/myQuotedPrice/myQuotedPrice">
+  <text>我的报价</text>
+  <text>></text>
+</navigator>

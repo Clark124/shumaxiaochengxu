@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<swiper indicator-dots="{{true}}" autoplay="{{false}}" interval="{{2000}}" duration="{{500}}" class="swiper">
+<swiper indicator-dots="{{true}}" autoplay="{{false}}"  duration="{{500}}" class="swiper">
   <block wx:for="{{imgList}}" wx:key="index" wx:if="{{item.url}}">
     <swiper-item>
       <view class="swiper-item" bindtap="navSwiperDetail" data-url="{{item.url}}">

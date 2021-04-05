@@ -40,7 +40,7 @@ Page({
     const db = wx.cloud.database()
     const _ = db.command
     const { page, pageSize, typeList, typeIndex } = this.data
-    db.collection('needs').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
+    db.collection('needs').orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       typeId: typeList[typeIndex]._id,
       expireDate: _.gte(new Date())
     }).get({
@@ -48,6 +48,7 @@ Page({
         let dataList = res.data
         dataList.forEach(item => {
           item.createDate = moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')
+          item.isTop = item.topExpireDate>new Date()
         })
         this.setData({ needsList: dataList, page: 2, isDataOver: false, isDataArrive: true })
         if (res.data.length < 10) {
@@ -88,7 +89,7 @@ Page({
     this.setData({ isDataArrive: false })
     const db = wx.cloud.database()
     const _ = db.command
-    db.collection('needs').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
+    db.collection('needs').orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       typeId: typeList[typeIndex]._id,
       expireDate: _.gte(new Date())
     }).get({
@@ -96,6 +97,7 @@ Page({
         let dataList = res.data
         dataList.forEach(item => {
           item.createDate = moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')
+          item.isTop = item.topExpireDate>new Date()
         })
         this.setData({ needsList: [...needsList, ...dataList], page: page + 1, isDataArrive: true })
         if (res.data.length < 10) {
@@ -126,7 +128,7 @@ Page({
       })
       return
     }
-    console.log(search)
+
     const url = `/pages/search/search?key=${search}&collection=${COLLECTION}&typeId=${typeList[typeIndex]._id}`
     wx.navigateTo({
       url,

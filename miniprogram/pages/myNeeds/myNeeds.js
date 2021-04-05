@@ -51,6 +51,7 @@ Page({
           item.isTouchMove = false
           item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss')
           item.isExpire = new Date()>item.expireDate
+          item.isTop = item.topExpireDate>new Date()
         })
         this.setData({ needsList: dataList, page: 2, isDataOver: false, isDataArrive: true })
         if (res.data.length < 10) {
@@ -100,6 +101,7 @@ Page({
           item.isTouchMove = false
           item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss')
           item.isExpire = new Date()>item.expireDate
+          item.isTop = item.topExpireDate>new Date()
         })
         this.setData({ needsList: [...needsList, ...dataList], page: page + 1, isDataArrive: true })
         if (res.data.length < 10) {

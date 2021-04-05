@@ -14,7 +14,11 @@
     <view class="content">
       <image src="{{item.imgList[0].url}}" class="stock-img"></image>
       <view class="item-info-wrapper">
-        <view class="item-info">{{item.productName}}{{item.isExpire?'(已过期)':''}}</view>
+        <view class="item-info">
+          <text>{{item.productName}}</text>
+          <text wx:if="{{item.isExpire}}" class="tip">已过期</text>
+          <text wx:if="{{item.isTop}}" class="tip">已置顶</text>
+        </view>
         <view class="item-info">价格：{{item.productPirce}}元</view>
         <view class="item-info">库存：{{item.productCount}}</view>
         <view class="item-info">发布时间：{{item.updateDate}}</view>

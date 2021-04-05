@@ -18,7 +18,10 @@
     <view class="content">
       <image src="{{item.imgList[0].url}}" class="stock-img"></image>
       <view class="item-info-wrapper">
-        <view class="item-info">{{item.quotedPriceTitle}}</view>
+        <view class="item-info">
+          <text>{{item.quotedPriceTitle}}</text>
+          <text class="tip" wx:if="{{item.isTop}}">已置顶</text>
+        </view>
         <view class="item-info"> 商家：{{item.businessName}}</view>
         <view class="item-info"> 发布时间：{{item.createDate}}</view>
       </view>

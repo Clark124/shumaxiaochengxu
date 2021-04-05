@@ -13,7 +13,7 @@ Page({
   },
   
   onShow: function () {
-    
+    this.getData()
     
   },
   getData(){

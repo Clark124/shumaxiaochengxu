@@ -29,7 +29,7 @@ Page({
           typeList: res.data
         })
         this.getStockList()
-      }
+      } 
     })
   },
 
@@ -38,7 +38,7 @@ Page({
     const db = wx.cloud.database()
     const _ = db.command
     const { page, pageSize, typeList, typeIndex } = this.data
-    db.collection(COLLECTION).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
+    db.collection(COLLECTION).orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       typeId: typeList[typeIndex]._id,
       expireDate: _.gte(new Date())
     }).get({
@@ -46,6 +46,7 @@ Page({
         let dataList = res.data
         dataList.forEach(item => {
           item.createDate = moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')
+          item.isTop = item.topExpireDate>new Date()
         })
         this.setData({ stockList: dataList, page: 2, isDataOver: false, isDataArrive: true })
         if (res.data.length < 10) {
@@ -86,13 +87,14 @@ Page({
     this.setData({ isDataArrive: false })
     const db = wx.cloud.database()
     const _ = db.command
-    db.collection(COLLECTION).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
+    db.collection(COLLECTION).orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       typeId: typeList[typeIndex]._id,
       expireDate: _.gte(new Date())
     }).get({
       success: (res) => {
         let dataList = res.data
         dataList.forEach(item => {
+          item.isTop = item.topExpireDate>new Date()
           item.createDate = moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')
         })
         this.setData({ stockList: [...stockList, ...dataList], page: page + 1, isDataArrive: true })

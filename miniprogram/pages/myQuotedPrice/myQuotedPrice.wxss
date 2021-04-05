@@ -30,12 +30,18 @@
 }
 
 .item-info-wrapper {
+  width: 100%;
   padding: 20rpx 10rpx;
   font-size: 24rpx;
 }
 
 .item-info {
   margin-bottom: 10rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.tip{
+  color: red;
 }
 
 .no-data {
