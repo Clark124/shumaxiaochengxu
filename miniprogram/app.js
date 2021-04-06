@@ -1,6 +1,6 @@
 //app.js
 App({
-  onLaunch: function () {
+  onLaunch:async function () {
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
@@ -13,24 +13,47 @@ App({
         traceUser: true,
       })
     }
-    this.login()
+    await this.login()
   },
   login(){
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        // console.log(res.result)
-        // console.log('[云函数] [login] user openid: ', res.result.openid)
-        this.globalData.openid = res.result.openid
-      },
-      fail: err => {
-        console.error('[云函数] [login] 调用失败', err)
-       
-      }
+    return new Promise((resolve,reject)=>{
+      wx.showLoading({
+        title: '加载中',
+        mask:true
+      })
+      wx.cloud.callFunction({
+        name: 'login',
+        data: {},
+        success: res => {
+  
+          const openid =  res.result.openid
+          this.globalData.openid = openid
+        
+          const db = wx.cloud.database()
+          db.collection('user').where({
+            _openid: openid,
+          }).get({
+            success:res=>{
+              console.log(res)
+              wx.hideLoading()
+              if(res.data.length>0){
+                this.globalData.isLogin = true
+              }
+              resolve()
+            }
+          })
+        },
+        fail: err => {
+          reject()
+          wx.hideLoading()
+          console.error('[云函数] [login] 调用失败', err)
+         
+        }
+      })
     })
+    
   },
   globalData:{
-
+    isLogin:false
   }
 })

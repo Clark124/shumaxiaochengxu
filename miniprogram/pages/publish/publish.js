@@ -4,6 +4,7 @@ const app = getApp()
 
 Page({
   data: {
+    isLogin:false,
     targetArray: ['库存', '需求', '报价'], //发布类型
     targetIndex: -1,
     stockType: [], //库存类目
@@ -28,7 +29,17 @@ Page({
   },
 
   onLoad: function (options) {
+    const isLogin = app.globalData.isLogin
+    if(isLogin){
+      this.setData({isLogin:true})
+    }
     this.getSelectList()
+  },
+  onShow:function(){
+    const isLogin = app.globalData.isLogin
+    if(isLogin){
+      this.setData({isLogin:true})
+    }
   },
 
 
@@ -684,6 +695,12 @@ Page({
       return false
     }
     return true
+  },
+
+  navToUserCentre(){
+    wx.switchTab({
+      url: '/pages/userCenter/userCenter',
+    })
   },
 
   //清空数据
