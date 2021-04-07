@@ -45,7 +45,7 @@
 </view>
 
 <view class="public-item" wx:if="{{targetIndex==0||targetIndex==1}}">
-  <text class="public-title">产品名称：</text>
+  <text class="public-title">型号：</text>
   <input type="text" bindinput="inputProductName" placeholder="请输入产品名称(必填)" value="{{productName}}" />
 </view>
 
@@ -59,12 +59,14 @@
   <input type="number" bindinput="inputProductCount" placeholder="请输入产品数量(必填)" value="{{productCount}}" />
 </view>
 
-
 <view class="public-item" wx:if="{{targetIndex==0||targetIndex==1}}">
-  <text class="public-title">产品描述：</text>
-  <textarea type="text" bindinput="inputProductDiscribe" placeholder="产品描述" value="{{productDiscribe}}"
-    class="discribe"></textarea>
-</view>
+    <text class="public-title">配置：</text>
+    <input type="text" bindinput="inputProductConfig" placeholder="请输入配置" value="{{productConfig}}" />
+  </view>
+  <view class="public-item" wx:if="{{targetIndex==0||targetIndex==1}}">
+    <text class="public-title">成色：</text>
+    <input type="text" bindinput="inputProductCondition" placeholder="请输入产品成色" value="{{productCondition}}" />
+  </view>
 
 <view class="public-item">
   <text class="public-title">商家：</text>
@@ -72,7 +74,7 @@
 </view>
 
 <view class="public-item">
-  <text class="public-title">联系方式：</text>
+  <text class="public-title">电话：</text>
   <input type="number" bindinput="inputPhone" placeholder="请输入联系方式(必填)" value="{{phone}}" />
 </view>
 

@@ -17,10 +17,11 @@
 <view class="stock-item" data-index="{{index}}" bindtap="navToNeedsDetail" wx:for="{{needsList}}" wx:key="index"
   data-id="{{item._id}}">
   <view class="item-info-wrapper">
-    <view class="item-info">需求：{{item.productName}}</view>
+    <view class="item-info">型号：{{item.productName}}</view>
     <view class="item-info">价格：{{item.productPirce}}元</view>
-    <view class="item-info"> 数量：{{item.productCount}}</view>
-    <view class="item-info"> {{item.productDiscribe}}</view>
+    <view class="item-info">库存：{{item.productCount}}</view>
+    <view class="item-info">配置：{{item.productConfig}}</view>
+    <view class="item-info">成色：{{item.productCondition}}</view>
   </view>
 </view>
 
@@ -32,11 +33,13 @@
 
 <view class="stock-item" data-index="{{index}}" bindtap="navToStockDetail" wx:for="{{stockList}}" wx:key="index"
   data-id="{{item._id}}">
-  <image src="{{item.imgList[0].url}}" class="stock-img"></image>
+  
   <view class="item-info-wrapper">
-    <view class="item-info">{{item.productName}}</view>
+    <view class="item-info">型号：{{item.productName}}</view>
     <view class="item-info">价格：{{item.productPirce}}元</view>
     <view class="item-info">库存：{{item.productCount}}</view>
+    <view class="item-info">配置：{{item.productConfig}}</view>
+    <view class="item-info">成色：{{item.productCondition}}</view>
    
   </view>
 </view>
@@ -48,10 +51,9 @@
 
 <view class="stock-item " data-index="{{index}}" bindtap="navToQuotedPriceDetail" wx:for="{{quotedPriceList}}" wx:key="index"
   data-id="{{item._id}}">
-  <image src="{{item.imgList[0].url}}" class="stock-img"></image>
   <view class="item-info-wrapper">
-    <view class="item-info">{{item.quotedPriceTitle}}</view>
-    <view class="item-info"> 商家：{{item.businessName}}</view>
+    <view class="item-info-view">{{item.quotedPriceTitle}}</view>
+    <view class="item-info-view"> 商家：{{item.businessName}}</view>
   </view>
 
 </view>

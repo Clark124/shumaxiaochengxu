@@ -1,7 +1,7 @@
 .search-wrapper{
   position: relative;
   box-sizing: border-box;
-  height: 60rpx;
+  height: 80rpx;
   padding-top: 10rpx;
 }
 .search-input {
@@ -23,29 +23,34 @@
   z-index: 2;
 }
 
-.tab {
+.container{
+  display: flex;
+}
+
+.tab-list {
   box-sizing: border-box;
   height: 70rpx;
   padding: 0 20rpx;
   width: 100%;
   white-space: nowrap;
+  border-bottom: 1rpx solid #eee;
+}
+
+.stock-list {
+  height: calc(100vh - 130rpx);
 }
 
 .tab-item {
   display: inline-block;
   height: 70rpx;
   line-height: 70rpx;
+  margin-right: 20rpx;
   font-size: 24rpx;
   color: #999;
-  margin-right: 20rpx;
 }
 
 .tab-item.active {
   color: red;
-}
-
-.stock-list {
-  height: calc(100vh - 130rpx);
 }
 
 .stock-img {
@@ -55,15 +60,23 @@
 }
 
 .item-info-wrapper {
-  padding: 20rpx 20rpx;
+  padding: 10rpx 20rpx;
   font-size: 24rpx;
   width: 100%;
 }
 
-.item-info {
-  margin-bottom: 10rpx;
+.item-info-view{
   display: flex;
   justify-content: space-between;
+  height: 40rpx;
+  margin-bottom: 10rpx;
+}
+.item-info{
+  display: inline-block;
+  height: 40rpx;
+  line-height: 40rpx;
+  margin-right: 40rpx;
+  margin-bottom: 10rpx;
 }
 .item-info.active{
   color: red;

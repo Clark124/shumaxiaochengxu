@@ -1,7 +1,7 @@
 .search-wrapper{
   position: relative;
   box-sizing: border-box;
-  height: 60rpx;
+  height: 80rpx;
   padding-top: 10rpx;
 }
 .search-input {
@@ -23,29 +23,31 @@
   z-index: 2;
 }
 
-.tab {
-  box-sizing: border-box;
-  height: 70rpx;
+.container{
+  display: flex;
+}
+
+.tab-list {
+  height: calc(100vh - 80rpx);
   padding: 0 20rpx;
-  width: 100%;
-  white-space: nowrap;
+  width: 150rpx;
+  border-right: 1rpx solid #eee;
+}
+
+.stock-list {
+  height: calc(100vh - 80rpx);
+  flex: 1;
 }
 
 .tab-item {
-  display: inline-block;
-  height: 70rpx;
-  line-height: 70rpx;
+  height: 80rpx;
+  line-height: 80rpx;
   font-size: 24rpx;
   color: #999;
-  margin-right: 20rpx;
 }
 
 .tab-item.active {
   color: red;
-}
-
-.stock-list {
-  height: calc(100vh - 130rpx);
 }
 
 .stock-img {
@@ -55,20 +57,27 @@
 }
 
 .item-info-wrapper {
-  padding: 20rpx 20rpx;
+  padding: 10rpx 20rpx;
   font-size: 24rpx;
   width: 100%;
 }
 
-.item-info {
-  margin-bottom: 10rpx;
+.item-info-view{
   display: flex;
   justify-content: space-between;
+  height: 40rpx;
+  margin-bottom: 10rpx;
 }
-.tip{
+.item-info{
+  display: inline-block;
+  height: 40rpx;
+  line-height: 40rpx;
+  margin-right: 40rpx;
+  margin-bottom: 10rpx;
+}
+.item-info.active{
   color: red;
 }
-
 .no-data {
   height: 100rpx;
   line-height: 100rpx;
@@ -80,6 +89,7 @@
   line-height: 80rpx;
   text-align: center;
 }
+
 
 .stock-item {
   display: flex;

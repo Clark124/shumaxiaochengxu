@@ -18,7 +18,8 @@ Page({
     quotedPriceTitlePlaceholder: `例:${moment().format('MM.DD')}苹果国行报价`,
     productPirce: null,
     productCount: null,
-    productDiscribe: "",
+    productConfig: "", //配置
+    productCondition: "", //成色
     businessName: "", //商家名称
     phone: null,
     imgList: [{}], //产品图片
@@ -156,10 +157,16 @@ Page({
     })
   },
 
-  //输入产品描述
-  inputProductDiscribe(e) {
+  //输入产品配置
+  inputProductConfig(e) {
     this.setData({
-      productDiscribe: e.detail.value
+      productConfig: e.detail.value
+    })
+  },
+  //输入产品成色
+  inputProductCondition(e) {
+    this.setData({
+      productCondition: e.detail.value
     })
   },
 
@@ -355,7 +362,8 @@ Page({
       productName,
       productPirce,
       productCount,
-      productDiscribe,
+      productConfig,
+      productCondition,
       businessName,
       phone,
       imgList,
@@ -380,7 +388,8 @@ Page({
         productName,
         productPirce:Number(productPirce),
         productCount:Number(productCount),
-        productDiscribe,
+        productConfig,
+        productCondition,
         businessName,
         phone,
         imgList,
@@ -417,6 +426,8 @@ Page({
       productName,
       productPirce,
       productCount,
+      productConfig,
+      productCondition,
       businessName,
       phone,
       imgList,
@@ -453,6 +464,20 @@ Page({
     if (!productCount) {
       wx.showToast({
         title: '请输入产品数量',
+        icon: "none"
+      })
+      return false
+    }
+    if (productConfig.trim() === "") {
+      wx.showToast({
+        title: '请输入配置',
+        icon: "none"
+      })
+      return false
+    }
+    if (productCondition.trim() === "") {
+      wx.showToast({
+        title: '请输入产品成色',
         icon: "none"
       })
       return false
@@ -496,7 +521,8 @@ Page({
       productName,
       productPirce,
       productCount,
-      productDiscribe,
+      productConfig,
+      productCondition,
       businessName,
       phone,
     } = this.data
@@ -519,7 +545,8 @@ Page({
         productName,
         productPirce:Number(productPirce),
         productCount:Number(productCount),
-        productDiscribe,
+        productConfig,
+        productCondition,
         businessName,
         phone,
         updateDate: new Date(),
@@ -553,6 +580,8 @@ Page({
       productName,
       productPirce,
       productCount,
+      productConfig,
+      productCondition,
       businessName,
       phone
     } = this.data
@@ -587,6 +616,20 @@ Page({
     if (!productCount) {
       wx.showToast({
         title: '请输入产品数量',
+        icon: "none"
+      })
+      return false
+    }
+    if (productConfig.trim() === "") {
+      wx.showToast({
+        title: '请输入配置',
+        icon: "none"
+      })
+      return false
+    }
+    if (productCondition.trim() === "") {
+      wx.showToast({
+        title: '请输入产品成色',
         icon: "none"
       })
       return false

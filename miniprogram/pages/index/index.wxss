@@ -12,7 +12,6 @@
   padding: 10rpx 20rpx;
 }
 .stock-item{
-  display: flex;
   width: 100%;
   background: #eee;
   border-bottom: 1rpx solid #aaa;
@@ -21,7 +20,18 @@
   box-sizing: border-box;
   height: 200rpx;
   font-size:24rpx;
-  padding: 20rpx 10rpx;
+  padding: 20rpx 20rpx;
+}
+.item-info-view{
+  height: 40rpx;
+  margin-bottom: 10rpx;
+}
+.item-info{
+  display: inline-block;
+  height: 40rpx;
+  line-height: 40rpx;
+  margin-right: 40rpx;
+  margin-bottom: 10rpx;
 }
 .stock-img {
   width: 240rpx;

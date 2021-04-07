@@ -4,7 +4,7 @@ const app = getApp()
 
 Page({
   data: {
-    isLogin:false,
+    isLogin: false,
     targetArray: ['库存', '需求', '报价'], //发布类型
     targetIndex: -1,
     stockType: [], //库存类目
@@ -22,6 +22,8 @@ Page({
     productPirce: null,
     productCount: null,
     productDiscribe: "",
+    productConfig: "", //配置
+    productCondition: "", //成色
     businessName: "", //商家名称
     phone: null,
     imgList: [{}], //产品图片
@@ -30,15 +32,19 @@ Page({
 
   onLoad: function (options) {
     const isLogin = app.globalData.isLogin
-    if(isLogin){
-      this.setData({isLogin:true})
+    if (isLogin) {
+      this.setData({
+        isLogin: true
+      })
     }
     this.getSelectList()
   },
-  onShow:function(){
+  onShow: function () {
     const isLogin = app.globalData.isLogin
-    if(isLogin){
-      this.setData({isLogin:true})
+    if (isLogin) {
+      this.setData({
+        isLogin: true
+      })
     }
   },
 
@@ -122,6 +128,18 @@ Page({
     })
   },
 
+  //输入产品配置
+  inputProductConfig(e) {
+    this.setData({
+      productConfig: e.detail.value
+    })
+  },
+  //输入产品成色
+  inputProductCondition(e) {
+    this.setData({
+      productCondition: e.detail.value
+    })
+  },
   //输入商家名称
   inputBusinessName(e) {
     this.setData({
@@ -173,7 +191,10 @@ Page({
 
                 const url = res.fileList[0].tempFileURL
 
-                imgList[index] = { fileId, url }
+                imgList[index] = {
+                  fileId,
+                  url
+                }
                 if (len < 5 && imgList[len - 1] !== "") {
                   imgList.push({})
                 }
@@ -232,7 +253,10 @@ Page({
                 } = _this.data
                 const len = productDetailImg.length
                 const url = res.fileList[0].tempFileURL
-                productDetailImg[index] = { fileId, url }
+                productDetailImg[index] = {
+                  fileId,
+                  url
+                }
                 if (len < 5 && productDetailImg[len - 1] !== "") {
                   productDetailImg.push({})
                 }
@@ -313,7 +337,8 @@ Page({
       productName,
       productPirce,
       productCount,
-      productDiscribe,
+      productConfig,
+      productCondition,
       businessName,
       phone,
       imgList,
@@ -338,15 +363,16 @@ Page({
         productName,
         productPirce: Number(productPirce),
         productCount: Number(productCount),
-        productDiscribe,
+        productConfig,
+        productCondition,
         businessName,
         phone,
         imgList,
         productDetailImg,
         createDate: new Date(),
         updateDate: new Date(),
-        expireDate: new Date(moment().add(1, 'month')),   //1个月后过期
-        topExpireDate: new Date(),   //置顶到期时间
+        expireDate: new Date(moment().add(1, 'month')), //1个月后过期
+        topExpireDate: new Date(), //置顶到期时间
         isTop: false,
       },
       success: (res) => {
@@ -382,6 +408,8 @@ Page({
       productName,
       productPirce,
       productCount,
+      productConfig,
+      productCondition,
       businessName,
       phone,
       imgList,
@@ -418,6 +446,20 @@ Page({
     if (!productCount) {
       wx.showToast({
         title: '请输入产品数量',
+        icon: "none"
+      })
+      return false
+    }
+    if (productConfig.trim() === "") {
+      wx.showToast({
+        title: '请输入配置',
+        icon: "none"
+      })
+      return false
+    }
+    if (productCondition.trim() === "") {
+      wx.showToast({
+        title: '请输入产品成色',
         icon: "none"
       })
       return false
@@ -459,9 +501,10 @@ Page({
       regionList,
       regionIndex,
       productName,
+      productConfig,
+      productCondition,
       productPirce,
       productCount,
-      productDiscribe,
       businessName,
       phone,
     } = this.data
@@ -484,12 +527,13 @@ Page({
         productName,
         productPirce: Number(productPirce),
         productCount: Number(productCount),
-        productDiscribe,
+        productConfig,
+        productCondition,
         businessName,
         phone,
         createDate: new Date(),
         updateDate: new Date(),
-        expireDate: new Date(moment().add(1, 'month')),   //1个月后过期
+        expireDate: new Date(moment().add(1, 'month')), //1个月后过期
         topExpireDate: new Date(),
         isTop: false,
 
@@ -526,6 +570,8 @@ Page({
       productName,
       productPirce,
       productCount,
+      productConfig,
+      productCondition,
       businessName,
       phone
     } = this.data
@@ -560,6 +606,20 @@ Page({
     if (!productCount) {
       wx.showToast({
         title: '请输入产品数量',
+        icon: "none"
+      })
+      return false
+    }
+    if (productConfig.trim() === "") {
+      wx.showToast({
+        title: '请输入配置',
+        icon: "none"
+      })
+      return false
+    }
+    if (productCondition.trim() === "") {
+      wx.showToast({
+        title: '请输入产品成色',
         icon: "none"
       })
       return false
@@ -613,7 +673,7 @@ Page({
         imgList,
         createDate: new Date(),
         updateDate: new Date(),
-        expireDate: new Date(moment().add(1, 'month')),   //1个月后过期
+        expireDate: new Date(moment().add(1, 'month')), //1个月后过期
         topExpireDate: new Date(),
         isTop: false,
       },
@@ -697,7 +757,7 @@ Page({
     return true
   },
 
-  navToUserCentre(){
+  navToUserCentre() {
     wx.switchTab({
       url: '/pages/userCenter/userCenter',
     })
@@ -716,7 +776,8 @@ Page({
       quotedPriceTitlePlaceholder: `例:${moment().format('MM.DD')}苹果国行报价`,
       productPirce: null,
       productCount: null,
-      productDiscribe: "",
+      productConfig: "",
+      productCondition:"",
       businessName: "", //商家名称
       phone: null,
       imgList: [{}], //产品图片

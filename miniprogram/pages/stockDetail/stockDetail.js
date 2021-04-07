@@ -101,6 +101,12 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    const {productName,productPirce} = this.data
+    return {
+      title: `型号:${productName} 价格:${productPirce}`,
+    }
+  },
+  onShareTimeline:function(){
+    
   }
 })
