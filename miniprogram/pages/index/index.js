@@ -52,7 +52,7 @@ Page({
       success:res=>{
         let dataList = res.data
         dataList.forEach(item => {
-          item.createDate = moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')
+          item.createDate = moment(item.createDate).format('YYYY.MM.DD')
         })
         this.setData({quotedPriceList:dataList})
       }

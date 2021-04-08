@@ -1,40 +1,144 @@
-.swiper-img{
-  width: 100%;
-  height: 500rpx;
+.swiper-wrapper{
+  height: 408rpx;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.swiper-img{
+  width: 696rpx;
+  height: 327rpx;
+  border-radius: 15rpx;
+}
+
 .swiper{
-  height: 500rpx;
+  width: 696rpx;
+  height: 327rpx;
+  overflow: hidden;
+  border-radius: 15rpx;
 }
 .title{
-  margin-top: 30rpx;
+  margin-top: 46rpx;
+  margin-bottom: 20rpx;
   display: flex;
   justify-content: space-between;
-  padding: 10rpx 20rpx;
+  align-items: center;
+  font-size:40rpx;
+  color: #222;
 }
+
+.to-more{
+  font-size:32rpx;
+  color: #999999;
+}
+.content-wrapper{
+  padding:0 27rpx;
+}
+
+
 .stock-item{
-  width: 100%;
-  background: #eee;
-  border-bottom: 1rpx solid #aaa;
-}
-.item-info-wrapper {
   box-sizing: border-box;
-  height: 200rpx;
-  font-size:24rpx;
-  padding: 20rpx 20rpx;
+  width: 100%;
+  background: #fff;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  padding: 30rpx 20rpx 26rpx 20rpx;
 }
-.item-info-view{
-  height: 40rpx;
-  margin-bottom: 10rpx;
+.block-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16rpx;
+  border-bottom: 1rpx solid #eee;
 }
-.item-info{
+.block-head-text{
   display: inline-block;
-  height: 40rpx;
-  line-height: 40rpx;
-  margin-right: 40rpx;
-  margin-bottom: 10rpx;
+  font-size: 28rpx;
+  background: #0983F6;
+  color: #fff;
+  padding: 0 8rpx;
+  border-radius: 5rpx;
+  margin-right: 5rpx;
+}
+.product-name{
+  font-size: 32rpx;
+  color: #222;
+}
+.price-unit{
+  font-size: 32rpx;
+  color: #F93204;
+}
+.price{
+  font-size: 42rpx;
+  color: #F93204;
+}
+
+.config{
+  font-size: 32rpx;
+  color: #666666;
+  margin: 20rpx 0;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.info-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.condition{
+  background: rgba(61, 149, 246, 0.1);
+  color: #0983F6;
+  font-size: 32rpx;
+  padding: 0 6rpx;
+}
+.count{
+  font-size: 32rpx;
+  color: #666666;
+}
+.stock-name{
+  font-size: 40rpx;
+  color: #222;
+}
+.stock-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item-info-wrapper {
+  display: flex;
+  margin-top: 20rpx;
 }
 .stock-img {
-  width: 240rpx;
-  height: 200rpx;
+  width: 212rpx;
+  height: 187rpx;
   margin-right: 20rpx;
+}
+.stock-info{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.stock-config{
+  font-size: 32rpx;
+  color: #666666;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.quoted-price-title{
+  font-size: 37rpx;
+  color: #222222;
+  margin-bottom: 20rpx;
+}
+.business-name{
+  font-size: 32rpx;
+  color: #999999;
+}
+.quoted-price-date{
+  margin-right: 55rpx;
 }
