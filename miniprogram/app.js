@@ -13,7 +13,7 @@ App({
         traceUser: true,
       })
     }
-    await this.login()
+    // await this.login()
   },
   login(){
     return new Promise((resolve,reject)=>{

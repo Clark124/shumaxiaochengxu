@@ -8,7 +8,10 @@ Page({
 
   onLoad: function (options) {
     const id = options.id
-    const openid = app.globalData.openid
+    let openid = ""
+    if(app.globalData.openid){
+      openid = app.globalData.openid
+    }
     this.setData({id,openid})
   },
   
@@ -70,11 +73,13 @@ Page({
   onShareAppMessage: function () {
    
     return {
-      title: '自定义转发标题',
+      title: '我的需求',
       // path: '/pages/needsDetail/needsDetail?id='+this.data.id,
     }
   },
   onShareTimeline:function(){
-    
+    return {
+      title: '我的需求',
+    }
   }
 })

@@ -8,7 +8,10 @@ Page({
 
   onLoad: function (options) {
     const id = options.id
-    const openid = app.globalData.openid
+    let openid = ""
+    if(app.globalData.openid){
+      openid = app.globalData.openid
+    }
     this.setData({id,openid})
   },
   
@@ -82,10 +85,13 @@ Page({
   onShareAppMessage: function () {
    
     return {
-      title: '自定义转发标题',
+      title: '今日报价',
     }
   },
   onShareTimeline:function(){
-    
+    return {
+      title: '今日报价',
+      imageUrl:this.data.imgList[0].url
+    }
   }
 })

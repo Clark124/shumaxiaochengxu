@@ -8,7 +8,10 @@ Page({
 
   onLoad: function (options) {
     const id = options.id
-    const openid = app.globalData.openid
+    let openid = ""
+    if(app.globalData.openid){
+      openid = app.globalData.openid
+    }
     this.setData({
       id,
       openid
@@ -107,6 +110,8 @@ Page({
     }
   },
   onShareTimeline:function(){
-    
+    return {
+      imageUrl:this.data.imgList[0].url
+    }
   }
 })

@@ -15,6 +15,7 @@ Page({
   },
 
   onLoad: function() {
+    this.login()
     this.getDataList()
   },
   onPullDownRefresh:function(){
@@ -99,5 +100,43 @@ Page({
     wx.switchTab({
       url: url,
     })
-  }
+  },
+  //登录
+  login(){
+    return new Promise((resolve,reject)=>{
+      wx.showLoading({
+        title: '加载中',
+        mask:true
+      })
+      wx.cloud.callFunction({
+        name: 'login',
+        data: {},
+        success: res => {
+  
+          const openid =  res.result.openid
+          app.globalData.openid = openid
+        
+          const db = wx.cloud.database()
+          db.collection('user').where({
+            _openid: openid,
+          }).get({
+            success:res=>{
+              wx.hideLoading()
+              if(res.data.length>0){
+                app.globalData.isLogin = true
+              }
+              resolve()
+            }
+          })
+        },
+        fail: err => {
+          reject()
+          wx.hideLoading()
+          console.error('[云函数] [login] 调用失败', err)
+         
+        }
+      })
+    })
+    
+  },
 })
