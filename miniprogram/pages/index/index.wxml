@@ -1,15 +1,15 @@
 <!--index.wxml-->
 <view class="swiper-wrapper">
-  <swiper indicator-dots="{{true}}" autoplay="{{false}}" duration="{{500}}" indicator-color="#fff"
-    indicator-active-color="#2D5DF8" class="swiper">
-    <block wx:for="{{imgList}}" wx:key="index" wx:if="{{item.url}}" class="swiper-block">
-      <swiper-item>
-        <view class="swiper-item" bindtap="navSwiperDetail" data-url="{{item.url}}">
-          <image src="{{item.url}}" class="swiper-img"></image>
-        </view>
-      </swiper-item>
-    </block>
-  </swiper>
+    <swiper indicator-dots="{{true}}" autoplay="{{true}}" duration="{{500}}" indicator-color="#fff"
+      indicator-active-color="#2D5DF8" class="swiper">
+      <block wx:for="{{imgList}}" wx:key="index" wx:if="{{item.url}}" class="swiper-block">
+        <swiper-item>
+          <view class="swiper-item" bindtap="navSwiperDetail" data-url="{{item.url}}">
+            <image src="{{item.url}}" class="swiper-img"></image>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
 </view>
 
 <view class="content-wrapper">

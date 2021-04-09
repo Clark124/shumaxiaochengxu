@@ -47,7 +47,10 @@ Page({
         if (res.confirm) {
           const {id} = this.data
           const db = wx.cloud.database()
-          db.collection(COLLECTION).doc(id).update({
+          db.collection(COLLECTION).where({
+            _id:id,
+            _openid:this.data.openid
+          }).update({
             data:{
                 topExpireDate: new Date(moment().add(1,'days')),
                 updateDate:new Date(),
@@ -64,6 +67,12 @@ Page({
           console.log('用户点击取消')
         }
       }
+    })
+  },
+
+  onMakeCall(){
+    wx.makePhoneCall({
+      phoneNumber: this.data.phone,
     })
   },
 

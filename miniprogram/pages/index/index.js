@@ -4,8 +4,8 @@ const moment = require('../../utils/moment')
 Page({
   data: {
     imgList:[
-      {url:'https://7465-test-4g4qvj3hf2e69c63-1305399772.tcb.qcloud.la/product-image1617173853321.jpeg'},
-      {url:'https://7465-test-4g4qvj3hf2e69c63-1305399772.tcb.qcloud.la/product-image1617173860825.jpeg'},
+      {url:'../../images/banner.jpg'},
+      {url:'../../images/banner02.jpg'},
       {url:'https://7465-test-4g4qvj3hf2e69c63-1305399772.tcb.qcloud.la/product-image1617194517242.jpg'}
     ],
     needsList:[],
@@ -16,6 +16,8 @@ Page({
 
   onLoad: function() {
     this.login()
+  },
+  onShow:function(){
     this.getDataList()
   },
   onPullDownRefresh:function(){

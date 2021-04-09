@@ -184,10 +184,13 @@ Page({
 
   //删除发布
   deleteData(index) {
-    let { needsList } = this.data
+    let { needsList, openid} = this.data
 
     const db = wx.cloud.database()
-    db.collection(COLLECTION).doc(needsList[index]._id).remove({
+    db.collection(COLLECTION).where({
+      _id:needsList[index]._id,
+      _openid:openid
+    }).remove({
       success: (res) => {
         this.setData({
           page: 1,

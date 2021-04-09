@@ -78,21 +78,36 @@ Page({
       content: '5元置顶一天',
       success:res=> {
         if (res.confirm) {
-          const {id} = this.data
-          const db = wx.cloud.database()
-          db.collection(COLLECTION).doc(id).update({
-            data:{
-                topExpireDate: new Date(moment().add(1,'days')),
-                updateDate:new Date(),
-                expireDate: new Date(moment().add(1, 'month')),   //1个月后过期
-            },
-            success:res=>{
-              wx.showToast({
-                title: '置顶成功',
-              })
-              this.getData()
-            }
+          const data = {
+            totalFee:"1",
+            body:"5元置顶",
+            spbillCreateIp:"127.0.0.1",
+          }
+          wx.showLoading({
+            title: '加载中...',
+            mask:true
           })
+          wx.cloud.callFunction({
+            name: 'payment',
+            data: data,
+            success: res => {
+              const payment = res.result.payment
+              wx.requestPayment({
+                ...payment,
+                success:res=> {
+                  this.updateTopState()
+                },
+                fail:res=> {
+                  console.error('pay fail', err)
+                },
+                complete:res=>{
+                  wx.hideLoading()
+                }
+              })
+            },
+            fail: console.error,
+          })
+         
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
@@ -100,15 +115,43 @@ Page({
     })
   },
 
-  /**
-   * 用户点击右上角分享
-   */
+  //支付成功，置顶
+  updateTopState(){
+    const {id} = this.data
+    const db = wx.cloud.database()
+    db.collection(COLLECTION).where({
+      _id:id,
+      _openid:this.data.openid
+    }).update({
+      data:{
+          topExpireDate: new Date(moment().add(1,'days')),
+          updateDate:new Date(),
+          expireDate: new Date(moment().add(1, 'month')),   //1个月后过期
+      },
+      success:res=>{
+        wx.showToast({
+          title: '置顶成功',
+        })
+        this.getData()
+      }
+    })
+  },
+
+  //拨打电话
+  onMakeCall(){
+    wx.makePhoneCall({
+      phoneNumber: this.data.phone,
+    })
+  },
+
+  //分享
   onShareAppMessage: function () {
     const {productName,productPirce} = this.data
     return {
       title: `型号:${productName} 价格:${productPirce}`,
     }
   },
+  //分享朋友圈
   onShareTimeline:function(){
     return {
       imageUrl:this.data.imgList[0].url

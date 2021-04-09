@@ -34,7 +34,9 @@ Page({
         const db = wx.cloud.database()
         db.collection('user').add({
           data: {
-            ...res.userInfo
+            ...res.userInfo,
+            createDate: new Date(),
+            userLevel:1, //1.普通  2.会员  3.管理员 
           },
           success:res=>{
             this.setData({
@@ -60,30 +62,8 @@ Page({
       })
     }
   },
-  getOpenid() {
-    console.log(app.globalData.openid)
-  },
-
-
-  onReady: function () {
-
-  },
-
-
   onShow: function () {
 
   },
-
-
-  onHide: function () {
-
-  },
-
-
-  onUnload: function () {
-
-  },
-
-
 
 })

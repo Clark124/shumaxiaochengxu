@@ -379,7 +379,10 @@ Page({
     wx.showLoading({
       title: '更新中...',
     })
-    db.collection('stock').doc(this.data._id).update({
+    db.collection('stock').where({
+      _id:this.data._id,
+      _openid:this.data._openid
+    }).update({
       data: {
         typeName: stockType[stockTypeIndex].name,
         typeId: stockType[stockTypeIndex]._id,
@@ -536,7 +539,10 @@ Page({
     wx.showLoading({
       title: '更新中...',
     })
-    db.collection('needs').doc(this.data._id).update({
+    db.collection('needs').where({
+      _id:this.data._id,
+      _openid:this.data._openid
+    }).update({
       data: {
         typeName: needsType[needsTypeIndex].name,
         typeId: needsType[needsTypeIndex]._id,
@@ -671,7 +677,10 @@ Page({
     wx.showLoading({
       title: '更新中...',
     })
-    db.collection('quotedPrice').doc(this.data._id).update({
+    db.collection('quotedPrice').where({
+      _id:this.data._id,
+      _openid:this.data._openid
+    }).update({
       data: {
         typeName: quotedPirceType[quotedPirceTypeIndex].name,
         typeId: quotedPirceType[quotedPirceTypeIndex]._id,

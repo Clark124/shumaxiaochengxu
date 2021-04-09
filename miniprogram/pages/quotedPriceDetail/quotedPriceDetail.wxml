@@ -11,7 +11,7 @@
 <view>类型：{{typeName}}</view>
 <view>区域：{{regionName}}</view>
 <view>商家：{{businessName}}</view>
-<view>电话：{{phone}}</view>
+<view bindtap="onMakeCall">电话：{{phone}}</view>
 <view>发布时间：{{createDate}}</view>
 
 <view class="btn-wrapper">
