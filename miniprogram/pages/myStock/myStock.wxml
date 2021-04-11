@@ -4,12 +4,12 @@
     data-index="{{index}}" bindtap="onChangeTab">{{item.name}}</view>
 </scroll-view>
 
-<scroll-view class="stock-list" scroll-y="true" refresher-enabled="{{true}}" refresher-threshold="{{80}}"
+<scroll-view class="stock-list" scroll-y="canScroll" refresher-enabled="{{true}}" refresher-threshold="{{80}}"
   refresher-default-style="black" refresher-background="#eee" refresher-triggered="{{triggered}}"
   bindrefresherrefresh="onRefresh" bindscrolltolower="loadMore" scroll-top="{{scrollTop}}">
 
   <view class="stock-item {{item.isTouchMove ? 'touch-move-active' : ''}}"
-  data-index="{{index}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtap="navToDetail"
+  data-index="{{index}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtap="navToDetail" bindtouchend="touchend"
   wx:for="{{stockList}}" wx:key="index" data-id="{{item._id}}">
     <view class="content">
       <!-- <image src="{{item.imgList[0].url}}" class="stock-img"></image> -->
@@ -24,7 +24,7 @@
         <view class="item-info-view">配置：{{item.productConfig}}</view>
         <view class="item-info-view">成色：{{item.productCondition}}</view>
       </view>
-    </view>
+    </view> 
     <view class="del" catchtap="del" data-index="{{index}}">删除</view>
 
   </view>

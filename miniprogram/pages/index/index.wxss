@@ -1,3 +1,6 @@
+page{
+  background: #F5F5F5;
+}
 .swiper-wrapper{
   height: 408rpx;
   background: #fff;

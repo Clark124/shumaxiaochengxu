@@ -5,6 +5,7 @@ const COLLECTION = 'stock'
 
 Page({
   data: {
+    canScroll: true,  //可以滚动
     scrollTop: 0,
     startX: 0, //开始坐标
     startY: 0,
@@ -21,15 +22,15 @@ Page({
 
 
   onLoad: function (options) {
-  
+
     const openid = app.globalData.openid
     this.setData({
       openid
     })
-   
+
   },
-  onShow:function(){
-    this.setData({page:1,isDataArrive:true,isDataOver:false})
+  onShow: function () {
+    this.setData({ page: 1, isDataArrive: true, isDataOver: false })
     const db = wx.cloud.database()
     db.collection('stockType').get({
       success: (res) => {
@@ -60,8 +61,8 @@ Page({
         dataList.forEach(item => {
           item.isTouchMove = false
           item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss'),
-          item.isExpire = new Date()>item.expireDate
-          item.isTop = item.topExpireDate>new Date()
+            item.isExpire = new Date() > item.expireDate
+          item.isTop = item.topExpireDate > new Date()
         })
         this.setData({
           stockList: dataList,
@@ -91,9 +92,9 @@ Page({
     })
     this.getStockList()
   },
-  navToDetail(e){
+  navToDetail(e) {
     const id = e.currentTarget.dataset.id
-    const url = '/pages/stockDetail/stockDetail?id='+id
+    const url = '/pages/stockDetail/stockDetail?id=' + id
     wx.navigateTo({
       url,
     })
@@ -147,8 +148,8 @@ Page({
         dataList.forEach(item => {
           item.isTouchMove = false
           item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss'),
-          item.isExpire = new Date()>item.expireDate
-          item.isTop = item.topExpireDate>new Date()
+            item.isExpire = new Date() > item.expireDate
+          item.isTop = item.topExpireDate > new Date()
         })
         this.setData({
           stockList: [...stockList, ...dataList],
@@ -194,6 +195,11 @@ Page({
         X: touchMoveX,
         Y: touchMoveY
       });
+    
+    if(Math.abs(angle) < 30){
+      this.setData({canScroll:false})
+    }
+    
     that.data.stockList.forEach(function (v, i) {
       v.isTouchMove = false
       //滑动超过30度角 return
@@ -210,6 +216,9 @@ Page({
       stockList: that.data.stockList
     })
   },
+  touchend:function(){
+    this.setData({canScroll:true})
+  },
 
   angle: function (start, end) {
     var _X = end.X - start.X,
@@ -224,7 +233,7 @@ Page({
     wx.showModal({
       title: '提示',
       content: '确定要删除该条发布吗？',
-      success:(res)=> {
+      success: (res) => {
         if (res.confirm) {
           this.deleteData(index)
         } else if (res.cancel) {
@@ -235,13 +244,13 @@ Page({
   },
 
   //删除发布
-  deleteData(index){
-    let {stockList,openid} = this.data
-    
+  deleteData(index) {
+    let { stockList, openid } = this.data
+
     const db = wx.cloud.database()
     db.collection(COLLECTION).where({
-      _id:stockList[index]._id,
-      _openid:openid
+      _id: stockList[index]._id,
+      _openid: openid
     }).remove({
       success: (res) => {
         this.setData({
@@ -250,13 +259,13 @@ Page({
           isDataOver: false,
           scrollTop: 0
         })
-        this.getStockList(()=>{
+        this.getStockList(() => {
           wx.showToast({
             title: '删除成功',
             icon: "success"
           })
         })
-        
+
       }
     })
   }

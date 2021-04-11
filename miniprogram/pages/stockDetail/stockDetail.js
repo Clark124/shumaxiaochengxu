@@ -92,20 +92,24 @@ Page({
             data: data,
             success: res => {
               const payment = res.result.payment
+              wx.hideLoading()
               wx.requestPayment({
                 ...payment,
                 success:res=> {
                   this.updateTopState()
                 },
-                fail:res=> {
+                fail:err=> {
                   console.error('pay fail', err)
                 },
                 complete:res=>{
-                  wx.hideLoading()
+                 
                 }
               })
             },
-            fail: console.error,
+            fail: (error)=>{
+              console.log(error)
+              wx.hideLoading()
+            },
           })
          
         } else if (res.cancel) {
@@ -120,7 +124,7 @@ Page({
     const {id} = this.data
     const db = wx.cloud.database()
     db.collection(COLLECTION).where({
-      _id:id,
+      _id:id, 
       _openid:this.data.openid
     }).update({
       data:{
