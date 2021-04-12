@@ -148,6 +148,8 @@ Page({
     })
   },
 
+  
+
   //分享
   onShareAppMessage: function () {
     const {productName,productPirce} = this.data

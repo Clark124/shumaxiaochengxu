@@ -1,42 +1,50 @@
-<!--miniprogram/pages/myStock/myStock.wxml-->
 <view class="search-wrapper">
   <input type="text" class="search-input" confirm-type="search" bindinput="onChangeInput" value="{{search}}"
     bindconfirm="onConfirmSearch" placeholder="搜索" />
   <image src="../../images/ss.png" class="search-icon" bindtap="onConfirmSearch"></image>
 </view>
 
+<view class="container">
+  <scroll-view scroll-y="true" class="tab-list">
+    <view class="{{index===typeIndex? 'tab-item active':'tab-item'}}" wx:for="{{typeList}}" wx:key="index"
+      data-index="{{index}}" bindtap="onChangeTab">{{item.name}}</view>
+  </scroll-view>
 
-<scroll-view scroll-x="true" class="tab-list">
-  <view class="{{index===typeIndex? 'tab-item active':'tab-item'}}" wx:for="{{typeList}}" wx:key="index"
-    data-index="{{index}}" bindtap="onChangeTab">{{item.name}}</view>
-</scroll-view>
+  <scroll-view class="stock-list" scroll-y="true" refresher-enabled="true" refresher-threshold="{{80}}"
+    refresher-default-style="black" refresher-background="rgb(250, 250, 250)" refresher-triggered="{{triggered}}"
+    bindrefresherrefresh="onRefresh" bindscrolltolower="loadMore" scroll-top="{{scrollTop}}">
 
-<scroll-view class="stock-list" scroll-y="true" refresher-enabled="{{true}}" refresher-threshold="{{80}}"
-  refresher-default-style="black" refresher-background="#eee" refresher-triggered="{{triggered}}"
-  bindrefresherrefresh="onRefresh" bindscrolltolower="loadMore" scroll-top="{{scrollTop}}">
-
-  <view class="stock-item" data-index="{{index}}" bindtap="navToDetail" wx:for="{{stockList}}" wx:key="index"
-    data-id="{{item._id}}">
-
-    <view class="item-info-wrapper">
-      <view class="item-info-view">
-        <text>型号：{{item.productName}}</text>
-        <text class="item-info active" wx:if="{{item.isTop}}">已置顶</text>
+    <view class="stock-item" data-index="{{index}}" bindtap="navToDetail" wx:for="{{stockList}}" wx:key="index"
+      data-id="{{item._id}}">
+      <view class="block-head">
+        <view>
+          <text class="block-head-text">型号</text>
+          <text class="product-name">{{item.productName}}</text>
+        </view>
+        <view class="price-wrapper">
+          <text class="price-unit">￥</text>
+          <text class="price">{{item.productPirce}}</text>
+        </view>
       </view>
-      <view class="item-info">价格：{{item.productPirce}}元</view>
-      <view class="item-info">库存：{{item.productCount}}</view>
-      <view class="item-info-view">配置：{{item.productConfig}}</view>
-      <view class="item-info-view">成色：{{item.productCondition}}</view> 
+      <view class="config">
+        配置：{{item.productConfig}}
+      </view>
+      <view class="info-row">
+        <view>
+          <text class="condition">{{item.productCondition}}</text>
+          <text class="tip" wx:if="{{item.isTop}}">已置顶</text>
+        </view>
+       
+        <text class="count">数量：{{item.productCount}}</text>
+      </view>
     </view>
 
+    <view class="no-data" wx:if="{{stockList.length===0}}">
+      暂无数据
+    </view>
 
-  </view>
-
-  <view class="no-data" wx:if="{{stockList.length===0}}">
-    暂无数据
-  </view>
-
-  <view class="not-more" wx:if="{{isDataOver&&stockList.length>5}}">
-    达到底部了
-  </view>
-</scroll-view>
+    <view class="not-more" wx:if="{{isDataOver&&stockList.length>5}}">
+      达到底部了
+    </view>
+  </scroll-view>
+</view>

@@ -39,7 +39,7 @@
         {
           "name": "库存详情",
           "pathName": "pages/stockDetail/stockDetail",
-          "query": "id=17453ede60641d7a001fe4ba13dfc669",
+          "query": "id=17453ede606fc56c0110f4f54d0296e8",
           "scene": null
         },
         {

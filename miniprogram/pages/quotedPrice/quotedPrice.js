@@ -48,7 +48,7 @@ Page({
       success: (res) => {
         let dataList = res.data
         dataList.forEach(item => {
-          item.createDate = moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')
+          item.createDate = moment(item.createDate).format('YYYY-MM-DD')
           item.isTop = item.topExpireDate>new Date()
         })
         this.setData({ stockList: dataList, page: 2, isDataOver: false, isDataArrive: true })
@@ -98,7 +98,7 @@ Page({
         let dataList = res.data
         dataList.forEach(item => {
           item.isTop = item.topExpireDate>new Date()
-          item.createDate = moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')
+          item.createDate = moment(item.createDate).format('YYYY-MM-DD')
         })
         this.setData({ stockList: [...stockList, ...dataList], page: page + 1, isDataArrive: true })
         if (res.data.length < 10) {

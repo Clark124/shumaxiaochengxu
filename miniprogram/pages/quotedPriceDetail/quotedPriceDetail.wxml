@@ -1,21 +1,72 @@
-<swiper indicator-dots="{{true}}" autoplay="{{ffalse}}" interval="{{2000}}" duration="{{500}}" class="swiper">
-  <block wx:for="{{imgList}}" wx:key="index" wx:if="{{item.url}}">
-    <swiper-item>
-      <view class="swiper-item" bindtap="previewSwiper" data-url="{{item.url}}">
-        <image src="{{item.url}}" class="swiper-img"></image>
-      </view>
-    </swiper-item>
-  </block>
-</swiper>
-<view>{{quotedPriceTitle}}</view>
-<view>类型：{{typeName}}</view>
-<view>区域：{{regionName}}</view>
-<view>商家：{{businessName}}</view>
-<view bindtap="onMakeCall">电话：{{phone}}</view>
-<view>发布时间：{{createDate}}</view>
+<view class="swiper-wrapper">
+  <image src="../../images/bjbj.png" class="bjbj-img"></image>
+  <view class="main-title">报价表</view>
+  <swiper indicator-dots="{{imgList.length>2}}" autoplay="{{false}}" interval="{{2000}}" duration="{{500}}"
+    class="swiper">
+    <block wx:for="{{imgList}}" wx:key="index" wx:if="{{item.url}}">
+      <swiper-item>
+        <view class="swiper-item" bindtap="previewSwiper" data-url="{{item.url}}">
+          <image src="{{item.url}}" class="swiper-img"></image>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
 
-<view class="btn-wrapper">
-  <button type="primary" bindtap="toEdit" wx:if="{{openid===_openid}}">修改</button>
-  <button type="primary" bindtap="toAddTop" wx:if="{{(openid===_openid)&&!isTop}}">5元置顶</button>
-  <button type="default"  wx:if="{{(openid===_openid)&&isTop}}">已置顶</button>
+
+
+
+
+<view class="block">
+  <view class="block-head">
+    <view class="product-name-wrapper">
+      <image src="../../images/bjtb.png" class="bjtb-icon"></image>
+      <text class="product-name">{{quotedPriceTitle}}</text>
+    </view>
+  </view>
+  <view class="info-item">
+    <text class="title" decode='true'>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：</text><text
+      class="content">{{typeName}}</text>
+  </view>
+  <view class="info-item">
+    <text class="title" decode='true'>区&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;域：</text><text
+      class="content">{{regionName}}</text>
+  </view>
+  <view class="info-item">
+    <text class="title" decode='true'>商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;家：</text><text
+      class="content">{{businessName}}</text>
+  </view>
+  <view class="info-item">
+    <text class="title" decode='true'>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：</text>
+    <image src="../../images/dh.png" class="phone-icon"></image>
+    <text bindtap="onMakeCall" class="phone">{{phone}}</text>
+  </view>
+  <view class="info-item">
+    <text class="title" decode='true'>发布时间：</text><text class="content">{{createDate}}</text>
+  </view>
+
+</view>
+
+
+
+<view class="btn-wrapper" wx:if="{{openid===_openid}}">
+  <view class="footer-left">
+    <view class="edit-btn" bindtap="toEdit">
+      <image src="../../images/xg.png" class="edit-icon"></image>
+      <text class="edit-text">修改</text>
+    </view>
+  </view>
+  <view class="footer-right" bindtap="toAddTop" wx:if="{{!isTop}}">
+    <view class="zd-icon-wrapper">
+      <image src="../../images/zd.png" class="zd-icon"></image>
+    </view>
+    <text class="top-text">5元置顶</text>
+  </view>
+
+  <view class="footer-right active" wx:else>
+    <view class="zd-icon-wrapper">
+      <image src="../../images/zd.png" class="zd-icon"></image>
+    </view>
+    <text class="top-text">已置顶</text>
+  </view>
 </view>
