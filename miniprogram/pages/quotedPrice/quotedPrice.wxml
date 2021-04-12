@@ -27,7 +27,8 @@
     </view>
 
     <view class="no-data" wx:if="{{stockList.length===0}}">
-      暂无数据
+      <image src="../../images/no-data.png" mode="widthFix" class="no-data-img"></image>
+      <view class="no-data-text">暂无数据</view>
     </view>
 
     <view class="not-more" wx:if="{{isDataOver&&stockList.length>5}}">

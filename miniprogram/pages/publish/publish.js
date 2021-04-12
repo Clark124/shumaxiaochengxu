@@ -374,7 +374,7 @@ Page({
         expireDate: new Date(moment().add(1, 'month')), //1个月后过期
         topExpireDate: new Date(), //置顶到期时间
         isTop: false,
-        status:1,   //上架
+        isOffShelf:false,
       },
       success: (res) => {
         wx.showToast({
@@ -537,7 +537,7 @@ Page({
         expireDate: new Date(moment().add(1, 'month')), //1个月后过期
         topExpireDate: new Date(),
         isTop: false,
-        status:1,   //1上架 0下架
+        isOffShelf:false
       },
       success: (res) => {
         wx.showToast({
@@ -677,7 +677,7 @@ Page({
         expireDate: new Date(moment().add(1, 'month')), //1个月后过期
         topExpireDate: new Date(),
         isTop: false,
-        status:1,   //1上架 0下架
+        isOffShelf:false  
       },
       success: (res) => {
         wx.showToast({

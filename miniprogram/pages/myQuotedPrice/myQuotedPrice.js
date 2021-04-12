@@ -48,9 +48,9 @@ Page({
         let dataList = res.data
         dataList.forEach(item => {
           item.isTouchMove = false
-          item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss')
-          item.isExpire = new Date()>item.expireDate
-          item.isTop = item.topExpireDate>new Date()
+          item.updateDate = moment(item.updateDate).format('YYYY-MM-DD')
+          item.isExpire = new Date() > item.expireDate
+          item.isTop = item.topExpireDate > new Date()
         })
         this.setData({ stockList: dataList, page: 2, isDataOver: false, isDataArrive: true })
         if (res.data.length < 10) {
@@ -98,9 +98,9 @@ Page({
         let dataList = res.data
         dataList.forEach(item => {
           item.isTouchMove = false
-          item.updateDate = moment(item.updateDate).format('YYYY-MM-DD HH:mm:ss')
-          item.isExpire = new Date()>item.expireDate
-          item.isTop = item.topExpireDate>new Date()
+          item.updateDate = moment(item.updateDate).format('YYYY-MM-DD')
+          item.isExpire = new Date() > item.expireDate
+          item.isTop = item.topExpireDate > new Date()
         })
         this.setData({ stockList: [...stockList, ...dataList], page: page + 1, isDataArrive: true })
         if (res.data.length < 10) {
@@ -181,11 +181,11 @@ Page({
 
   //删除发布
   deleteData(index) {
-    let { stockList ,openid} = this.data
+    let { stockList, openid } = this.data
     const db = wx.cloud.database()
     db.collection(COLLECTION).where({
-      _id:stockList[index]._id,
-      _openid:openid
+      _id: stockList[index]._id,
+      _openid: openid
     }).remove({
       success: (res) => {
         this.setData({
@@ -203,9 +203,97 @@ Page({
       }
     })
   },
-  navToDetail(e){
+
+  //确定是否下架
+  onOffShelf(e) {
+    const index = e.currentTarget.dataset.index
+    wx.showModal({
+      title: '提示',
+      content: '确定要下架吗？',
+      success: (res) => {
+        if (res.confirm) {
+          this.offSelf(index)
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+  offSelf(index) {
+    let { stockList, openid } = this.data
+    wx.showLoading({
+      title: '加载中...',
+    })
+    const db = wx.cloud.database()
+    db.collection(COLLECTION).where({
+      _id: stockList[index]._id,
+      _openid: openid
+    }).update({
+      data: {
+        isOffShelf: true
+      },
+      success: (res) => {
+        stockList[index].isOffShelf = true
+        this.setData({ stockList })
+        wx.hideLoading()
+        wx.showToast({
+          title: '下架成功',
+          icon: "success"
+        })
+      },
+      complete: (res) => {
+        wx.hideLoading()
+      }
+    })
+  },
+
+  //上架
+  onOnShelf(e) {
+    const index = e.currentTarget.dataset.index
+    wx.showModal({
+      title: '提示',
+      content: '确定要上架吗？',
+      success: (res) => {
+        if (res.confirm) {
+          this.onSelf(index)
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+  onSelf(index) {
+    let { stockList, openid } = this.data
+    wx.showLoading({
+      title: '加载中...',
+    })
+    const db = wx.cloud.database()
+    db.collection(COLLECTION).where({
+      _id: stockList[index]._id,
+      _openid: openid
+    }).update({
+      data: {
+        isOffShelf: false
+      },
+      success: (res) => {
+        stockList[index].isOffShelf = false
+        this.setData({ stockList })
+        wx.hideLoading()
+        wx.showToast({
+          title: '上架成功',
+          icon: "success"
+        })
+      },
+      complete: (res) => {
+        wx.hideLoading()
+      }
+    })
+  },
+
+
+  navToDetail(e) {
     const id = e.currentTarget.dataset.id
-    const url = '/pages/quotedPriceDetail/quotedPriceDetail?id='+id
+    const url = '/pages/quotedPriceDetail/quotedPriceDetail?id=' + id
     wx.navigateTo({
       url,
     })

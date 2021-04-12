@@ -32,7 +32,9 @@ Page({
   },
   getDataList(){
     const db = wx.cloud.database()
-    db.collection('needs').orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').limit(3).get({
+    db.collection('needs').orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').limit(3).where({
+      isOffShelf:false
+    }).get({
       success:res=>{
         let dataList = res.data
         dataList.forEach(item => {
@@ -41,7 +43,9 @@ Page({
         this.setData({needsList:dataList})
       }
     })
-    db.collection('stock').orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').limit(3).get({
+    db.collection('stock').orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').limit(3).where({
+      isOffShelf:false
+    }).get({
       success:res=>{
         let dataList = res.data
         dataList.forEach(item => {
@@ -50,7 +54,9 @@ Page({
         this.setData({stockList:dataList})
       }
     })
-    db.collection('quotedPrice').orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').limit(3).get({
+    db.collection('quotedPrice').orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').limit(3).where({
+      isOffShelf:false
+    }).get({
       success:res=>{
         let dataList = res.data
         dataList.forEach(item => {

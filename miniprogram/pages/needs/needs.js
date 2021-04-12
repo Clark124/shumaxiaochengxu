@@ -5,7 +5,8 @@ const COLLECTION = 'needs'
 
 Page({
   data: {
-    scrollTop: 0,
+    search:"",
+    scrollTop: 0, 
     openid: "",
     typeList: [],
     typeIndex: 0,
@@ -44,7 +45,8 @@ Page({
     const { page, pageSize, typeList, typeIndex } = this.data
     db.collection('needs').orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       typeId: typeList[typeIndex]._id,
-      expireDate: _.gte(new Date())
+      expireDate: _.gte(new Date()),
+      isOffShelf:false
     }).get({
       success: (res) => {
         let dataList = res.data
@@ -93,7 +95,8 @@ Page({
     const _ = db.command
     db.collection('needs').orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       typeId: typeList[typeIndex]._id,
-      expireDate: _.gte(new Date())
+      expireDate: _.gte(new Date()),
+      isOffShelf:false
     }).get({
       success: (res) => {
         let dataList = res.data

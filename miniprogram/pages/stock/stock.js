@@ -48,7 +48,8 @@ Page({
     } = this.data
     db.collection(COLLECTION).orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       typeId: typeList[typeIndex]._id,
-      expireDate: _.gte(new Date())
+      expireDate: _.gte(new Date()),
+      isOffShelf:false
     }).get({
       success: (res) => {
         let dataList = res.data
@@ -133,7 +134,8 @@ Page({
     const _ = db.command
     db.collection(COLLECTION).orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       typeId: typeList[typeIndex]._id,
-      expireDate: _.gte(new Date())
+      expireDate: _.gte(new Date()),
+      isOffShelf:false
     }).get({
       success: (res) => {
         let dataList = res.data

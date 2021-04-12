@@ -28,16 +28,18 @@
         配置：{{item.productConfig}}
       </view>
       <view class="info-row">
-        <view>
+        <view class="status-row">
           <text class="condition">{{item.productCondition}}</text>
           <text class="tip" wx:if="{{item.isTop}}">已置顶</text>
+          <text class="off-shelf" wx:if="{{item.isOffShelf}}">已下架</text>
         </view>
        
         <text class="count">数量：{{item.productCount}}</text>
       </view>
     </view>
     <view class="slide">
-      <view class="status" catchtap="del" data-index="{{index}}">下架</view>
+      <view class="status" catchtap="onOnShelf" data-index="{{index}}" wx:if="{{item.isOffShelf}}">上架</view>
+      <view class="status" catchtap="onOffShelf" data-index="{{index}}" wx:else>下架</view>
       <view class="del" catchtap="del" data-index="{{index}}">删除</view>
     </view>
     
@@ -45,7 +47,8 @@
   </view>
 
   <view class="no-data" wx:if="{{stockList.length===0}}">
-    暂无数据
+    <image src="../../images/no-data.png" mode="widthFix" class="no-data-img"></image>
+    <view class="no-data-text">暂无数据</view>
   </view>
 
   <view class="not-more" wx:if="{{isDataOver&&stockList.length>5}}">

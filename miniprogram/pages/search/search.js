@@ -59,14 +59,14 @@ Page({
           regexp: '.*' + key,
           options: 'i',
         })
-      }]).and([{typeId: typeId,},{expireDate: _.gte(new Date())}])
+      }]).and([{typeId: typeId,},{expireDate: _.gte(new Date())},{isOffShelf:false}])
     } else if (collection === 'quotedPrice') {
       condition = _.or([{
         quotedPriceTitle: db.RegExp({
           regexp: '.*' + key,
           options: 'i',
         })
-      }]).and([{typeId: typeId,},{expireDate: _.gte(new Date())}])
+      }]).and([{typeId: typeId,},{expireDate: _.gte(new Date())},{isOffShelf:false}])
     }
     db.collection(collection).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where(condition).get({
       success: res => {
@@ -160,14 +160,14 @@ Page({
           regexp: '.*' + key,
           options: 'i',
         })
-      }]).and([{typeId: typeId,},{expireDate: _.gte(new Date())}])
+      }]).and([{typeId: typeId,},{expireDate: _.gte(new Date())},{isOffShelf:false}])
     } else if (collection === 'quotedPrice') {
       condition = _.or([{
         quotedPriceTitle: db.RegExp({
           regexp: '.*' + key,
           options: 'i',
         })
-      }]).and([{typeId: typeId,},{expireDate: _.gte(new Date())}])
+      }]).and([{typeId: typeId,},{expireDate: _.gte(new Date())},{isOffShelf:false}])
     }
     db.collection(collection).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where(
       condition

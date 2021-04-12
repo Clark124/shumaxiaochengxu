@@ -131,17 +131,7 @@
 }
 
 
-.no-data {
-  height: 100rpx;
-  line-height: 100rpx;
-  text-align: center;
-}
 
-.not-more {
-  height: 80rpx;
-  line-height: 80rpx;
-  text-align: center;
-}
 
 .quoted-price-title{
   font-size: 28rpx;
