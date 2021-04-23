@@ -10,7 +10,7 @@ Page({
     startX: 0, //开始坐标
     startY: 0,
     openid: "",
-    typeList: [],
+    typeList: [{name:'所有分类'}],
     typeIndex: 0,
     stockList: [],
     triggered: true,
@@ -27,19 +27,20 @@ Page({
     this.setData({
       openid
     })
+    const db = wx.cloud.database()
+    db.collection('stockType').orderBy('index', 'asc').get({
+      success: (res) => {
+        this.setData({
+          typeList: [...this.data.typeList,...res.data]
+        })
+      }
+    })
 
   },
   onShow: function () {
     this.setData({ page: 1, isDataArrive: true, isDataOver: false })
-    const db = wx.cloud.database()
-    db.collection('stockType').get({
-      success: (res) => {
-        this.setData({
-          typeList: res.data
-        })
-        this.getStockList()
-      }
-    })
+    this.getStockList()
+   
   },
 
   //获取我的库存列表
@@ -265,7 +266,7 @@ Page({
           icon:"success"
         })
       },
-      complete:(res)=>{
+      fail:(res)=>{
         wx.hideLoading()
       }
     })
@@ -308,7 +309,7 @@ Page({
           icon:"success"
         })
       },
-      complete:(res)=>{
+      fail:(res)=>{
         wx.hideLoading()
       }
     })
@@ -335,7 +336,9 @@ Page({
   //删除发布
   deleteData(index) {
     let { stockList, openid } = this.data
-
+    wx.showLoading({
+      title: '加载中...',
+    })
     const db = wx.cloud.database()
     db.collection(COLLECTION).where({
       _id: stockList[index]._id,
@@ -348,6 +351,7 @@ Page({
           isDataOver: false,
           scrollTop: 0
         })
+        wx.hideLoading()
         this.getStockList(() => {
           wx.showToast({
             title: '删除成功',
@@ -355,6 +359,9 @@ Page({
           })
         })
 
+      },
+      fail:res=>{
+        wx.hideLoading()
       }
     })
   }

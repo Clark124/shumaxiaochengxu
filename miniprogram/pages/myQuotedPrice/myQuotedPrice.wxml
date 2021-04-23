@@ -10,7 +10,7 @@
   bindrefresherrefresh="onRefresh" bindscrolltolower="loadMore" scroll-top="{{scrollTop}}">
 
   <view class="stock-item {{item.isTouchMove ? 'touch-move-active' : ''}}"
-  data-index="{{index}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtap="navToDetail" bindtouchend="touchend"
+  data-index="{{index}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtap="navToDetail" 
   wx:for="{{stockList}}" wx:key="index" data-id="{{item._id}}">
     <view class="content">
       <view class="quoted-price-title">

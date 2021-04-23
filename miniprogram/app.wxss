@@ -6,8 +6,11 @@
   line-height: 60rpx;
   text-align: center;
 }
+.no-data{
+  text-align: center;
+}
 .no-data-img{
-  width: 100%;
+  width: 50%;
 }
 .no-data-text{
   text-align: center;

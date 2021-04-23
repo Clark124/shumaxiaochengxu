@@ -1,130 +1,146 @@
 <!--miniprogram/pages/publish/publish.wxml-->
-<view wx:if="{{isLogin}}">
-  <view class="public-item">
-    <text class="public-title">发布：</text>
-    <picker bindchange="onChangeTarget" value="{{index}}" range="{{targetArray}}">
-      <text>{{targetIndex>-1?targetArray[targetIndex]:'请选择'}}</text>
-    </picker>
-  </view>
+<view wx:if="{{isLogin}}" class="container">
+  <picker bindchange="onChangeTarget" value="{{index}}" range="{{targetArray}}">
+    <view class="picker-item">
+      <view class="title-wrapper">
+        <text class="public-title">发布：</text>
+        <text class="title-text">{{targetIndex>-1?targetArray[targetIndex]:'请选择'}}</text>
+      </view>
+      <image src="../../images/xl.png" class="arrow-icon"></image>
+    </view>
+  </picker>
 
-  <!-- 报价标题 -->
-  <view class="public-item" wx:if="{{targetIndex==2}}">
-    <text class="public-title">标题：</text>
-    <input type="text" bindinput="inputQuotedPrice" placeholder="{{quotedPriceTitlePlaceholder}}"
-      value="{{quotedPriceTitle}}" />
-  </view>
 
   <!-- 库存类目 -->
-  <view class="public-item" wx:if="{{targetIndex==0}}">
-    <text class="public-title">类目：</text>
-    <picker bindchange="onChangeType" value="{{index}}" range="{{stockType}}" range-key="name"
-      data-type="stockTypeIndex">
-      <text>{{stockTypeIndex>-1?stockType[stockTypeIndex].name:'请选择'}}</text>
-    </picker>
-  </view>
+  <picker bindchange="onChangeType" value="{{index}}" range="{{stockType}}" range-key="name" data-type="stockTypeIndex">
+    <view class="picker-item" wx:if="{{targetIndex==0}}">
+      <view class="title-wrapper">
+        <text class="public-title">类目：</text>
+        <text class="title-text">{{stockTypeIndex>-1?stockType[stockTypeIndex].name:'请选择'}}</text>
+      </view>
+      <image src="../../images/xl.png" class="arrow-icon"></image>
+    </view>
+  </picker>
 
   <!-- 需求类目 -->
-  <view class="public-item" wx:if="{{targetIndex==1}}">
-    <text class="public-title">类目：</text>
-    <picker bindchange="onChangeType" value="{{index}}" range="{{needsType}}" range-key="name"
-      data-type='needsTypeIndex'>
-      <text>{{needsTypeIndex>-1?needsType[needsTypeIndex].name:'请选择'}}</text>
-    </picker>
-  </view>
+  <picker bindchange="onChangeType" value="{{index}}" range="{{needsType}}" range-key="name" data-type='needsTypeIndex'>
+    <view class="picker-item" wx:if="{{targetIndex==1}}">
+      <view class="title-wrapper">
+        <text class="public-title">类目：</text>
+        <text class="title-text">{{needsTypeIndex>-1?needsType[needsTypeIndex].name:'请选择'}}</text>
+      </view>
+      <image src="../../images/xl.png" class="arrow-icon"></image>
+    </view>
+  </picker>
 
   <!-- 报价类目 -->
-  <view class="public-item" wx:if="{{targetIndex==2}}">
-    <text class="public-title">类目：</text>
-    <picker bindchange="onChangeType" value="{{index}}" range="{{quotedPirceType}}" range-key="name"
-      data-type='quotedPirceTypeIndex'>
-      <text>{{quotedPirceTypeIndex>-1?quotedPirceType[quotedPirceTypeIndex].name:'请选择'}}</text>
-    </picker>
+  <picker bindchange="onChangeType" value="{{index}}" range="{{quotedPirceType}}" range-key="name"
+    data-type='quotedPirceTypeIndex'>
+    <view class="picker-item" wx:if="{{targetIndex==2}}">
+      <view class="title-wrapper">
+        <text class="public-title">类目：</text>
+        <text class="title-text">{{quotedPirceTypeIndex>-1?quotedPirceType[quotedPirceTypeIndex].name:'请选择'}}</text>
+      </view>
+      <image src="../../images/xl.png" class="arrow-icon"></image>
+    </view>
+  </picker>
+
+
+  <picker bindchange="onChangeType" value="{{index}}" range="{{regionList}}" range-key="name" data-type="regionIndex">
+    <view class="picker-item">
+      <view class="title-wrapper">
+        <text class="public-title">区域：</text>
+        <text class="title-text">{{regionIndex>-1?regionList[regionIndex].name:'请选择'}}</text>
+      </view>
+      <image src="../../images/xl.png" class="arrow-icon"></image>
+    </view>
+  </picker>
+
+  <view class="public-wrapper">
+    <!-- 报价标题 -->
+    <view class="public-item" wx:if="{{targetIndex==2}}">
+      <text class="public-title">标题：</text>
+      <input type="text" bindinput="inputQuotedPrice" placeholder="{{quotedPriceTitlePlaceholder}}"
+        value="{{quotedPriceTitle}}" />
+    </view>
+
+    <view class="public-item" wx:if="{{targetIndex==0||targetIndex==1}}">
+      <text class="public-title">型号：</text>
+      <input type="text" bindinput="inputProductName" placeholder="请输入型号" value="{{productName}}" />
+    </view>
+
+    <view class="public-item" wx:if="{{targetIndex==0||targetIndex==1}}">
+      <text class="public-title">价格：</text>
+      <input type="digit" bindinput="inputProductPrice" placeholder="请输入产品价格" value="{{productPirce}}" />
+    </view>
+
+    <view class="public-item" wx:if="{{targetIndex==0||targetIndex==1}}">
+      <text class="public-title">数量：</text>
+      <input type="number" bindinput="inputProductCount" placeholder="请输入产品数量" value="{{productCount}}" />
+    </view>
+
+
+    <view class="public-item" wx:if="{{targetIndex==0||targetIndex==1}}">
+      <text class="public-title">配置：</text>
+      <input type="text" bindinput="inputProductConfig" placeholder="请输入配置" value="{{productConfig}}" />
+    </view>
+    <view class="public-item" wx:if="{{targetIndex==0||targetIndex==1}}">
+      <text class="public-title">成色：</text>
+      <input type="text" bindinput="inputProductCondition" placeholder="请输入产品成色" value="{{productCondition}}" />
+    </view>
+
+    <view class="public-item">
+      <text class="public-title">商家：</text>
+      <input type="text" bindinput="inputBusinessName" placeholder="请输入商家名称" value="{{businessName}}" />
+    </view>
+
+    <view class="public-item">
+      <text class="public-title">电话：</text>
+      <input type="number" bindinput="inputPhone" placeholder="请输入联系电话" value="{{phone}}" />
+    </view>
+
+
+    <!-- 商品图片 -->
+    <view class="public-item img" wx:if="{{targetIndex==0||targetIndex==2}}">
+      <text class="public-title">图片：</text>
+      <view class="image-list">
+        <View class="image-wrapper" wx:for="{{imgList}}" wx:key="index" bindtap="upload" data-index="{{index}}">
+          <image src="../../images/add.png" class="default-img" wx:if="{{!item.url}}"></image>
+          <image src="{{item.url}}" wx:else class="product-img"></image>
+          <image src="../../images/dele.png" wx:if="{{item.url}}" catchtap="cancelImg" data-index="{{index}}"
+            class="delete-img"></image>
+        </View>
+      </view>
+    </view>
+    <view class="mark" wx:if="{{targetIndex==0||targetIndex==2}}">*最多5张</view>
+
+
+
+
+    <!-- 商品细节 -->
+    <view class="public-item img" wx:if="{{targetIndex==0}}">
+      <text class="public-title">产品细节：</text>
+      <view class="image-list">
+        <View class="image-wrapper" wx:for="{{productDetailImg}}" wx:key="index" bindtap="uploadDetail"
+          data-index="{{index}}">
+          <image src="../../images/add.png" class="default-img" wx:if="{{!item.url}}"></image>
+          <image src="{{item.url}}" wx:else class="product-img"></image>
+          <image src="../../images/dele.png" wx:if="{{item.url}}" catchtap="cancelDetailImg" data-index="{{index}}"
+            class="delete-img"></image>
+        </View>
+      </view>
+    </view>
+    <view class="mark" wx:if="{{targetIndex==0}}">*最多5张</view>
   </view>
+  <view bindtap="onSubmit" class="submit-btn" hover-class="submit-btn-active">发布</view>
 
-  <view class="public-item">
-    <text class="public-title">区域：</text>
-    <picker bindchange="onChangeType" value="{{index}}" range="{{regionList}}" range-key="name" data-type="regionIndex">
-      <text>{{regionIndex>-1?regionList[regionIndex].name:'请选择'}}</text>
-    </picker>
-  </view>
-
-  <view class="public-item" wx:if="{{targetIndex==0||targetIndex==1}}">
-    <text class="public-title">型号：</text>
-    <input type="text" bindinput="inputProductName" placeholder="请输入型号" value="{{productName}}" />
-  </view>
-
-  <view class="public-item" wx:if="{{targetIndex==0||targetIndex==1}}">
-    <text class="public-title">价格：</text>
-    <input type="digit" bindinput="inputProductPrice" placeholder="请输入产品价格" value="{{productPirce}}" />
-  </view>
-
-  <view class="public-item" wx:if="{{targetIndex==0||targetIndex==1}}">
-    <text class="public-title">数量：</text>
-    <input type="number" bindinput="inputProductCount" placeholder="请输入产品数量" value="{{productCount}}" />
-  </view>
-
-
-  <view class="public-item" wx:if="{{targetIndex==0||targetIndex==1}}">
-    <text class="public-title">配置：</text>
-    <input type="text" bindinput="inputProductConfig" placeholder="请输入配置" value="{{productConfig}}" />
-  </view>
-  <view class="public-item" wx:if="{{targetIndex==0||targetIndex==1}}">
-    <text class="public-title">成色：</text>
-    <input type="text" bindinput="inputProductCondition" placeholder="请输入产品成色" value="{{productCondition}}" />
-  </view>
-
-  <view class="public-item">
-    <text class="public-title">商家：</text>
-    <input type="text" bindinput="inputBusinessName" placeholder="请输入商家名称" value="{{businessName}}" />
-  </view>
-
-  <view class="public-item">
-    <text class="public-title">电话：</text>
-    <input type="number" bindinput="inputPhone" placeholder="请输入联系电话" value="{{phone}}" />
-  </view>
-
-
-  <!-- 商品图片 -->
-  <view class="public-item img" wx:if="{{targetIndex==0||targetIndex==2}}">
-    <text class="public-title">图片：</text>
-    <View class="image-wrapper" wx:for="{{imgList}}" wx:key="index" bindtap="upload" data-index="{{index}}">
-      <View class="default-img" wx:if="{{!item.url}}">
-        <View>+</View>
-        <View>上传图片</View>
-      </View>
-      <image src="{{item.url}}" wx:else class="product-img"></image>
-      <view class="delete-img" wx:if="{{item.url}}" catchtap="cancelImg" data-index="{{index}}">X</view>
-    </View>
-
-  </view>
-  <view class="mark" wx:if="{{targetIndex==0||targetIndex==2}}">最多5张</view>
-
-
-
-
-  <!-- 商品细节 -->
-  <view class="public-item img" wx:if="{{targetIndex==0}}">
-    <text class="public-title">产品细节：</text>
-    <View class="image-wrapper" wx:for="{{productDetailImg}}" wx:key="index" bindtap="uploadDetail"
-      data-index="{{index}}">
-      <View class="default-img" wx:if="{{!item.url}}">
-        <View>+</View>
-        <View>上传图片</View>
-      </View>
-      <image src="{{item.url}}" wx:else class="product-img"></image>
-      <view class="delete-img" wx:if="{{item.url}}" catchtap="cancelDetailImg" data-index="{{index}}">X</view>
-    </View>
-  </view>
-
-  <view class="mark" wx:if="{{targetIndex==0}}">最多5张</view>
-
-
-
-  <view class="btn-wrapper">
-    <button type="primary" bindtap="onSubmit" class="submit">提交</button>
-  </view>
 </view>
 
-<view wx:else>
-  <button type="default" bindtap="navToUserCentre">请登录</button>
+<view wx:else class="login-wrapper">
+  <image src="../../images/grzxbj.png" class="userinfo-bg" mode="widthFix"></image>
+  <view class="login" bindtap="getUserProfile">
+    <image src="../../images/user-unlogin.png" class="default-avatar" ></image>
+    <view class="login-text">请登录</view>
+  </view>
+
 </view>

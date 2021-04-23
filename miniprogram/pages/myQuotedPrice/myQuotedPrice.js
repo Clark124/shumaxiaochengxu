@@ -8,7 +8,7 @@ Page({
     startX: 0, //开始坐标
     startY: 0,
     openid: "",
-    typeList: [],
+    typeList: [{name:'所有分类'}],
     typeIndex: 0,
     stockList: [],
     triggered: true,
@@ -21,25 +21,37 @@ Page({
 
   onLoad: function (options) {
     const openid = app.globalData.openid
-    this.setData({ openid })
-  },
-  onShow: function () {
-    this.setData({ page: 1, isDataArrive: true, isDataOver: false })
+    this.setData({
+      openid
+    })
     const db = wx.cloud.database()
-    db.collection('quotedPriceType').get({
+    db.collection('quotedPriceType').orderBy('index', 'asc').get({
       success: (res) => {
         this.setData({
-          typeList: res.data
+          typeList: [...this.data.typeList,...res.data]
         })
-        this.getStockList()
       }
     })
+  },
+  onShow: function () {
+    this.setData({
+      page: 1,
+      isDataArrive: true,
+      isDataOver: false
+    })
+    this.getStockList()
   },
 
   //获取我的库存列表
   getStockList(callback) {
     const db = wx.cloud.database()
-    const { openid, page, pageSize, typeList, typeIndex } = this.data
+    const {
+      openid,
+      page,
+      pageSize,
+      typeList,
+      typeIndex
+    } = this.data
     db.collection('quotedPrice').orderBy('updateDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       _openid: openid,
       typeId: typeList[typeIndex]._id
@@ -52,9 +64,16 @@ Page({
           item.isExpire = new Date() > item.expireDate
           item.isTop = item.topExpireDate > new Date()
         })
-        this.setData({ stockList: dataList, page: 2, isDataOver: false, isDataArrive: true })
+        this.setData({
+          stockList: dataList,
+          page: 2,
+          isDataOver: false,
+          isDataArrive: true
+        })
         if (res.data.length < 10) {
-          this.setData({ isDataOver: true })
+          this.setData({
+            isDataOver: true
+          })
         }
         if (callback) {
           callback()
@@ -64,7 +83,13 @@ Page({
   },
   //切换tab
   onChangeTab(e) {
-    this.setData({ typeIndex: e.currentTarget.dataset.index, page: 1, isDataArrive: true, isDataOver: false, scrollTop: 0 })
+    this.setData({
+      typeIndex: e.currentTarget.dataset.index,
+      page: 1,
+      isDataArrive: true,
+      isDataOver: false,
+      scrollTop: 0
+    })
     this.getStockList()
   },
 
@@ -72,9 +97,15 @@ Page({
   onRefresh() {
     if (this._freshing) return
     this._freshing = true
-    this.setData({ isDataArrive: true, isDataOver: false, page: 1 })
+    this.setData({
+      isDataArrive: true,
+      isDataOver: false,
+      page: 1
+    })
     this.getStockList(() => {
-      this.setData({ triggered: false })
+      this.setData({
+        triggered: false
+      })
       this._freshing = false
       wx.showToast({
         title: '刷新成功',
@@ -84,11 +115,22 @@ Page({
   },
   //加载更多
   loadMore(e) {
-    const { isDataArrive, isDataOver, stockList, openid, page, pageSize, typeList, typeIndex } = this.data
+    const {
+      isDataArrive,
+      isDataOver,
+      stockList,
+      openid,
+      page,
+      pageSize,
+      typeList,
+      typeIndex
+    } = this.data
     if (page === 1 || !isDataArrive || isDataOver) {
       return
     }
-    this.setData({ isDataArrive: false })
+    this.setData({
+      isDataArrive: false
+    })
     const db = wx.cloud.database()
     db.collection('quotedPrice').orderBy('updateDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       _openid: openid,
@@ -102,9 +144,15 @@ Page({
           item.isExpire = new Date() > item.expireDate
           item.isTop = item.topExpireDate > new Date()
         })
-        this.setData({ stockList: [...stockList, ...dataList], page: page + 1, isDataArrive: true })
+        this.setData({
+          stockList: [...stockList, ...dataList],
+          page: page + 1,
+          isDataArrive: true
+        })
         if (res.data.length < 10) {
-          this.setData({ isDataOver: true })
+          this.setData({
+            isDataOver: true
+          })
         }
       }
     })
@@ -181,8 +229,14 @@ Page({
 
   //删除发布
   deleteData(index) {
-    let { stockList, openid } = this.data
+    let {
+      stockList,
+      openid
+    } = this.data
     const db = wx.cloud.database()
+    wx.showLoading({
+      title: '加载中...',
+    })
     db.collection(COLLECTION).where({
       _id: stockList[index]._id,
       _openid: openid
@@ -194,12 +248,16 @@ Page({
           isDataOver: false,
           scrollTop: 0
         })
+        wx.hideLoading()
         this.getStockList(() => {
           wx.showToast({
             title: '删除成功',
             icon: "success"
           })
         })
+      },
+      fail: res => {
+        wx.hideLoading()
       }
     })
   },
@@ -220,7 +278,10 @@ Page({
     })
   },
   offSelf(index) {
-    let { stockList, openid } = this.data
+    let {
+      stockList,
+      openid
+    } = this.data
     wx.showLoading({
       title: '加载中...',
     })
@@ -234,14 +295,16 @@ Page({
       },
       success: (res) => {
         stockList[index].isOffShelf = true
-        this.setData({ stockList })
+        this.setData({
+          stockList
+        })
         wx.hideLoading()
         wx.showToast({
           title: '下架成功',
           icon: "success"
         })
       },
-      complete: (res) => {
+      fail: (res) => {
         wx.hideLoading()
       }
     })
@@ -263,7 +326,10 @@ Page({
     })
   },
   onSelf(index) {
-    let { stockList, openid } = this.data
+    let {
+      stockList,
+      openid
+    } = this.data
     wx.showLoading({
       title: '加载中...',
     })
@@ -277,14 +343,16 @@ Page({
       },
       success: (res) => {
         stockList[index].isOffShelf = false
-        this.setData({ stockList })
+        this.setData({
+          stockList
+        })
         wx.hideLoading()
         wx.showToast({
           title: '上架成功',
           icon: "success"
         })
       },
-      complete: (res) => {
+      fail: (res) => {
         wx.hideLoading()
       }
     })

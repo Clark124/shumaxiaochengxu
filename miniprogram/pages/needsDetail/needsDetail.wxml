@@ -1,4 +1,6 @@
 
+
+
 <view class="block">
   <view class="block-head">
     <view class="product-name-wrapper">
@@ -38,6 +40,11 @@
     <text class="condition">{{productCondition}}</text>
     <text class="count">数量：{{productCount}}</text>
   </view>
+</view>
+
+<view class="share-buttom" hover-class="share-buttom-active" bindtap="copyContent">
+  <image src="../../images/fx.png" class="share-icon"></image>
+  <text style="margin-bottom:2rpx">复制</text>
 </view>
 
 

@@ -47,8 +47,8 @@
 }
 
 .tab-item {
-  height: 74rpx;
-  line-height: 74rpx;
+  height: 80rpx;
+  line-height: 80rpx;
   text-align: center;
   font-size: 26rpx;
   color: #333;

@@ -36,6 +36,18 @@ Page({
       this.setData({
         isLogin: true
       })
+    }else{
+      wx.showModal({
+        title: '提示',
+        content:"请先登录才能发布信息",
+        success:res=>{
+          if (res.confirm) {
+            this.getUserProfile()
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
     }
     this.getSelectList()
   },
@@ -48,12 +60,35 @@ Page({
     }
   },
 
+  getUserProfile() {
+    wx.getUserProfile({
+      desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        const db = wx.cloud.database()
+        db.collection('user').add({
+          data: {
+            ...res.userInfo,
+            createDate: new Date(),
+            userLevel:1, //1.普通  2.会员  3.管理员 
+          },
+          success:res=>{
+            this.setData({
+              isLogin: true
+            })
+            app.globalData.isLogin = true
+          }
+        })
+       
+      }
+    })
+  },
+
 
   //获取选择列表
   getSelectList() {
     const db = wx.cloud.database()
     //需求类目
-    db.collection('needsType').get({
+    db.collection('needsType').orderBy('index', 'asc').get({
       success: (res) => {
         this.setData({
           needsType: res.data
@@ -61,7 +96,7 @@ Page({
       }
     })
     //库存类目
-    db.collection('stockType').get({
+    db.collection('stockType').orderBy('index', 'asc').get({
       success: (res) => {
         this.setData({
           stockType: res.data
@@ -69,7 +104,7 @@ Page({
       }
     })
     //报价类目
-    db.collection('quotedPriceType').get({
+    db.collection('quotedPriceType').orderBy('index', 'asc').get({
       success: (res) => {
         this.setData({
           quotedPirceType: res.data
@@ -195,7 +230,7 @@ Page({
                   fileId,
                   url
                 }
-                if (len < 5 && imgList[len - 1] !== "") {
+                if (len < 5 && imgList[len - 1].url) {
                   imgList.push({})
                 }
 
@@ -257,7 +292,7 @@ Page({
                   fileId,
                   url
                 }
-                if (len < 5 && productDetailImg[len - 1] !== "") {
+                if (len < 5 && productDetailImg[len - 1].url) {
                   productDetailImg.push({})
                 }
                 _this.setData({
@@ -291,8 +326,8 @@ Page({
       imgList
     } = this.data
     imgList.splice(index, 1)
-    if (imgList.length === 4) {
-      imgList.push("")
+    if (imgList.length === 4&&imgList[3].url) {
+      imgList.push({})
     }
     this.setData({
       imgList
@@ -304,8 +339,8 @@ Page({
       productDetailImg
     } = this.data
     productDetailImg.splice(index, 1)
-    if (productDetailImg.length === 4) {
-      productDetailImg.push("")
+    if (productDetailImg.length === 4&&productDetailImg[3].url) {
+      productDetailImg.push({})
     }
     this.setData({
       productDetailImg
@@ -353,6 +388,7 @@ Page({
     const db = wx.cloud.database()
     wx.showLoading({
       title: '发布中...',
+      mask:true
     })
     db.collection('stock').add({
       data: {
@@ -518,6 +554,7 @@ Page({
     const db = wx.cloud.database()
     wx.showLoading({
       title: '发布中...',
+      mask:true
     })
     db.collection('needs').add({
       data: {
@@ -661,6 +698,7 @@ Page({
     const db = wx.cloud.database()
     wx.showLoading({
       title: '发布中...',
+      mask:true
     })
     db.collection('quotedPrice').add({
       data: {

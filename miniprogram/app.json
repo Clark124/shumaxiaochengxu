@@ -13,7 +13,10 @@
     "pages/quotedPrice/quotedPrice",
     "pages/stock/stock",
     "pages/needs/needs",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/manageList/manageList",
+    "pages/manageBanner/manageBanner",
+    "pages/manageType/manageType"
   ],
   "tabBar": {
     "color": "#777777",

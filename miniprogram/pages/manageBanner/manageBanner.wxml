@@ -1,0 +1,12 @@
+<!--miniprogram/pages/manageBanner/manageBanner.wxml-->
+
+<view class="tip">广告图片尺寸：700*330</view>
+
+<View class="image-wrapper" wx:for="{{bannerList}}" wx:key="index" bindtap="uploadBanner" data-index="{{index}}">
+  <image src="../../images/addarea.png" class="default-img" wx:if="{{!item.url}}"></image>
+  <image src="{{item.url}}" wx:else class="banner-img"></image>
+  <image src="../../images/dele.png" wx:if="{{item.url}}" catchtap="cancelImg" data-index="{{index}}"
+    class="delete-img"></image>
+</View>
+
+<button type="primary" class="submit-btn" bindtap="onSubmit">提交</button>

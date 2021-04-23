@@ -9,7 +9,7 @@ Page({
     openid: "",
     startX: 0, //开始坐标
     startY: 0,
-    typeList: [],
+    typeList: [{name:'所有分类'}],
     typeIndex: 0,
     needsList: [],
     triggered: true,
@@ -23,18 +23,18 @@ Page({
   onLoad: function (options) {
     const openid = app.globalData.openid
     this.setData({ openid })
+    const db = wx.cloud.database()
+    db.collection('needsType').orderBy('index', 'asc').get({
+      success: (res) => {
+        this.setData({
+          typeList: [...this.data.typeList,...res.data]
+        })
+      }
+    })
   },
   onShow: function () {
     this.setData({ page: 1, isDataArrive: true, isDataOver: false })
-    const db = wx.cloud.database()
-    db.collection('needsType').get({
-      success: (res) => {
-        this.setData({
-          typeList: res.data
-        })
-        this.getNeedsList()
-      }
-    })
+    this.getNeedsList()
   },
 
   //获取我的库存列表
@@ -185,7 +185,9 @@ Page({
   //删除发布
   deleteData(index) {
     let { needsList, openid} = this.data
-
+    wx.showLoading({
+      title: '加载中...',
+    })
     const db = wx.cloud.database()
     db.collection(COLLECTION).where({
       _id:needsList[index]._id,
@@ -198,12 +200,16 @@ Page({
           isDataOver: false,
           scrollTop: 0
         })
+        wx.hideLoading()
         this.getNeedsList(() => {
           wx.showToast({
             title: '删除成功',
             icon: "success"
           })
         })
+      },
+      fail:res=>{
+        wx.hideLoading()
       }
     })
   },
@@ -245,7 +251,7 @@ Page({
           icon:"success"
         })
       },
-      complete:(res)=>{
+      fail:(res)=>{
         wx.hideLoading()
       }
     })
@@ -288,7 +294,7 @@ Page({
           icon:"success"
         })
       },
-      complete:(res)=>{
+      fail:(res)=>{
         wx.hideLoading()
       }
     })

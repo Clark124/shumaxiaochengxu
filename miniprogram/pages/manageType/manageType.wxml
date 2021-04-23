@@ -1,0 +1,60 @@
+<!--miniprogram/pages/manageType/manageType.wxml-->
+<view class="tab">
+  <view wx:for="{{tabList}}" data-index="{{index}}" bindtap="onChangeTab" wx:key="index"
+    class="{{tabIndex===index?'tab-item active':'tab-item'}}">{{item}}</view>
+</view>
+
+<scroll-view scroll-y="true" class="listbox" bindscroll="onScroll">
+  <view class="type-item clone" hidden='{{!showClone}}' style='top:{{clone.top}}px'>
+    <view>
+      <text class="type-index">?</text>
+      <text class="type-name">{{clone.name}}</text>
+    </view>
+    <image src="../../images/drag_img.png" class="drag-img"></image>
+  </view>
+
+  <view class="type-item" wx:for="{{typeList}}" wx:key="index">
+    <view>
+      <text class="type-index">{{index+1}}</text>
+      <text class="type-name">{{item.name}}</text>
+    </view>
+
+    <view class="type-item-right">
+      <image src="../../images/drag_img.png" class="drag-img" data-index="{{index}}"
+     catchtouchstart='dragStart' catchtouchmove='dragMove' 
+     catchtouchend='dragEnd' wx:if="{{status===0}}"></image>
+     <checkbox  checked="{{item.isSelect}}" wx:else bindtap="onSelectDelete" data-index="{{index}}"/>
+     <text class="edit-typename" wx:if="{{status===1}}" data-index="{{index}}" bindtap="onShowEditModal">修改</text>
+    </view>
+   
+  </view>
+</scroll-view>
+
+<view class="footer">
+  <view class="footer-btn add" hover-class="btn-active" wx:if="{{status===0}}" bindtap="onShowAddModal">新增</view>
+  <view class="footer-btn delete" hover-class="btn-active" wx:else bindtap="onDelete">删除</view>
+  <view class="footer-btn edit" hover-class="btn-active" wx:if="{{status===0}}" bindtap="onChangeState">编辑</view>
+  <view class="footer-btn complete" hover-class="btn-active" wx:else bindtap="onChangeState">完成</view>
+</view>
+
+<view class="add-modal" wx:if="{{showAddModal}}">
+  <view class="modal-title">新增类目</view>
+  <view class="modal-input-wrapper">
+    <input type="text" class="add-input" placeholder="请输入类目名称" value="{{typeName}}" bindinput="inputTypeName"/>
+  </view>
+  <view class="modal-footer" >
+    <text class="btn cancel" bindtap="hideModal">取消</text>
+    <text class="btn add" bindtap="onAddType">添加</text>
+  </view>
+</view>
+
+<view class="add-modal" wx:if="{{showEditModal}}">
+  <view class="modal-title">修改类目</view>
+  <view class="modal-input-wrapper">
+    <input type="text" class="add-input" placeholder="请输入类目名称" value="{{editType.name}}" bindinput="inputEditTypeName"/>
+  </view>
+  <view class="modal-footer" >
+    <text class="btn cancel" bindtap="hideEditModal">取消</text>
+    <text class="btn add" bindtap="onEditTypeName">修改</text>
+  </view>
+</view>

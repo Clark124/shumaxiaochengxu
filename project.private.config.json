@@ -53,6 +53,23 @@
           "pathName": "pages/stock/stock",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "我的管理",
+          "pathName": "pages/manageList/manageList",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "管理广告",
+          "pathName": "pages/manageBanner/manageBanner",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "管理分类",
+          "pathName": "pages/manageType/manageType",
+          "scene": null
         }
       ]
     }

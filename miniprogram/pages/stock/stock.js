@@ -7,7 +7,7 @@ Page({
     search:"",
     scrollTop: 0,
     openid: "",
-    typeList: [],
+    typeList: [{name:'所有分类'}],
     typeIndex: 0,
     stockList: [],
     triggered: true,
@@ -22,18 +22,19 @@ Page({
       this.setData({typeIndex:Number(app.globalData.typeIndex)})
       app.globalData.typeIndex = ""
     }
+    const db = wx.cloud.database()
+    db.collection('stockType').orderBy('index', 'asc').get({
+      success: (res) => {
+        this.setData({
+          typeList: [...this.data.typeList,...res.data]
+        })
+       
+      }
+    })
   },
   onShow:function(){
     this.setData({page:1,isDataArrive:true,isDataOver:false})
-    const db = wx.cloud.database()
-    db.collection('stockType').get({
-      success: (res) => {
-        this.setData({
-          typeList: res.data
-        })
-        this.getStockList()
-      }
-    })
+    this.getStockList()
   },
 
   //获取我的库存列表

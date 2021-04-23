@@ -1,5 +1,4 @@
-<!--miniprogram/pages/userCenter/userCenter.wxml-->
-<!-- 用户 openid -->
+<image src="../../images/grzxbj.png" class="userinfo-bg" mode="widthFix"></image>
 <view class="userinfo">
   <block wx:if="{{canIUseOpenData}}" class="userinfo-opendata">
     <view class="userinfo-block-avatar" bindtap="bindViewTap">
@@ -12,21 +11,52 @@
   <block wx:else>
     <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile" class="userinfo-avatar"
       style="background-image: url({{avatarUrl}})" size="default"></button>
-    <view>请登录</view>
+    <view class="username">请登录</view>
   </block>
 </view>
 
-<navigator class="nav-my-publish" url="/pages/myStock/myStock">
-  <text>我的库存</text>
-  <text>></text>
-</navigator>
 
-<navigator class="nav-my-publish" url="/pages/myNeeds/myNeeds">
-  <text>我的需求</text>
-  <text>></text>
-</navigator>
+<view class="nav-list">
 
-<navigator class="nav-my-publish" url="/pages/myQuotedPrice/myQuotedPrice">
-  <text>我的报价</text>
-  <text>></text>
-</navigator>
+  <navigator class="nav-my-publish" url="/pages/myStock/myStock" hover-class="null">
+    <view class="nav-text">
+      <image src="../../images/wdkc.png" class="nav-icon"></image>
+      <text>我的库存</text>
+    </view>
+    <image src="../../images/arrow.png" class="arrow-icon"></image>
+  </navigator>
+
+  <navigator class="nav-my-publish" url="/pages/myNeeds/myNeeds" hover-class="null">
+    <view class="nav-text">
+      <image src="../../images/wdxq.png" class="nav-icon"></image>
+      <text>我的需求</text>
+    </view>
+    <image src="../../images/arrow.png" class="arrow-icon"></image>
+  </navigator>
+
+  <navigator class="nav-my-publish" url="/pages/myQuotedPrice/myQuotedPrice" hover-class="null">
+    <view class="nav-text">
+      <image src="../../images/wdbj.png" class="nav-icon"></image>
+      <text>我的报价</text>
+    </view>
+    <image src="../../images/arrow.png" class="arrow-icon"></image>
+  </navigator>
+
+</view>
+
+<view class="nav-block">
+  <view class="contact-us" bindtap="onMakeCall">
+    <view class="nav-text">
+      <image src="../../images/lxwm.png" class="nav-icon"></image>
+      <text>联系我们</text>
+    </view>
+    <image src="../../images/arrow.png" class="arrow-icon"></image>
+  </view>
+  <view class="contact-us" bindtap="navManager" wx:if="{{userInfo.userLevel&&userInfo.userLevel===3}}">
+    <view class="nav-text">
+      <image src="../../images/wdgl.png" class="nav-icon"></image>
+      <text>我的管理</text>
+    </view>
+    <image src="../../images/arrow.png" class="arrow-icon"></image>
+  </view>
+</view>

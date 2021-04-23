@@ -1,0 +1,12 @@
+<!--miniprogram/pages/manageList/manageList.wxml-->
+
+<view class="block">
+  <navigator class="nav-item" url="/pages/manageBanner/manageBanner" hover-class="null">
+    <text>管理广告</text>
+    <image src="../../images/arrow.png" class="arrow-icon"></image>
+  </navigator>
+  <navigator class="nav-item" url="/pages/manageType/manageType" hover-class="null">
+    <text>管理类目</text>
+    <image src="../../images/arrow.png" class="arrow-icon"></image>
+  </navigator>
+</view>

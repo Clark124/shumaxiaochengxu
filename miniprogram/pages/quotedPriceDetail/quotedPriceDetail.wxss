@@ -191,11 +191,11 @@ page{
   align-items: center;
 }
 .edit-icon{
-  width: 33rpx;
-  height: 32rpx;
+  width: 40rpx;
+  height: 40rpx;
 }
 .edit-text{
-  font-size: 20rpx;
+  font-size: 24rpx;
   color: #666;
 }
 .edit-btn{

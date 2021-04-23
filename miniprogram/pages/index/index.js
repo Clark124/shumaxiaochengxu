@@ -4,9 +4,9 @@ const moment = require('../../utils/moment')
 Page({
   data: {
     imgList:[
-      {url:'../../images/banner.jpg'},
-      {url:'../../images/banner02.jpg'},
-      {url:'https://7465-test-4g4qvj3hf2e69c63-1305399772.tcb.qcloud.la/product-image1617194517242.jpg'}
+      // {url:'../../images/banner.jpg'},
+      // {url:'../../images/banner02.jpg'},
+      // {url:'https://7465-test-4g4qvj3hf2e69c63-1305399772.tcb.qcloud.la/product-image1617194517242.jpg'}
     ],
     needsList:[],
     stockList:[],
@@ -19,6 +19,7 @@ Page({
   },
   onShow:function(){
     this.getDataList()
+    this.onGetBanner()
   },
   onPullDownRefresh:function(){
     this.getDataList()
@@ -66,6 +67,16 @@ Page({
       }
     })
 
+  },
+  //获取banner
+  onGetBanner(){
+    const db = wx.cloud.database()
+    db.collection('banner').get({
+      success:res=>{
+        const imgList = res.data[0].bannerList
+        this.setData({imgList})
+      }
+    })
   },
   navSwiperDetail(){
 
@@ -132,6 +143,7 @@ Page({
               wx.hideLoading()
               if(res.data.length>0){
                 app.globalData.isLogin = true
+                app.globalData.userInfo = res.data[0]
               }
               resolve()
             }

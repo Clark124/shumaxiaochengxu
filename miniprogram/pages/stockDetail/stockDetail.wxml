@@ -1,9 +1,9 @@
 <!--miniprogram/pages/stockDetail/stockDetail.wxml-->
-<view class="share-buttom" hover-class="share-buttom-active">
+<view class="share-buttom" hover-class="share-buttom-active" bindtap="copyContent">
   <image src="../../images/fx.png" class="share-icon"></image>
-  <text>分享</text>
+  <text style="margin-bottom:2rpx">复制</text>
 </view>
-<button open-type="share" class="share"></button>
+<!-- <button open-type="share" class="share"></button> -->
 
 <swiper indicator-dots="{{imgList.length>2}}" autoplay="{{false}}" interval="{{2000}}" duration="{{500}}" indicator-color="#fff"
   indicator-active-color="#2D5DF8" class="swiper">

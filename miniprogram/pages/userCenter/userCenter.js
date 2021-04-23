@@ -15,7 +15,7 @@ Page({
   onLoad: function (options) {
     const isLogin = app.globalData.isLogin
     if(isLogin){
-      this.setData({canIUseOpenData:true})
+      this.setData({canIUseOpenData:true,userInfo:app.globalData.userInfo})
     }
     if (wx.getUserProfile) {
       this.setData({
@@ -38,10 +38,10 @@ Page({
             createDate: new Date(),
             userLevel:1, //1.普通  2.会员  3.管理员 
           },
-          success:res=>{
+          success:ret=>{
             this.setData({
               // avatarUrl: res.userInfo.avatarUrl,
-              // userInfo: res.userInfo,
+              userInfo: res.userInfo,
               // hasUserInfo: true,
               canIUseOpenData: true
             })
@@ -62,8 +62,16 @@ Page({
       })
     }
   },
-  onShow: function () {
-
+  onMakeCall(){
+    wx.makePhoneCall({
+      phoneNumber: "18164113247",
+    })
   },
+
+  navManager(){
+    wx.navigateTo({
+      url: '/pages/manageList/manageList',
+    })
+  }
 
 })

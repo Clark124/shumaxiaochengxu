@@ -1,0 +1,33 @@
+/* miniprogram/pages/manageBanner/manageBanner.wxss */
+page{
+  padding: 25rpx;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 700rpx;
+  height: 330rpx;
+  margin-top: 20rpx;
+}
+.default-img,.banner-img{
+  width: 700rpx;
+  height: 330rpx;
+}
+
+.delete-img {
+  position: absolute;
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%;
+  right: -15rpx;
+  top: -15rpx;
+}
+
+.submit-btn{
+  margin-top: 30rpx;
+  width: 100%;
+}
+
+.tip{
+  font-size: 24rpx;
+}

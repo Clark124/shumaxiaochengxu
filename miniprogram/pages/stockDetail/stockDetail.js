@@ -160,7 +160,23 @@ Page({
   //分享朋友圈
   onShareTimeline:function(){
     return {
+      title: `型号:${productName} 价格:${productPirce}`,
       imageUrl:this.data.imgList[0].url
     }
+  },
+  //复制信息到剪切板
+  copyContent(){
+    const {productName,productConfig,productCondition,productPirce,phone} = this.data
+    const data = `型号:${productName},配置:${productConfig},成色:${productCondition},价格:${productPirce},联系电话:${phone}。`
+    wx.setClipboardData({
+      data: data,
+      success (res) {
+        wx.getClipboardData({
+          success (res) {
+            console.log(res.data) // data
+          }
+        })
+      }
+    })
   }
 })

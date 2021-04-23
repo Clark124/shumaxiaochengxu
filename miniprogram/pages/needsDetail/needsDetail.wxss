@@ -20,11 +20,11 @@ page{
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 20rpx;
-  top: 26rpx;
+  right: 26rpx;
+  top: 650rpx;
   width: 142rpx;
   height: 50rpx;
-  background: rgba(0, 0, 0, 0.3);
+  background:#0983F6;
   border-radius: 28rpx;
   color: #fff;
   font-size: 28rpx;
@@ -158,11 +158,11 @@ page{
   align-items: center;
 }
 .edit-icon{
-  width: 33rpx;
-  height: 32rpx;
+  width: 40rpx;
+  height: 40rpx;
 }
 .edit-text{
-  font-size: 20rpx;
+  font-size: 24rpx;
   color: #666;
 }
 .edit-btn{

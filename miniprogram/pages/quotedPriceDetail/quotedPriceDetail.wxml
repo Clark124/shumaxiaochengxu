@@ -1,3 +1,8 @@
+<view class="share-buttom" hover-class="share-buttom-active" bindtap="copyContent">
+  <image src="../../images/fx.png" class="share-icon"></image>
+  <text style="margin-bottom:2rpx">复制</text>
+</view>
+
 <view class="swiper-wrapper">
   <image src="../../images/bjbj.png" class="bjbj-img"></image>
   <view class="main-title">报价表</view>

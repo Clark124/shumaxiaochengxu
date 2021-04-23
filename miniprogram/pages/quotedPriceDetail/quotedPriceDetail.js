@@ -131,15 +131,31 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    const {quotedPriceTitle,phone} = this.data
     return {
-      title: '今日报价',
+      title: `${quotedPriceTitle},联系电话:${phone}`
     }
   },
   onShareTimeline: function () {
+    const {quotedPriceTitle,phone} = this.data
     return {
-      title: '今日报价',
+      title: `${quotedPriceTitle},联系电话:${phone}`,
       imageUrl: this.data.imgList[0].url
     }
+  },
+  //复制信息到剪切板
+  copyContent(){
+    const {quotedPriceTitle,phone} = this.data
+    const data = `${quotedPriceTitle},联系电话:${phone}`
+    wx.setClipboardData({
+      data: data,
+      success (res) {
+        wx.getClipboardData({
+          success (res) {
+            console.log(res.data) // data
+          }
+        })
+      }
+    })
   }
 })
