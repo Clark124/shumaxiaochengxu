@@ -1,0 +1,62 @@
+<!--miniprogram/pages/myStock/myStock.wxml-->
+<view class="container">
+  <scroll-view scroll-y="true" class="tab-list">
+    <view class="{{index===typeIndex? 'tab-item active':'tab-item'}}" wx:for="{{typeList}}" wx:key="index"
+      data-index="{{index}}" bindtap="onChangeTab">{{item.name}}</view>
+  </scroll-view>
+  
+  <scroll-view class="stock-list" scroll-y="canScroll" refresher-enabled="{{true}}" refresher-threshold="{{80}}"
+  refresher-default-style="black" refresher-background="rgb(250, 250, 250)" refresher-triggered="{{triggered}}"
+  bindrefresherrefresh="onRefresh" bindscrolltolower="loadMore" scroll-top="{{scrollTop}}">
+
+  <view class="stock-item {{item.isTouchMove ? 'touch-move-active' : ''}}"
+  data-index="{{index}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtap="navToDetail" 
+  wx:for="{{needsList}}" wx:key="index" data-id="{{item._id}}">
+    <view class="content">
+     
+      <view class="block-head">
+        <view>
+          <text class="block-head-text">型号</text>
+          <text class="product-name">{{item.productName}}</text>
+        </view>
+        <view class="price-wrapper">
+          <text class="price-unit">￥</text>
+          <text class="price">{{item.productPirce}}</text>
+        </view>
+      </view>
+      <view class="config">
+        配置：{{item.productConfig}}
+      </view>
+      <view class="info-row">
+        <view class="status-row">
+          <text class="condition">{{item.productCondition}}</text>
+          <text class="tip" wx:if="{{item.isTop}}">已置顶</text>
+          <text class="off-shelf" wx:if="{{item.isOffShelf}}">已下架</text>
+        </view>
+       
+        <text class="count">数量：{{item.productCount}}</text>
+      </view>
+    </view>
+    <view class="slide">
+      <view class="status" catchtap="onOnShelf" data-index="{{index}}" wx:if="{{item.isOffShelf}}">上架</view>
+      <view class="status" catchtap="onOffShelf" data-index="{{index}}" wx:else>下架</view>
+      <view class="del" catchtap="del" data-index="{{index}}">删除</view>
+    </view>
+    
+
+  </view>
+
+  <view class="no-data" wx:if="{{needsList.length===0}}">
+    <image src="../../images/no-data.png" mode="widthFix" class="no-data-img"></image>
+    <view class="no-data-text">暂无数据</view>
+  </view>
+
+  <view class="not-more" wx:if="{{isDataOver&&needsList.length>5}}">
+    达到底部了
+  </view>
+</scroll-view>
+
+
+</view>
+
+ 

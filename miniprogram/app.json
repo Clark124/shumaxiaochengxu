@@ -16,7 +16,10 @@
     "pages/search/search",
     "pages/manageList/manageList",
     "pages/manageBanner/manageBanner",
-    "pages/manageType/manageType"
+    "pages/manageType/manageType",
+    "pages/manageStock/manageStock",
+    "pages/manageQuotedPrice/manageQuotedPrice",
+    "pages/manageNeeds/manageNeeds"
   ],
   "tabBar": {
     "color": "#777777",

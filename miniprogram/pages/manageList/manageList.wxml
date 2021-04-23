@@ -9,4 +9,16 @@
     <text>管理类目</text>
     <image src="../../images/arrow.png" class="arrow-icon"></image>
   </navigator>
+  <navigator class="nav-item" url="/pages/manageStock/manageStock" hover-class="null">
+    <text>管理库存</text>
+    <image src="../../images/arrow.png" class="arrow-icon"></image>
+  </navigator>
+  <navigator class="nav-item" url="/pages/manageQuotedPrice/manageQuotedPrice" hover-class="null">
+    <text>管理报价</text>
+    <image src="../../images/arrow.png" class="arrow-icon"></image>
+  </navigator>
+  <navigator class="nav-item" url="/pages/manageNeeds/manageNeeds" hover-class="null">
+    <text>管理需求</text>
+    <image src="../../images/arrow.png" class="arrow-icon"></image>
+  </navigator>
 </view>
