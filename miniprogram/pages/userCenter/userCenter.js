@@ -67,6 +67,12 @@ Page({
       phoneNumber: "18164113247",
     })
   },
+  onShowEWM(){
+    wx.previewImage({
+      current: 'cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/contact_img.jpeg', // 当前显示图片的http链接
+      urls: ['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/contact_img.jpeg'] // 需要预览的图片http链接列表
+    })
+  },
 
   navManager(){
     wx.navigateTo({

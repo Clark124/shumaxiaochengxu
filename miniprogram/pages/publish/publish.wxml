@@ -92,11 +92,14 @@
     <view class="public-item">
       <text class="public-title">商家：</text>
       <input type="text" bindinput="inputBusinessName" placeholder="请输入商家名称" value="{{businessName}}" />
+     
     </view>
 
     <view class="public-item">
       <text class="public-title">电话：</text>
       <input type="number" bindinput="inputPhone" placeholder="请输入联系电话" value="{{phone}}" />
+      <button class="get-phone" size="mini"  wx:if="{{!hasPhone}}"
+      open-type="getPhoneNumber" bindgetphonenumber="getPhone">获取本手机号码</button>
     </view>
 
 

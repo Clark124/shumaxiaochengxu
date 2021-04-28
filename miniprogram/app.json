@@ -19,7 +19,8 @@
     "pages/manageType/manageType",
     "pages/manageStock/manageStock",
     "pages/manageQuotedPrice/manageQuotedPrice",
-    "pages/manageNeeds/manageNeeds"
+    "pages/manageNeeds/manageNeeds",
+    "pages/businessList/businessList"
   ],
   "tabBar": {
     "color": "#777777",

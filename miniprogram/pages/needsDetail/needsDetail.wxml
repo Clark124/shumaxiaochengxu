@@ -26,7 +26,7 @@
   </view>
   <view class="info-item">
     <text class="title" decode='true'>商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;家：</text><text
-      class="content">{{businessName}}</text>
+      class="phone" bindtap="toBusiness">{{businessName}}</text>
   </view>
   <view class="info-item">
     <text class="title" decode='true'>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：</text>

@@ -157,5 +157,13 @@ Page({
         })
       }
     })
+  },
+  //去商家列表
+  toBusiness(){
+    const {businessName} = this.data
+    const url = `/pages/businessList/businessList?key=${businessName}&collection=${'quotedPrice'}`
+    wx.navigateTo({
+      url,
+    })
   }
 })

@@ -18,12 +18,11 @@ Page({
     const {
       collection,
       key,
-      typeId
+      
     } = options
     this.setData({
       collection,
       key,
-      typeId
     })
 
   },
@@ -43,50 +42,14 @@ Page({
       pageSize,
       collection,
       key,
-      typeId
     } = this.data
     const db = wx.cloud.database()
     const _ = db.command
-    let condition
-    let andCondition = [{expireDate: _.gte(new Date())},{isOffShelf:false}]
-    if(typeId!=='undefined'){
-      andCondition.push({typeId: typeId})
-    }
-    if (collection === 'stock' || collection === 'needs') {
-      condition = _.or([{
-        productName: db.RegExp({
-          regexp: '.*' + key,
-          options: 'i',
-        })
-      }, {
-        productDiscribe: db.RegExp({
-          regexp: '.*' + key,
-          options: 'i',
-        })
-      },{
-        businessName:db.RegExp({
-          regexp: '.*' + key,
-          options: 'i',
-        })
-      }
-    ]).and(andCondition)
-    } else if (collection === 'quotedPrice') {
-      condition = _.or([{
-        quotedPriceTitle: db.RegExp({
-          regexp: '.*' + key,
-          options: 'i',
-        })
-      },
-      {
-        businessName:db.RegExp({
-          regexp: '.*' + key,
-          options: 'i',
-        })
-      }
-    
-    ]).and(andCondition)
-    }
-    db.collection(collection).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where(condition).get({
+    db.collection(collection).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
+        expireDate: _.gte(new Date()),
+        isOffShelf:false,
+        businessName:key,
+      }).get({
       success: res => {
         let dataList = res.data
         dataList.forEach(item => {
@@ -154,7 +117,6 @@ Page({
       stockList,
       page,
       pageSize,
-      typeId,
       collection,
       key
     } = this.data
@@ -166,48 +128,13 @@ Page({
     })
     const db = wx.cloud.database()
     const _ = db.command
-    //查询条件
-    let condition
-    let andCondition = [{expireDate: _.gte(new Date())},{isOffShelf:false}]
-    if(typeId!=='undefined'){
-      andCondition.push({typeId: typeId})
-    }
-    if (collection === 'stock' || collection === 'needs') {
-      condition = _.or([{
-        productName: db.RegExp({
-          regexp: '.*' + key,
-          options: 'i',
-        })
-      }, {
-        productDiscribe: db.RegExp({
-          regexp: '.*' + key,
-          options: 'i',
-        })
-      },{
-        businessName:db.RegExp({
-          regexp: '.*' + key,
-          options: 'i',
-        })
-      }
     
-    ]).and(andCondition)
-    } else if (collection === 'quotedPrice') {
-      condition = _.or([{
-        quotedPriceTitle: db.RegExp({
-          regexp: '.*' + key,
-          options: 'i',
-        })
-      },
-      {
-        businessName:db.RegExp({
-          regexp: '.*' + key,
-          options: 'i',
-        })
-      }
-    ]).and(andCondition)
-    }
     db.collection(collection).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where(
-      condition
+      {
+        expireDate: _.gte(new Date()),
+        isOffShelf:false,
+        businessName:key,
+      }
     ).get({
       success: (res) => {
         let dataList = res.data

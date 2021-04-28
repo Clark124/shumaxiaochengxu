@@ -1,0 +1,104 @@
+<!--miniprogram/pages/search/search.wxml-->
+<!-- <view class="search-wrapper">
+  <input type="text" class="search-input" confirm-type="search" bindinput="onChangeInput" value="{{key}}"
+    bindconfirm="onConfirmSearch" placeholder="搜索" />
+    <image src="../../images/ss.png" class="search-icon" bindtap="onConfirmSearch"></image>
+</view> -->
+
+<!-- 库存列表 -->
+<scroll-view class="stock-list" scroll-y="true" refresher-enabled="{{true}}" refresher-threshold="{{80}}"
+  refresher-default-style="black" refresher-background="#eee" refresher-triggered="{{triggered}}"
+  bindrefresherrefresh="onRefresh" bindscrolltolower="loadMore" scroll-top="{{scrollTop}}"
+  wx:if="{{collection==='stock'}}">
+
+  <view class="stock-item" data-index="{{index}}" bindtap="navToDetail" wx:for="{{stockList}}" wx:key="index"
+    data-id="{{item._id}}">
+    <view class="stock-head">
+      <view class="stock-name">{{item.productName}}</view>
+      <view class="price-wrapper">
+        <text class="price-unit">￥</text>
+        <text class="price">{{item.productPirce}}</text>
+      </view>
+    </view>
+    <view class="item-info-wrapper">
+      <image class="stock-img" src="{{item.imgList[0].url}}"></image>
+      <view class="stock-info">
+        <view class="stock-config">配置：{{item.productConfig}}</view>
+        <view class="info-row">
+          <text class="condition">{{item.productCondition}}</text>
+          <text class="count">数量：{{item.productCount}}</text>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+  <view class="no-data" wx:if="{{stockList.length===0}}">
+    <image src="../../images/no-data.png" mode="widthFix" class="no-data-img"></image>
+    <view class="no-data-text">暂无数据</view>
+  </view>
+
+  <view class="not-more" wx:if="{{isDataOver&&stockList.length>5}}">
+    达到底部了
+  </view>
+</scroll-view>
+
+<!-- 报价列表 -->
+<scroll-view class="stock-list" scroll-y="true" refresher-enabled="{{true}}" refresher-threshold="{{80}}"
+  refresher-default-style="black" refresher-background="#eee" refresher-triggered="{{triggered}}"
+  bindrefresherrefresh="onRefresh" bindscrolltolower="loadMore" scroll-top="{{scrollTop}}"
+  wx:if="{{collection==='quotedPrice'}}">
+
+  <view class="stock-item " data-index="{{index}}" bindtap="navToDetail" wx:for="{{stockList}}" wx:key="index"
+    data-id="{{item._id}}">
+    <view class="quoted-price-title">{{item.quotedPriceTitle}}</view>
+    <view class="business-name">
+      <text class="quoted-price-date">{{item.createDate}}</text>
+      <text>商家：{{item.businessName}}</text>
+    </view>
+  </view>
+  <view class="no-data" wx:if="{{stockList.length===0}}">
+    <image src="../../images/no-data.png" mode="widthFix" class="no-data-img"></image>
+    <view class="no-data-text">暂无数据</view>
+  </view>
+  <view class="not-more" wx:if="{{isDataOver&&stockList.length>5}}">
+    达到底部了
+  </view>
+</scroll-view>
+
+<!-- 需求列表 -->
+<scroll-view class="stock-list" scroll-y="true" refresher-enabled="{{true}}" refresher-threshold="{{80}}"
+  refresher-default-style="black" refresher-background="#eee" refresher-triggered="{{triggered}}"
+  bindrefresherrefresh="onRefresh" bindscrolltolower="loadMore" scroll-top="{{scrollTop}}"
+  wx:if="{{collection==='needs'}}">
+
+  <view class="stock-item" data-index="{{index}}" bindtap="navToDetail" wx:for="{{stockList}}" wx:key="index"
+    data-id="{{item._id}}">
+    <view class="block-head">
+      <view>
+        <text class="block-head-text">型号</text>
+        <text class="product-name">{{item.productName}}</text>
+      </view>
+      <view class="price-wrapper">
+        <text class="price-unit">￥</text>
+        <text class="price">{{item.productPirce}}</text>
+      </view>
+    </view>
+    <view class="config">
+      配置：{{item.productConfig}}
+    </view>
+    <view class="info-row">
+      <text class="condition">{{item.productCondition}}</text>
+      <text class="count">数量：{{item.productCount}}</text>
+    </view>
+
+  </view>
+
+  <view class="no-data" wx:if="{{stockList.length===0}}">
+    <image src="../../images/no-data.png" mode="widthFix" class="no-data-img"></image>
+    <view class="no-data-text">暂无数据</view>
+  </view>
+  <view class="not-more" wx:if="{{isDataOver&&stockList.length>5}}">
+    达到底部了
+  </view>
+</scroll-view>

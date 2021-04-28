@@ -26,21 +26,32 @@ Page({
     productCondition: "", //成色
     businessName: "", //商家名称
     phone: null,
+    hasPhone:false,
     imgList: [{}], //产品图片
     productDetailImg: [{}], //商品细节图片
   },
 
   onLoad: function (options) {
     const isLogin = app.globalData.isLogin
+    const userInfo = app.globalData.userInfo
+    wx.getStorage({
+      key: 'businessName',
+      success:res=>{
+        this.setData({businessName:res.data})
+      }
+    })
     if (isLogin) {
       this.setData({
         isLogin: true
       })
-    }else{
+      if(userInfo.phone){
+        this.setData({hasPhone:true,phone:userInfo.phone})
+      }
+    } else {
       wx.showModal({
         title: '提示',
-        content:"请先登录才能发布信息",
-        success:res=>{
+        content: "请先登录才能发布信息",
+        success: res => {
           if (res.confirm) {
             this.getUserProfile()
           } else if (res.cancel) {
@@ -69,16 +80,16 @@ Page({
           data: {
             ...res.userInfo,
             createDate: new Date(),
-            userLevel:1, //1.普通  2.会员  3.管理员 
+            userLevel: 1, //1.普通  2.会员  3.管理员 
           },
-          success:res=>{
+          success: res => {
             this.setData({
               isLogin: true
             })
             app.globalData.isLogin = true
           }
         })
-       
+
       }
     })
   },
@@ -326,7 +337,7 @@ Page({
       imgList
     } = this.data
     imgList.splice(index, 1)
-    if (imgList.length === 4&&imgList[3].url) {
+    if (imgList.length === 4 && imgList[3].url) {
       imgList.push({})
     }
     this.setData({
@@ -339,7 +350,7 @@ Page({
       productDetailImg
     } = this.data
     productDetailImg.splice(index, 1)
-    if (productDetailImg.length === 4&&productDetailImg[3].url) {
+    if (productDetailImg.length === 4 && productDetailImg[3].url) {
       productDetailImg.push({})
     }
     this.setData({
@@ -388,7 +399,7 @@ Page({
     const db = wx.cloud.database()
     wx.showLoading({
       title: '发布中...',
-      mask:true
+      mask: true
     })
     db.collection('stock').add({
       data: {
@@ -410,7 +421,7 @@ Page({
         expireDate: new Date(moment().add(1, 'month')), //1个月后过期
         topExpireDate: new Date(), //置顶到期时间
         isTop: false,
-        isOffShelf:false,
+        isOffShelf: false,
       },
       success: (res) => {
         wx.showToast({
@@ -418,6 +429,20 @@ Page({
           icon: "success",
           duration: 2000,
           mask: true
+        })
+        const stockData = {
+          stockTypeIndex,
+          regionIndex,
+          productName,
+          productPirce,
+          productCount,
+          productConfig,
+          productCondition,
+          productDetailImg
+        }
+        wx.setStorage({
+          data: stockData,
+          key: 'stockData',
         })
         setTimeout(() => {
           const url = '/pages/stock/stock'
@@ -554,7 +579,7 @@ Page({
     const db = wx.cloud.database()
     wx.showLoading({
       title: '发布中...',
-      mask:true
+      mask: true
     })
     db.collection('needs').add({
       data: {
@@ -574,7 +599,7 @@ Page({
         expireDate: new Date(moment().add(1, 'month')), //1个月后过期
         topExpireDate: new Date(),
         isTop: false,
-        isOffShelf:false
+        isOffShelf: false
       },
       success: (res) => {
         wx.showToast({
@@ -582,6 +607,10 @@ Page({
           icon: "success",
           duration: 2000,
           mask: true
+        })
+        wx.setStorage({
+          data: businessName,
+          key: 'businessName',
         })
         setTimeout(() => {
           const url = '/pages/needs/needs'
@@ -698,7 +727,7 @@ Page({
     const db = wx.cloud.database()
     wx.showLoading({
       title: '发布中...',
-      mask:true
+      mask: true
     })
     db.collection('quotedPrice').add({
       data: {
@@ -715,7 +744,7 @@ Page({
         expireDate: new Date(moment().add(1, 'month')), //1个月后过期
         topExpireDate: new Date(),
         isTop: false,
-        isOffShelf:false  
+        isOffShelf: false
       },
       success: (res) => {
         wx.showToast({
@@ -723,6 +752,10 @@ Page({
           icon: "success",
           duration: 2000,
           mask: true
+        })
+        wx.setStorage({
+          data: businessName,
+          key: 'businessName',
         })
         setTimeout(() => {
           const url = '/pages/quotedPrice/quotedPrice'
@@ -817,11 +850,37 @@ Page({
       productPirce: null,
       productCount: null,
       productConfig: "",
-      productCondition:"",
-      businessName: "", //商家名称
-      phone: null,
+      productCondition: "",
       imgList: [{}], //产品图片
       productDetailImg: [{}], //商品细节图片
     })
+  },
+  getPhone(e) {
+    var that = this;
+
+    wx.cloud.callFunction({
+      name: 'getMobile',
+      data: {
+        weRunData: wx.cloud.CloudID(e.detail.cloudID),
+      }
+    }).then(res => {
+      const openid = app.globalData.openid 
+      const db = wx.cloud.database()
+      db.collection('user').where({
+        _openid:openid
+      }).update({
+        data:{
+          phone:res.result
+        }
+      })
+
+      that.setData({
+        phone: res.result,
+        hasPhone:true
+      })
+    }).catch(err => {
+      console.error(err);
+    });
   }
+
 })

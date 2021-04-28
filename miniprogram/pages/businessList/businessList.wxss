@@ -1,0 +1,134 @@
+page{
+  background: #F5F5F5;
+}
+.stock-list{
+  height: 100vh;
+  padding:25rpx;
+  box-sizing: border-box;
+}
+
+.title{
+  margin-top: 32rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size:36rpx;
+  color: #222;
+}
+
+.to-more{
+  font-size:28rpx;
+  color: #999999;
+}
+.content-wrapper{
+  padding:0 27rpx;
+}
+
+
+.stock-item{
+  box-sizing: border-box;
+  width: 100%;
+  background: #fff;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  padding: 25rpx 20rpx 25rpx 20rpx;
+}
+.block-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16rpx;
+  border-bottom: 1rpx solid #eee;
+}
+.block-head-text{
+  display: inline-block;
+  font-size: 24rpx;
+  background: #0983F6;
+  color: #fff;
+  padding: 0 8rpx;
+  border-radius: 5rpx;
+  margin-right: 5rpx;
+}
+.product-name{
+  font-size: 28rpx;
+  color: #222;
+}
+.price-unit{
+  font-size: 28rpx;
+  color: #F93204;
+}
+.price{
+  font-size: 38rpx;
+  color: #F93204;
+}
+
+.config{
+  font-size: 28rpx;
+  color: #666666;
+  margin: 20rpx 0;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.info-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.condition{
+  background: rgba(61, 149, 246, 0.1);
+  color: #0983F6;
+  font-size: 28rpx;
+  padding: 0 6rpx;
+}
+.count{
+  font-size: 28rpx;
+  color: #666666;
+}
+.stock-name{
+  font-size: 36rpx;
+  color: #222;
+}
+.stock-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item-info-wrapper {
+  display: flex;
+  margin-top: 20rpx;
+}
+.stock-img {
+  width: 212rpx;
+  height: 187rpx;
+  margin-right: 20rpx;
+}
+.stock-info{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.stock-config{
+  font-size: 28rpx;
+  color: #666666;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.quoted-price-title{
+  font-size: 33rpx;
+  color: #222222;
+  margin-bottom: 20rpx;
+}
+.business-name{
+  font-size: 28rpx;
+  color: #999999;
+}
+.quoted-price-date{
+  margin-right: 55rpx;
+}
+

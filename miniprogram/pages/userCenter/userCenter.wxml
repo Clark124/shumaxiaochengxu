@@ -45,7 +45,7 @@
 </view>
 
 <view class="nav-block">
-  <view class="contact-us" bindtap="onMakeCall">
+  <view class="contact-us" bindtap="onShowEWM">
     <view class="nav-text">
       <image src="../../images/lxwm.png" class="nav-icon"></image>
       <text>联系我们</text>

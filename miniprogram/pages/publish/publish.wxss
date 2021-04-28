@@ -66,6 +66,13 @@ page {
 .public-item.img {
   flex-wrap: wrap;
 }
+.get-phone{
+  font-size:28rpx !important;
+  color: #0983F6;
+}
+.get-phone:active{
+  opacity: 0.7;
+}
 
 .public-title {
   font-size: 28rpx;
