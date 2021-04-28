@@ -20,10 +20,10 @@ Page({
 
 
   onLoad: function (options) {
-    if(app.globalData.typeIndex){
-      this.setData({typeIndex:Number(app.globalData.typeIndex)})
-      app.globalData.typeIndex = ""
-    }
+    // if(app.globalData.typeIndex){
+    //   this.setData({typeIndex:Number(app.globalData.typeIndex)+1})
+    //   app.globalData.typeIndex = ""
+    // }
     const db = wx.cloud.database()
     db.collection('needsType').orderBy('index', 'asc').get({
       success: (res) => {

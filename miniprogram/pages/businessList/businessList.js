@@ -18,8 +18,18 @@ Page({
     const {
       collection,
       key,
-      
     } = options
+    let collectionText
+    if (collection === 'stock') {
+      collectionText = '库存'
+    } else if (collection === 'needs') {
+      collectionText = '需求'
+    } else if (collection === 'quotedPrice') {
+      collectionText = '报价'
+    }
+    wx.setNavigationBarTitle({
+      title: key + collectionText
+    })
     this.setData({
       collection,
       key,
@@ -46,10 +56,10 @@ Page({
     const db = wx.cloud.database()
     const _ = db.command
     db.collection(collection).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
-        expireDate: _.gte(new Date()),
-        isOffShelf:false,
-        businessName:key,
-      }).get({
+      expireDate: _.gte(new Date()),
+      isOffShelf: false,
+      businessName: key,
+    }).get({
       success: res => {
         let dataList = res.data
         dataList.forEach(item => {
@@ -128,12 +138,12 @@ Page({
     })
     const db = wx.cloud.database()
     const _ = db.command
-    
+
     db.collection(collection).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where(
       {
         expireDate: _.gte(new Date()),
-        isOffShelf:false,
-        businessName:key,
+        isOffShelf: false,
+        businessName: key,
       }
     ).get({
       success: (res) => {
@@ -175,6 +185,6 @@ Page({
       return
     }
     console.log(search)
-   
+
   },
 })

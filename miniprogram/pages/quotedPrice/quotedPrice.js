@@ -18,10 +18,10 @@ Page({
 
 
   onLoad: function (options) {
-    if(app.globalData.typeIndex){
-      this.setData({typeIndex:Number(app.globalData.typeIndex)})
-      app.globalData.typeIndex = ""
-    }
+    // if(app.globalData.typeIndex){
+    //   this.setData({typeIndex:Number(app.globalData.typeIndex)})
+    //   app.globalData.typeIndex = ""
+    // }
     const db = wx.cloud.database()
     db.collection('quotedPriceType').orderBy('index', 'asc').get({
       success: (res) => {

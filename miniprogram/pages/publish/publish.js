@@ -137,6 +137,28 @@ Page({
     this.setData({
       targetIndex: Number(e.detail.value)
     })
+    if(Number(e.detail.value)===0){
+      wx.getStorage({
+        key:"stockData",
+        success:res=>{
+          this.setData({...this.data,...res.data})
+        }
+      })
+    }else if(Number(e.detail.value)===1){
+      wx.getStorage({
+        key:"needsData",
+        success:res=>{
+          this.setData({...this.data,...res.data})
+        }
+      })
+    }else if(Number(e.detail.value)===2){
+      wx.getStorage({
+        key:"quotedPriceData",
+        success:res=>{
+          this.setData({...this.data,...res.data})
+        }
+      })
+    }
   },
 
   //选择类型
@@ -438,6 +460,8 @@ Page({
           productCount,
           productConfig,
           productCondition,
+          businessName,
+          imgList,
           productDetailImg
         }
         wx.setStorage({
@@ -450,7 +474,7 @@ Page({
           wx.switchTab({
             url: url,
           })
-          this.clearData()
+          // this.clearData()
         }, 2000)
       },
       fail: err => {
@@ -608,9 +632,19 @@ Page({
           duration: 2000,
           mask: true
         })
+        const needsData = {
+          needsTypeIndex,
+          regionIndex,
+          productName,
+          productPirce,
+          productCount,
+          productConfig,
+          productCondition,
+          businessName,
+        }
         wx.setStorage({
-          data: businessName,
-          key: 'businessName',
+          data: needsData,
+          key: 'needsData',
         })
         setTimeout(() => {
           const url = '/pages/needs/needs'
@@ -618,7 +652,7 @@ Page({
           wx.navigateTo({
             url: url,
           })
-          this.clearData()
+          // this.clearData()
         }, 2000)
       },
       fail: err => {
@@ -753,9 +787,16 @@ Page({
           duration: 2000,
           mask: true
         })
+        const quotedPriceData = {
+          quotedPirceTypeIndex,
+          regionIndex,
+          quotedPriceTitle,
+          businessName,
+          imgList,
+        }
         wx.setStorage({
-          data: businessName,
-          key: 'businessName',
+          data: quotedPriceData,
+          key: 'quotedPriceData',
         })
         setTimeout(() => {
           const url = '/pages/quotedPrice/quotedPrice'
@@ -763,7 +804,7 @@ Page({
           wx.switchTab({
             url: url,
           })
-          this.clearData()
+          // this.clearData()
         }, 2000)
       },
       fail: err => {

@@ -14,27 +14,27 @@ Page({
     page: 1,
     pageSize: 10,
     isDataArrive: true,
-    isDataOver: false
+    isDataOver: false,
+    onLoadOver:false,
   },
 
   onLoad: function (options) {
-    if(app.globalData.typeIndex){
-      this.setData({typeIndex:Number(app.globalData.typeIndex)})
-      app.globalData.typeIndex = ""
-    }
+    // if(app.globalData.typeIndex){
+    //   this.setData({typeIndex:Number(app.globalData.typeIndex)+1})
+    //   app.globalData.typeIndex = ""
+    // }
     const db = wx.cloud.database()
     db.collection('stockType').orderBy('index', 'asc').get({
       success: (res) => {
         this.setData({
           typeList: [...this.data.typeList,...res.data]
         })
-       
       }
     })
   },
   onShow:function(){
     this.setData({page:1,isDataArrive:true,isDataOver:false})
-    this.getStockList()
+      this.getStockList()
   },
 
   //获取我的库存列表
@@ -62,7 +62,8 @@ Page({
           stockList: dataList,
           page: 2,
           isDataOver: false,
-          isDataArrive: true
+          isDataArrive: true,
+          onLoadOver:true
         })
         if (res.data.length < 10) {
           this.setData({
