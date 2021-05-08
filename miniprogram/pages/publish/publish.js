@@ -34,12 +34,12 @@ Page({
   onLoad: function (options) {
     const isLogin = app.globalData.isLogin
     const userInfo = app.globalData.userInfo
-    wx.getStorage({
-      key: 'businessName',
-      success:res=>{
-        this.setData({businessName:res.data})
-      }
-    })
+    // wx.getStorage({
+    //   key: 'businessName',
+    //   success:res=>{
+    //     this.setData({businessName:res.data})
+    //   }
+    // })
     if (isLogin) {
       this.setData({
         isLogin: true
@@ -907,16 +907,19 @@ Page({
     }).then(res => {
       const openid = app.globalData.openid 
       const db = wx.cloud.database()
+     
+      const phoneNum = res.result.event.weRunData.data.phoneNumber
+      console.log(phoneNum)
       db.collection('user').where({
         _openid:openid
       }).update({
         data:{
-          phone:res.result
+          phone:phoneNum
         }
       })
 
       that.setData({
-        phone: res.result,
+        phone: phoneNum,
         hasPhone:true
       })
     }).catch(err => {
