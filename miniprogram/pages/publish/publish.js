@@ -50,9 +50,12 @@ Page({
     } else {
       wx.showModal({
         title: '提示',
-        content: "请先登录才能发布信息",
+        content: "请先登录",
         success: res => {
           if (res.confirm) {
+            // wx.navigateTo({
+            //   url: '/pages/register/register',
+            // })
             this.getUserProfile()
           } else if (res.cancel) {
             console.log('用户点击取消')
@@ -70,6 +73,11 @@ Page({
       })
     }
   },
+  navToRegister(){
+    wx.navigateTo({
+      url: '/pages/register/register',
+    })
+  },
 
   getUserProfile() {
     wx.getUserProfile({
@@ -80,7 +88,10 @@ Page({
           data: {
             ...res.userInfo,
             createDate: new Date(),
-            userLevel: 1, //1.普通  2.会员  3.管理员 
+            userLevel: 3, //1.普通  2.会员  3.管理员 
+            vipExpireDate:  new Date('2021/06/01'),
+            region:[{_id:'28ee4e3e6061957c0d443d0d35088a23',name:"武昌广埠屯"}],
+            businessType:['手机']
           },
           success: res => {
             this.setData({

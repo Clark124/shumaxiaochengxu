@@ -21,4 +21,8 @@
     <text>管理需求</text>
     <image src="../../images/arrow.png" class="arrow-icon"></image>
   </navigator>
+  <navigator class="nav-item" url="/pages/manageUser/manageUser" hover-class="null">
+    <text>管理会员</text>
+    <image src="../../images/arrow.png" class="arrow-icon"></image>
+  </navigator>
 </view>

@@ -1,0 +1,51 @@
+<!--miniprogram/pages/register/register.wxml-->
+<view class="container">
+  <!-- <view class="public-item">
+    <text class="public-title">姓名：</text>
+    <input type="text" bindinput="inputBusinessName" placeholder="请输入姓名" value="{{businessName}}" />
+  </view> -->
+
+  <view class="public-item">
+    <text class="public-title">电话：</text>
+    <input type="number" bindinput="inputPhone" placeholder="请输入联系电话" value="{{phone}}" />
+    <button class="get-phone" size="mini"  open-type="getPhoneNumber"
+      bindgetphonenumber="getPhone">获取本手机号码</button>
+  </view>
+
+  <view class="public-item">
+    <text class="public-title">邮箱：</text>
+    <input type="email" bindinput="inputEmail" placeholder="请输入邮箱" value="{{email}}" />
+  </view>
+
+  <view class="public-item">
+    <text class="public-title">店铺名称：</text>
+    <input type="text" bindinput="inputBusinessName" placeholder="请输入店铺名称" value="{{businessName}}" />
+  </view>
+
+  <view class="public-item">
+    <text class="public-title">店铺地址：</text>
+    <input type="text" bindinput="inputBusinessAddress" placeholder="请输入店铺地址" value="{{businessAddress}}" />
+  </view>
+
+  <picker bindchange="onChangeType" value="{{index}}" range="{{regionList}}" range-key="name" data-type="regionIndex">
+    <view class="picker-item">
+      <view class="title-wrapper">
+        <text class="public-title">选择区域：</text>
+        <text class="title-text">{{regionIndex>-1?regionList[regionIndex].name:'请选择'}}</text>
+      </view>
+      <image src="../../images/xl.png" class="arrow-icon"></image>
+    </view>
+  </picker>
+
+  <picker bindchange="onChangeType" value="{{index}}"  data-type="typeIndex" range="{{typeList}}">
+    <view class="picker-item">
+      <view class="title-wrapper">
+        <text class="public-title">选择领域：</text>
+        <text class="title-text">{{typeIndex>-1?typeList[typeIndex]:'请选择'}}</text>
+      </view>
+      <image src="../../images/xl.png" class="arrow-icon"></image>
+    </view>
+  </picker>
+
+  <view bindtap="onSubmit" class="submit-btn" hover-class="submit-btn-active">注册</view>
+</view>

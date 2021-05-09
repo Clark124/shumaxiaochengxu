@@ -25,6 +25,11 @@ Page({
     let base64 = wx.getFileSystemManager().readFileSync(this.data.avatarUrl, 'base64');
     this.setData({ avatarUrl: 'data:image/jpg;base64,' + base64 })
   },
+  navToRegister(){
+    wx.navigateTo({
+      url: '/pages/register/register',
+    })
+  },
 
   getUserProfile() {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
@@ -36,7 +41,10 @@ Page({
           data: {
             ...res.userInfo,
             createDate: new Date(),
-            userLevel:1, //1.普通  2.会员  3.管理员 
+            userLevel: 3, //1.普通  2.会员  3.管理员 
+            vipExpireDate:  new Date('2021/06/01'),
+            region:[{_id:'28ee4e3e6061957c0d443d0d35088a23',name:"武昌广埠屯"}],
+            businessType:['手机']
           },
           success:ret=>{
             this.setData({

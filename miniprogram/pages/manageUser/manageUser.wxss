@@ -1,0 +1,73 @@
+/* miniprogram/pages/manageUser/manageUser.wxss */
+
+.search-wrapper{
+  position: relative;
+  box-sizing: border-box;
+  height: 100rpx;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1rpx solid #eee;
+}
+.search-input {
+  box-sizing: border-box;
+  width: 700rpx;
+  height: 64rpx;
+  border-radius: 32rpx;
+  font-size: 24rpx;
+  background:#eee;
+  padding-left: 34rpx;
+}
+.search-icon{
+  position: absolute;
+  right: 44rpx;
+  top: 28rpx;
+  width: 40rpx;
+  height: 40rpx;
+  z-index: 2;
+}
+.user-list{
+  box-sizing: border-box;
+  height: calc(100vh - 100rpx);
+  background: rgb(250, 250, 250);
+  padding: 16rpx;
+}
+.user-item{
+  display: flex;
+  height: 120rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  padding: 25rpx 20rpx 25rpx 20rpx;
+}
+.avatar{
+  height:120rpx;
+  width: 120rpx;
+  margin-right: 20rpx;
+}
+.userinfo{
+  flex: 1;
+}
+.nickname{
+  font-size: 28rpx;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.vip-lever{
+  color: #0983F6;
+}
+.region{
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #333;
+}
+.region.type{
+  display: flex;
+  justify-content: space-between;
+}
+.expire-date{
+  margin-left: 20rpx;
+}

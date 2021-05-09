@@ -1,0 +1,44 @@
+<!--miniprogram/pages/manageUser/manageUser.wxml-->
+<view class="search-wrapper">
+  <input type="text" class="search-input" confirm-type="search" bindinput="onChangeInput" value="{{search}}"
+    bindconfirm="onConfirmSearch" placeholder="搜索用户" />
+  <image src="../../images/ss.png" class="search-icon" bindtap="onConfirmSearch"></image>
+</view>
+
+<scroll-view class="user-list" scroll-y="true" refresher-enabled="true" refresher-threshold="{{80}}"
+  refresher-default-style="black" refresher-background="rgb(250, 250, 250)" refresher-triggered="{{triggered}}"
+  bindrefresherrefresh="onRefresh" bindscrolltolower="loadMore" scroll-top="{{scrollTop}}">
+
+  <view class="user-item" data-index="{{index}}" bindtap="navToDetail" wx:for="{{userList}}" wx:key="index"
+    data-id="{{item._id}}">
+    <image src="{{item.avatarUrl}}" class="avatar"></image>
+    <view class="userinfo">
+      <view class="nickname">
+        <text>{{item.nickName}}</text>
+        <text class="vip-lever">{{item.vipLever}}</text>
+      </view>
+      <view class="region">
+        <text>区域：</text>
+        <text wx:for="{{item.region}}" wx:for-item="itemName"  wx:key="*this">{{itemName.name}}</text>
+      </view>
+      <view class="region type">
+        <view>
+          <text>领域：</text>
+          <text wx:for="{{item.businessType}}" wx:for-item="itemName"  wx:key="*this">{{itemName}}</text>
+        </view>
+        <view>
+          <text class="expire-date">vip到期时间：</text>
+          <text>{{item.vipTime}}</text>
+        </view>
+
+
+      </view>
+    </view>
+  </view>
+
+
+
+  <view class="not-more" wx:if="{{isDataOver&&stockList.length>5}}">
+    达到底部了
+  </view>
+</scroll-view>

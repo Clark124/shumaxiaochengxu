@@ -20,7 +20,10 @@
     "pages/manageStock/manageStock",
     "pages/manageQuotedPrice/manageQuotedPrice",
     "pages/manageNeeds/manageNeeds",
-    "pages/businessList/businessList"
+    "pages/businessList/businessList",
+    "pages/register/register",
+    "pages/manageUser/manageUser",
+    "pages/manageUserDetail/manageUserDetail"
   ],
   "tabBar": {
     "color": "#777777",

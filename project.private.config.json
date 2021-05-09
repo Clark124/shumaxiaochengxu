@@ -69,6 +69,18 @@
         {
           "name": "管理分类",
           "pathName": "pages/manageType/manageType",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "注册",
+          "pathName": "pages/register/register",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "会员管理",
+          "pathName": "pages/manageUser/manageUser",
           "scene": null
         }
       ]

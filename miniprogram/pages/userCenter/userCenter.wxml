@@ -47,12 +47,19 @@
 <view class="nav-block">
   <view class="contact-us" bindtap="onShowEWM">
     <view class="nav-text">
+      <image src="../../images/icon_vip.png" class="nav-icon"></image>
+      <text>我的会员</text>
+    </view>
+    <image src="../../images/arrow.png" class="arrow-icon"></image>
+  </view>
+  <view class="contact-us" bindtap="onShowEWM">
+    <view class="nav-text">
       <image src="../../images/lxwm.png" class="nav-icon"></image>
       <text>联系我们</text>
     </view>
     <image src="../../images/arrow.png" class="arrow-icon"></image>
   </view>
-  <view class="contact-us" bindtap="navManager" wx:if="{{userInfo.userLevel&&userInfo.userLevel===3}}">
+  <view class="contact-us" bindtap="navManager" wx:if="{{userInfo.userLevel&&userInfo.userLevel===1}}">
     <view class="nav-text">
       <image src="../../images/wdgl.png" class="nav-icon"></image>
       <text>我的管理</text>
