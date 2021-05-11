@@ -4,15 +4,20 @@ const app = getApp()
 Page({
   data: {
     openid: "",
+    isLogin: false
   },
 
   onLoad: function (options) {
     const id = options.id
     let openid = ""
+    let isLogin = false
     if (app.globalData.openid) {
       openid = app.globalData.openid
     }
-    this.setData({ id, openid })
+    if (app.globalData.isLogin) {
+      isLogin = app.globalData.isLogin
+    }
+    this.setData({ id, openid, isLogin })
   },
 
   onShow: function () {
@@ -82,11 +87,11 @@ Page({
                   console.error('pay fail', err)
                 },
                 complete: res => {
-                 
+
                 }
               })
             },
-            fail: (error)=>{
+            fail: (error) => {
               console.log(error)
               wx.hideLoading()
             },
@@ -131,27 +136,27 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    const {quotedPriceTitle,phone} = this.data
+    const { quotedPriceTitle, phone } = this.data
     return {
       title: `${quotedPriceTitle},联系电话:${phone}`
     }
   },
   onShareTimeline: function () {
-    const {quotedPriceTitle,phone} = this.data
+    const { quotedPriceTitle, phone } = this.data
     return {
       title: `${quotedPriceTitle},联系电话:${phone}`,
       imageUrl: this.data.imgList[0].url
     }
   },
   //复制信息到剪切板
-  copyContent(){
-    const {quotedPriceTitle,phone} = this.data
+  copyContent() {
+    const { quotedPriceTitle, phone } = this.data
     const data = `${quotedPriceTitle},联系电话:${phone}`
     wx.setClipboardData({
       data: data,
-      success (res) {
+      success(res) {
         wx.getClipboardData({
-          success (res) {
+          success(res) {
             console.log(res.data) // data
           }
         })
@@ -159,8 +164,8 @@ Page({
     })
   },
   //去商家列表
-  toBusiness(){
-    const {businessName} = this.data
+  toBusiness() {
+    const { businessName } = this.data
     const url = `/pages/businessList/businessList?key=${businessName}&collection=${'quotedPrice'}`
     wx.navigateTo({
       url,

@@ -1,14 +1,14 @@
 const moment = require('../../utils/moment')
 const COLLECTION = 'stock'
 const app = getApp()
-import {filterUserLevel,filterType} from '../../utils/index'
+import { filterUserLevel, filterType } from '../../utils/index'
 
 Page({
   data: {
-    search:"",
+    search: "",
     scrollTop: 0,
     openid: "",
-    typeList: [{name:'所有分类'}],
+    typeList: [{ name: '所有分类' }],
     typeIndex: 0,
     stockList: [],
     triggered: true,
@@ -16,7 +16,7 @@ Page({
     pageSize: 10,
     isDataArrive: true,
     isDataOver: false,
-    onLoadOver:false,
+    onLoadOver: false,
   },
 
   onLoad: function (options) {
@@ -24,19 +24,20 @@ Page({
     //   this.setData({typeIndex:Number(app.globalData.typeIndex)+1})
     //   app.globalData.typeIndex = ""
     // }
+    
+  },
+  onShow: function () {
+    this.setData({ page: 1, isDataArrive: true, isDataOver: false })
     const db = wx.cloud.database()
     const filterTypeWhere = filterType()
     db.collection('stockType').orderBy('index', 'asc').where({...filterTypeWhere}).get({
       success: (res) => {
         this.setData({
-          typeList: [...this.data.typeList,...res.data]
+          typeList: [{ name: '所有分类' },...res.data]
         })
       }
     })
-  },
-  onShow:function(){
-    this.setData({page:1,isDataArrive:true,isDataOver:false})
-      this.getStockList()
+    this.getStockList()
   },
 
   //获取我的库存列表
@@ -53,20 +54,20 @@ Page({
     db.collection(COLLECTION).orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       typeId: typeList[typeIndex]._id,
       expireDate: _.gte(new Date()),
-      isOffShelf:false,...filterWhere
+      isOffShelf: false, ...filterWhere
     }).get({
       success: (res) => {
         let dataList = res.data
         dataList.forEach(item => {
           item.createDate = moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')
-          item.isTop = item.topExpireDate>new Date()
+          item.isTop = item.topExpireDate > new Date()
         })
         this.setData({
           stockList: dataList,
           page: 2,
           isDataOver: false,
           isDataArrive: true,
-          onLoadOver:true
+          onLoadOver: true
         })
         if (res.data.length < 10) {
           this.setData({
@@ -90,9 +91,9 @@ Page({
     })
     this.getStockList()
   },
-  navToDetail(e){
+  navToDetail(e) {
     const id = e.currentTarget.dataset.id
-    const url = '/pages/stockDetail/stockDetail?id='+id
+    const url = '/pages/stockDetail/stockDetail?id=' + id
     wx.navigateTo({
       url,
     })
@@ -107,6 +108,7 @@ Page({
       isDataOver: false,
       page: 1
     })
+
     this.getStockList(() => {
       this.setData({
         triggered: false
@@ -141,13 +143,13 @@ Page({
     db.collection(COLLECTION).orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       typeId: typeList[typeIndex]._id,
       expireDate: _.gte(new Date()),
-      isOffShelf:false,...filterWhere
+      isOffShelf: false, ...filterWhere
     }).get({
       success: (res) => {
         let dataList = res.data
         dataList.forEach(item => {
           item.createDate = moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')
-          item.isTop = item.topExpireDate>new Date()
+          item.isTop = item.topExpireDate > new Date()
         })
         this.setData({
           stockList: [...stockList, ...dataList],
@@ -164,19 +166,18 @@ Page({
   },
 
   //搜索框输入
-  onChangeInput(e){
-    this.setData({search:e.detail.value})
+  onChangeInput(e) {
+    this.setData({ search: e.detail.value })
   },
-  onConfirmSearch(){
-    const {search,typeList,typeIndex} = this.data
-    if(!search.trim()){
+  onConfirmSearch() {
+    const { search, typeList, typeIndex } = this.data
+    if (!search.trim()) {
       wx.showToast({
         title: '请输入搜索内容',
-        icon:"none"
+        icon: "none"
       })
       return
     }
-    console.log(search)
     const url = `/pages/search/search?key=${search}&collection=${'stock'}&typeId=${typeList[typeIndex]._id}`
     wx.navigateTo({
       url,

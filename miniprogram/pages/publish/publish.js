@@ -34,7 +34,7 @@ Page({
   onLoad: function (options) {
     const isLogin = app.globalData.isLogin
     const userInfo = app.globalData.userInfo
-    console.log(userInfo)
+  
     if (isLogin) {
       this.setData({
         isLogin: true,

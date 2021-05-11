@@ -4,6 +4,7 @@ const app = getApp()
 Page({
   data: {
     openid:"",
+    isLogin:false
   },
 
   onLoad: function (options) {
@@ -11,6 +12,9 @@ Page({
     let openid = ""
     if(app.globalData.openid){
       openid = app.globalData.openid
+    }
+    if( app.globalData.isLogin){
+      this.setData({isLogin:app.globalData.isLogin})
     }
     this.setData({id,openid})
   },

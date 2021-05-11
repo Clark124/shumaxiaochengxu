@@ -1,5 +1,8 @@
 // miniprogram/pages/search/search.js
 const moment = require('../../utils/moment')
+
+import {filterUserLevel} from '../../utils/index'
+
 Page({
   data: {
     collection: "",
@@ -47,8 +50,14 @@ Page({
     } = this.data
     const db = wx.cloud.database()
     const _ = db.command
+    let filterUserPublic =  filterUserLevel()
+    filterUserPublic = Object.entries(filterUserPublic).map(item=>{
+      return {
+        [item[0]]:item[1]
+      }
+    })
     let condition
-    let andCondition = [{expireDate: _.gte(new Date())},{isOffShelf:false}]
+    let andCondition = [{expireDate: _.gte(new Date())},{isOffShelf:false},...filterUserPublic]
     if(typeId!=='undefined'){
       andCondition.push({typeId: typeId})
     }
@@ -166,9 +175,15 @@ Page({
     })
     const db = wx.cloud.database()
     const _ = db.command
+    let filterUserPublic =  filterUserLevel()
+    filterUserPublic = Object.entries(filterUserPublic).map(item=>{
+      return {
+        [item[0]]:item[1]
+      }
+    })
     //查询条件
     let condition
-    let andCondition = [{expireDate: _.gte(new Date())},{isOffShelf:false}]
+    let andCondition = [{expireDate: _.gte(new Date())},{isOffShelf:false},...filterUserPublic]
     if(typeId!=='undefined'){
       andCondition.push({typeId: typeId})
     }
@@ -247,7 +262,6 @@ Page({
       })
       return
     }
-    console.log(search)
    
   },
 })

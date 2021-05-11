@@ -1,5 +1,7 @@
 // miniprogram/pages/search/search.js
 const moment = require('../../utils/moment')
+import {filterUserLevel} from '../../utils/index'
+
 Page({
   data: {
     collection: "",
@@ -55,10 +57,11 @@ Page({
     } = this.data
     const db = wx.cloud.database()
     const _ = db.command
+    let filterUserPublic =  filterUserLevel()
     db.collection(collection).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       expireDate: _.gte(new Date()),
       isOffShelf: false,
-      businessName: key,
+      businessName: key,...filterUserPublic
     }).get({
       success: res => {
         let dataList = res.data
@@ -138,12 +141,12 @@ Page({
     })
     const db = wx.cloud.database()
     const _ = db.command
-
+    let filterUserPublic =  filterUserLevel()
     db.collection(collection).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where(
       {
         expireDate: _.gte(new Date()),
         isOffShelf: false,
-        businessName: key,
+        businessName: key,...filterUserPublic
       }
     ).get({
       success: (res) => {

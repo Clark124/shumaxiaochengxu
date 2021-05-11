@@ -31,9 +31,9 @@
   font-size:28rpx !important;
   color: #0983F6;
 }
-.get-phone:active{
+/* .get-phone:active{
   opacity: 0.7;
-}
+} */
 
 .picker-item {
   box-sizing: border-box;

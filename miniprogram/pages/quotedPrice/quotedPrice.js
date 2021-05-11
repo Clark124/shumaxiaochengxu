@@ -24,19 +24,20 @@ Page({
     //   this.setData({typeIndex:Number(app.globalData.typeIndex)})
     //   app.globalData.typeIndex = ""
     // }
+   
+  },
+  onShow: function () {
+    this.setData({ page: 1, isDataArrive: true, isDataOver: false })
     const filterTypeWhere = filterType()
     const db = wx.cloud.database()
     db.collection('quotedPriceType').orderBy('index', 'asc').where({...filterTypeWhere}).get({
       success: (res) => {
         this.setData({
-          typeList: [...this.data.typeList,...res.data]
+          typeList: [{name:'所有分类'},...res.data]
         })
        
       } 
     })
-  },
-  onShow: function () {
-    this.setData({ page: 1, isDataArrive: true, isDataOver: false })
     this.getStockList()
   },
 

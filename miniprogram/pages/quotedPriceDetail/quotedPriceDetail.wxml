@@ -54,7 +54,7 @@
 
 
 
-<view class="btn-wrapper" wx:if="{{openid===_openid}}">
+<view class="btn-wrapper" wx:if="{{openid===_openid&&isLogin}}">
   <view class="footer-left">
     <view class="edit-btn" bindtap="toEdit">
       <image src="../../images/xg.png" class="edit-icon"></image>

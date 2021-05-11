@@ -32,8 +32,6 @@ export function filterUserLevel() {
       userLevel: 1
     }
   }
-
-
 }
 
 export function filterType() {

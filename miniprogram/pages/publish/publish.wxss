@@ -70,7 +70,7 @@ page {
   font-size:28rpx !important;
   color: #0983F6;
 }
-.get-phone:active{
+.get-phone-hover{
   opacity: 0.7;
 }
 

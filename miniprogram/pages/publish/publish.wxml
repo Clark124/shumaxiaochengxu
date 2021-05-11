@@ -98,7 +98,7 @@
     <view class="public-item">
       <text class="public-title">电话：</text>
       <input type="number" bindinput="inputPhone" placeholder="请输入联系电话" value="{{phone}}" />
-      <button class="get-phone" size="mini"  wx:if="{{!hasPhone}}"
+      <button class="get-phone" size="mini"  wx:if="{{!hasPhone}}" hover-class="get-phone-hover"
       open-type="getPhoneNumber" bindgetphonenumber="getPhone">获取本手机号码</button>
     </view>
 

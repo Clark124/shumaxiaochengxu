@@ -43,7 +43,6 @@ Page({
       }])
     ).get({
       success: (res) => {
-        console.log(res.data)
         let dataList = res.data
         dataList.forEach(item=>{
           let vipLever = ""
@@ -82,7 +81,6 @@ Page({
 
   navToDetail(e){
     const id = e.currentTarget.dataset.id
-    console.log(id)
     wx.navigateTo({
       url: '/pages/manageUserDetail/manageUserDetail?id='+id,
     })

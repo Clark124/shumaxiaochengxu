@@ -1,7 +1,7 @@
 <!--miniprogram/pages/myStock/myStock.wxml-->
 <view class="container">
   <scroll-view scroll-y="true" class="tab-list">
-    <view class="{{index===typeIndex? 'tab-item active':'tab-item'}}" wx:for="{{typeList}}" wx:key="index"
+    <view class="{{index===typeIndex? 'tab-item active':'tab-item'}}" wx:for="{{typeList}}" wx:key="name"
       data-index="{{index}}" bindtap="onChangeTab">{{item.name}}</view>
   </scroll-view>
   
@@ -11,7 +11,7 @@
 
   <view class="stock-item {{item.isTouchMove ? 'touch-move-active' : ''}}"
   data-index="{{index}}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtap="navToDetail" 
-  wx:for="{{needsList}}" wx:key="index" data-id="{{item._id}}">
+  wx:for="{{needsList}}" wx:key="_id" data-id="{{item._id}}">
     <view class="content">
      
       <view class="block-head">

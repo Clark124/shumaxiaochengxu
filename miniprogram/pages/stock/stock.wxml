@@ -6,7 +6,7 @@
 
 <view class="container">
   <scroll-view scroll-y="true" class="tab-list">
-    <view class="{{index===typeIndex? 'tab-item active':'tab-item'}}" wx:for="{{typeList}}" wx:key="*this"
+    <view class="{{index===typeIndex? 'tab-item active':'tab-item'}}" wx:for="{{typeList}}" wx:key="name"
       data-index="{{index}}" bindtap="onChangeTab">{{item.name}}</view>
   </scroll-view>
 
@@ -14,7 +14,7 @@
     refresher-default-style="black" refresher-background="rgb(250, 250, 250)" refresher-triggered="{{triggered}}"
     bindrefresherrefresh="onRefresh" bindscrolltolower="loadMore" scroll-top="{{scrollTop}}">
 
-    <view class="stock-item" data-index="{{index}}" bindtap="navToDetail" wx:for="{{stockList}}" wx:key="index"
+    <view class="stock-item" data-index="{{index}}" bindtap="navToDetail" wx:for="{{stockList}}" wx:key="_id"
       data-id="{{item._id}}">
       <view class="block-head">
         <view>
