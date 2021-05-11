@@ -6,7 +6,7 @@
 
 <view class="container">
   <scroll-view scroll-y="true" class="tab-list">
-    <view class="{{index===typeIndex? 'tab-item active':'tab-item'}}" wx:for="{{typeList}}" wx:key="index"
+    <view class="{{index===typeIndex? 'tab-item active':'tab-item'}}" wx:for="{{typeList}}" wx:key="*this"
       data-index="{{index}}" bindtap="onChangeTab">{{item.name}}</view>
   </scroll-view>
 

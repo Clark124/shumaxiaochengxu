@@ -64,6 +64,9 @@
   font-size: 24rpx;
   color: #333;
 }
+.region-item{
+  margin-right: 20rpx;
+}
 .region.type{
   display: flex;
   justify-content: space-between;

@@ -13,20 +13,19 @@
     <image src="../../images/drag_img.png" class="drag-img"></image>
   </view>
 
-  <view class="type-item" wx:for="{{typeList}}" wx:key="index">
+  <view class="type-item" wx:for="{{typeList}}" wx:key="_id">
     <view>
       <text class="type-index">{{index+1}}</text>
       <text class="type-name">{{item.name}}</text>
     </view>
 
     <view class="type-item-right">
-      <image src="../../images/drag_img.png" class="drag-img" data-index="{{index}}"
-     catchtouchstart='dragStart' catchtouchmove='dragMove' 
-     catchtouchend='dragEnd' wx:if="{{status===0}}"></image>
-     <checkbox  checked="{{item.isSelect}}" wx:else bindtap="onSelectDelete" data-index="{{index}}"/>
-     <text class="edit-typename" wx:if="{{status===1}}" data-index="{{index}}" bindtap="onShowEditModal">修改</text>
+      <image src="../../images/drag_img.png" class="drag-img" data-index="{{index}}" catchtouchstart='dragStart'
+        catchtouchmove='dragMove' catchtouchend='dragEnd' wx:if="{{status===0}}"></image>
+      <checkbox checked="{{item.isSelect}}" wx:else bindtap="onSelectDelete" data-index="{{index}}" />
+      <text class="edit-typename" wx:if="{{status===1}}" data-index="{{index}}" bindtap="onShowEditModal">修改</text>
     </view>
-   
+
   </view>
 </scroll-view>
 
@@ -40,9 +39,23 @@
 <view class="add-modal" wx:if="{{showAddModal}}">
   <view class="modal-title">新增类目</view>
   <view class="modal-input-wrapper">
-    <input type="text" class="add-input" placeholder="请输入类目名称" value="{{typeName}}" bindinput="inputTypeName"/>
+    <view class="modal-input-item">
+      <text>类目名称：</text>
+      <input type="text" class="add-input" placeholder="请输入类目名称" value="{{typeName}}" bindinput="inputTypeName" />
+    </view>
+
+    <picker range="{{regionList}}" value="{{regionIndex}}" bindchange="onChangeRegion">
+      <view class="modal-input-item">
+        <text>领域：</text>
+        <text>{{regionIndex>-1?regionList[regionIndex]:"请选择"}}</text>
+      </view>
+    </picker>
+
   </view>
-  <view class="modal-footer" >
+
+
+
+  <view class="modal-footer">
     <text class="btn cancel" bindtap="hideModal">取消</text>
     <text class="btn add" bindtap="onAddType">添加</text>
   </view>
@@ -51,9 +64,20 @@
 <view class="add-modal" wx:if="{{showEditModal}}">
   <view class="modal-title">修改类目</view>
   <view class="modal-input-wrapper">
-    <input type="text" class="add-input" placeholder="请输入类目名称" value="{{editType.name}}" bindinput="inputEditTypeName"/>
+    <view class="modal-input-item">
+      <text>类目名称：</text>
+      <input type="text" class="add-input" placeholder="请输入类目名称" value="{{editType.name}}"
+      bindinput="inputEditTypeName" />
+    </view>
+    <picker range="{{regionList}}" value="{{regionIndex}}" bindchange="onChangeRegion">
+      <view class="modal-input-item">
+        <text>领域：</text>
+        <text>{{regionIndex>-1?regionList[regionIndex]:"请选择"}}</text>
+      </view>
+    </picker>
+   
   </view>
-  <view class="modal-footer" >
+  <view class="modal-footer">
     <text class="btn cancel" bindtap="hideEditModal">取消</text>
     <text class="btn add" bindtap="onEditTypeName">修改</text>
   </view>

@@ -26,7 +26,7 @@ Page({
     productCondition: "", //成色
     businessName: "", //商家名称
     phone: null,
-    hasPhone:false,
+    hasPhone: false,
     imgList: [{}], //产品图片
     productDetailImg: [{}], //商品细节图片
   },
@@ -34,18 +34,18 @@ Page({
   onLoad: function (options) {
     const isLogin = app.globalData.isLogin
     const userInfo = app.globalData.userInfo
-    // wx.getStorage({
-    //   key: 'businessName',
-    //   success:res=>{
-    //     this.setData({businessName:res.data})
-    //   }
-    // })
+    console.log(userInfo)
     if (isLogin) {
       this.setData({
-        isLogin: true
+        isLogin: true,
+        userInfo
       })
-      if(userInfo.phone){
-        this.setData({hasPhone:true,phone:userInfo.phone})
+      if (userInfo.phone) {
+        this.setData({
+          hasPhone: true,
+          phone: userInfo.phone,
+          
+        })
       }
     } else {
       wx.showModal({
@@ -53,9 +53,6 @@ Page({
         content: "请先登录",
         success: res => {
           if (res.confirm) {
-            // wx.navigateTo({
-            //   url: '/pages/register/register',
-            // })
             this.getUserProfile()
           } else if (res.cancel) {
             console.log('用户点击取消')
@@ -63,7 +60,7 @@ Page({
         }
       })
     }
-    this.getSelectList()
+
   },
   onShow: function () {
     const isLogin = app.globalData.isLogin
@@ -71,9 +68,35 @@ Page({
       this.setData({
         isLogin: true
       })
+      const userInfo = app.globalData.userInfo
+      const {
+        region,
+        userLevel
+      } = userInfo
+
+      //零售商不能发布报价
+      if (userLevel === 3) {
+        this.setData({
+          targetArray: ['库存', '需求']
+        })
+      }else if(userLevel === 2){
+        this.setData({
+          targetArray: ['库存', '需求','报价']
+        })
+      }
+      this.getSelectList(userInfo.businessType)
+
+      this.setData({
+        regionList: region,
+        userLevel,
+        userInfo
+      })
     }
+
+    // this.setPublicTimes('stock', '二手手机')
   },
-  navToRegister(){
+
+  navToRegister() {
     wx.navigateTo({
       url: '/pages/register/register',
     })
@@ -84,20 +107,42 @@ Page({
       desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
         const db = wx.cloud.database()
+        let userLevel = 3
+        if (new Date() > new Date('2021/06/01')) {
+          userLevel = 4
+        }
+        const userInfo = {
+          ...res.userInfo,
+          createDate: new Date(),
+          userLevel: userLevel, //1.普通  2.会员  3.管理员 
+          vipExpireDate: new Date('2021/06/01'),
+          region: [{
+            _id: '28ee4e3e6061957c0d443d0d35088a23',
+            name: "武昌广埠屯"
+          }],
+          businessType: ['手机']
+        }
         db.collection('user').add({
-          data: {
-            ...res.userInfo,
-            createDate: new Date(),
-            userLevel: 3, //1.普通  2.会员  3.管理员 
-            vipExpireDate:  new Date('2021/06/01'),
-            region:[{_id:'28ee4e3e6061957c0d443d0d35088a23',name:"武昌广埠屯"}],
-            businessType:['手机']
-          },
-          success: res => {
+          data: userInfo,
+          success: ret => {
+            if (userLevel === 3) {
+              this.setData({
+                targetArray: ['库存', '需求'],
+                regionList: [{
+                  _id: '28ee4e3e6061957c0d443d0d35088a23',
+                  name: "武昌广埠屯"
+                }]
+              })
+            }
             this.setData({
-              isLogin: true
+              isLogin: true,
+              userLevel,
+              userInfo
             })
             app.globalData.isLogin = true
+            app.globalData.userInfo = userInfo
+            this.getSelectList(userInfo.businessType)
+
           }
         })
 
@@ -107,10 +152,13 @@ Page({
 
 
   //获取选择列表
-  getSelectList() {
+  getSelectList(businessType) {
     const db = wx.cloud.database()
+    const _ = db.command
     //需求类目
-    db.collection('needsType').orderBy('index', 'asc').get({
+    db.collection('needsType').orderBy('index', 'asc').where({
+      type: _.in(businessType)
+    }).get({
       success: (res) => {
         this.setData({
           needsType: res.data
@@ -118,7 +166,9 @@ Page({
       }
     })
     //库存类目
-    db.collection('stockType').orderBy('index', 'asc').get({
+    db.collection('stockType').orderBy('index', 'asc').where({
+      type: _.in(businessType)
+    }).get({
       success: (res) => {
         this.setData({
           stockType: res.data
@@ -126,47 +176,60 @@ Page({
       }
     })
     //报价类目
-    db.collection('quotedPriceType').orderBy('index', 'asc').get({
+    db.collection('quotedPriceType').orderBy('index', 'asc').where({
+      type: _.in(businessType)
+    }).get({
       success: (res) => {
         this.setData({
           quotedPirceType: res.data
         })
       }
     })
-    //区域列表
-    db.collection('region').get({
-      success: (res) => {
-        this.setData({
-          regionList: res.data
-        })
-      }
-    })
+    // //区域列表
+    // db.collection('region').get({
+    //   success: (res) => {
+    //     this.setData({
+    //       regionList: res.data
+    //     })
+    //   }
+    // })
   },
 
   //选择发布方式
   onChangeTarget: function (e) {
+
     this.setData({
       targetIndex: Number(e.detail.value)
     })
-    if(Number(e.detail.value)===0){
+
+    if (Number(e.detail.value) === 0) {
       wx.getStorage({
-        key:"stockData",
-        success:res=>{
-          this.setData({...this.data,...res.data})
+        key: "stockData",
+        success: res => {
+          this.setData({
+            ...this.data,
+            ...res.data
+          })
         }
       })
-    }else if(Number(e.detail.value)===1){
+    } else if (Number(e.detail.value) === 1) {
       wx.getStorage({
-        key:"needsData",
-        success:res=>{
-          this.setData({...this.data,...res.data})
+        key: "needsData",
+        success: res => {
+          this.setData({
+            ...this.data,
+            ...res.data
+          })
         }
       })
-    }else if(Number(e.detail.value)===2){
+    } else if (Number(e.detail.value) === 2) {
       wx.getStorage({
-        key:"quotedPriceData",
-        success:res=>{
-          this.setData({...this.data,...res.data})
+        key: "quotedPriceData",
+        success: res => {
+          this.setData({
+            ...this.data,
+            ...res.data
+          })
         }
       })
     }
@@ -408,6 +471,7 @@ Page({
   },
   //提交库存
   submitStock() {
+
     const {
       stockType,
       stockTypeIndex,
@@ -421,11 +485,19 @@ Page({
       businessName,
       phone,
       imgList,
-      productDetailImg
+      productDetailImg,
+      userInfo
     } = this.data
+
+
     //验证填写数据
     const verifyStockData = this.verifyStockData()
     if (!verifyStockData) {
+      return
+    }
+
+    const verifPublicTimes = this.setPublicTimes('stock', stockType[stockTypeIndex].name)
+    if (!verifPublicTimes) {
       return
     }
 
@@ -438,6 +510,7 @@ Page({
       data: {
         typeName: stockType[stockTypeIndex].name,
         typeId: stockType[stockTypeIndex]._id,
+        typeRegion:stockType[stockTypeIndex].type,
         regionName: regionList[regionIndex].name,
         regionId: regionList[regionIndex]._id,
         productName,
@@ -455,6 +528,7 @@ Page({
         topExpireDate: new Date(), //置顶到期时间
         isTop: false,
         isOffShelf: false,
+        userLevel:userInfo.userLevel,
       },
       success: (res) => {
         wx.showToast({
@@ -604,10 +678,16 @@ Page({
       productCount,
       businessName,
       phone,
+      userInfo
     } = this.data
     //验证填写数据
     const verifyNeedData = this.verifyNeedData()
     if (!verifyNeedData) {
+      return
+    }
+
+    const verifPublicTimes = this.setPublicTimes('needs', needsType[needsTypeIndex].name)
+    if (!verifPublicTimes) {
       return
     }
 
@@ -620,6 +700,7 @@ Page({
       data: {
         typeName: needsType[needsTypeIndex].name,
         typeId: needsType[needsTypeIndex]._id,
+        typeRegion:needsType[needsTypeIndex].type,
         regionName: regionList[regionIndex].name,
         regionId: regionList[regionIndex]._id,
         productName,
@@ -634,7 +715,8 @@ Page({
         expireDate: new Date(moment().add(1, 'month')), //1个月后过期
         topExpireDate: new Date(),
         isTop: false,
-        isOffShelf: false
+        isOffShelf: false,
+        userLevel:userInfo.userLevel,
       },
       success: (res) => {
         wx.showToast({
@@ -761,13 +843,20 @@ Page({
       quotedPriceTitle,
       businessName,
       phone,
-      imgList
+      imgList,
+      userInfo
     } = this.data
     //验证填写数据
     const verifyQuotedPriceData = this.verifyQuotedPriceData()
     if (!verifyQuotedPriceData) {
       return
     }
+
+    const verifPublicTimes = this.setPublicTimes('quotedPrice', quotedPirceType[quotedPirceTypeIndex].name)
+    if (!verifPublicTimes) {
+      return
+    }
+
 
     const db = wx.cloud.database()
     wx.showLoading({
@@ -778,6 +867,7 @@ Page({
       data: {
         typeName: quotedPirceType[quotedPirceTypeIndex].name,
         typeId: quotedPirceType[quotedPirceTypeIndex]._id,
+        typeRegion:quotedPirceType[quotedPirceTypeIndex].type,
         regionName: regionList[regionIndex].name,
         regionId: regionList[regionIndex]._id,
         quotedPriceTitle,
@@ -789,7 +879,8 @@ Page({
         expireDate: new Date(moment().add(1, 'month')), //1个月后过期
         topExpireDate: new Date(),
         isTop: false,
-        isOffShelf: false
+        isOffShelf: false,
+        userLevel:userInfo.userLevel,
       },
       success: (res) => {
         wx.showToast({
@@ -916,26 +1007,136 @@ Page({
         weRunData: wx.cloud.CloudID(e.detail.cloudID),
       }
     }).then(res => {
-      const openid = app.globalData.openid 
+      const openid = app.globalData.openid
       const db = wx.cloud.database()
-     
+
       const phoneNum = res.result.event.weRunData.data.phoneNumber
       console.log(phoneNum)
       db.collection('user').where({
-        _openid:openid
+        _openid: openid
       }).update({
-        data:{
-          phone:phoneNum
+        data: {
+          phone: phoneNum
         }
       })
 
       that.setData({
         phone: phoneNum,
-        hasPhone:true
+        hasPhone: true
       })
     }).catch(err => {
       console.error(err);
     });
-  }
+  },
 
+  onShowEWM() {
+    wx.previewImage({
+      current: 'cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/contact_img.jpeg', // 当前显示图片的http链接
+      urls: ['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/contact_img.jpeg'] // 需要预览的图片http链接列表
+    })
+  },
+
+  setPublicTimes(target, type) {
+    const {
+      userLevel
+    } = this.data
+
+    let result = wx.getStorageSync('publicTime')
+    const currentDate = moment().format('YYYY-MM-DD')
+
+    if (result) {
+      //批发商
+      if (userLevel === 2) {
+        if (result[target] && result[target][type]) {
+          //报价和需求一天只能发一次
+          if (target === 'quotedPrice' || target === 'needs') {
+            if (result[target][type].date === currentDate) {
+              wx.showToast({
+                title: '该类目今日只能发布1次',
+                icon: 'none'
+              })
+              return false
+            } else {
+              //第二天了 又可以发，且只能发一次
+              result[target][type].date = currentDate
+            }
+          }
+          //库存一天每项可以发5次
+          if (target === 'stock') {
+            //当天每项发了5次就不能发了
+            if ((result[target][type].date === currentDate) && result[target][type].times === 5) {
+              wx.showToast({
+                title: '该类目今日只能发布5次',
+                icon: 'none'
+              })
+              return false
+            } else if ((result[target][type].date === currentDate) && result[target][type].times < 5) {
+              result[target][type].times = result[target][type].times + 1
+            } else if (result[target][type].date < currentDate) {  //第二天了 又可以发，重置次数
+              result[target][type].times = 1
+              result[target][type].date = currentDate
+            }
+          }
+        } else if(result[target] && !result[target][type]){
+          result[target][type] = {
+            times: 1,
+            date: currentDate
+          }
+        }else {
+          result[target] = {
+            [type]: {
+              times: 1,
+              date: currentDate
+            }
+          }
+        }
+      } else if (userLevel === 3) { //userLevel:3  零售商
+        if (result[target] && result[target][type]) {
+          if (result[target][type].date === currentDate) {
+            wx.showToast({
+              title: '该类目今日只能发布1次',
+              icon: 'none'
+            })
+            return false
+          } else {
+            result[target][type].date = currentDate
+          }
+        } else if(result[target] && !result[target][type]){
+          result[target][type] = {
+            times: 1,
+            date: currentDate
+          }
+        }else{
+          result[target] = {
+            [type] :{
+              times: 1,
+              date: currentDate
+            }
+          }
+        }
+      }
+
+      wx.setStorage({
+        data: result,
+        key: 'publicTime',
+      })
+
+    } else {
+      const data = {
+        [target]: {
+          [type]: {
+            times: 1,
+            date: currentDate
+          }
+        }
+      }
+
+      wx.setStorage({
+        data: data,
+        key: 'publicTime',
+      })
+    }
+
+    return true
+  }
 })

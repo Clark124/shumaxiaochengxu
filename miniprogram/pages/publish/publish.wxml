@@ -1,6 +1,6 @@
 <!--miniprogram/pages/publish/publish.wxml-->
-<view wx:if="{{isLogin}}" class="container">
-  <picker bindchange="onChangeTarget" value="{{index}}" range="{{targetArray}}">
+<view wx:if="{{isLogin&&userLevel<4}}" class="container">
+  <picker bindchange="onChangeTarget" value="{{targetIndex}}" range="{{targetArray}}">
     <view class="picker-item">
       <view class="title-wrapper">
         <text class="public-title">发布：</text>
@@ -12,7 +12,7 @@
 
 
   <!-- 库存类目 -->
-  <picker bindchange="onChangeType" value="{{index}}" range="{{stockType}}" range-key="name" data-type="stockTypeIndex">
+  <picker bindchange="onChangeType" value="{{stockTypeIndex}}" range="{{stockType}}" range-key="name" data-type="stockTypeIndex">
     <view class="picker-item" wx:if="{{targetIndex==0}}">
       <view class="title-wrapper">
         <text class="public-title">类目：</text>
@@ -23,7 +23,7 @@
   </picker>
 
   <!-- 需求类目 -->
-  <picker bindchange="onChangeType" value="{{index}}" range="{{needsType}}" range-key="name" data-type='needsTypeIndex'>
+  <picker bindchange="onChangeType" value="{{needsTypeIndex}}" range="{{needsType}}" range-key="name" data-type='needsTypeIndex'>
     <view class="picker-item" wx:if="{{targetIndex==1}}">
       <view class="title-wrapper">
         <text class="public-title">类目：</text>
@@ -34,7 +34,7 @@
   </picker>
 
   <!-- 报价类目 -->
-  <picker bindchange="onChangeType" value="{{index}}" range="{{quotedPirceType}}" range-key="name"
+  <picker bindchange="onChangeType" value="{{quotedPirceTypeIndex}}" range="{{quotedPirceType}}" range-key="name"
     data-type='quotedPirceTypeIndex'>
     <view class="picker-item" wx:if="{{targetIndex==2}}">
       <view class="title-wrapper">
@@ -46,7 +46,7 @@
   </picker>
 
 
-  <picker bindchange="onChangeType" value="{{index}}" range="{{regionList}}" range-key="name" data-type="regionIndex">
+  <picker bindchange="onChangeType" value="{{regionIndex}}" range="{{regionList}}" range-key="name" data-type="regionIndex">
     <view class="picker-item">
       <view class="title-wrapper">
         <text class="public-title">区域：</text>
@@ -139,7 +139,14 @@
 
 </view>
 
-<view wx:else class="login-wrapper">
+<view wx:if="{{isLogin&&userLevel===4}}" class="contact-wrapper">
+  个人用户无法发布消息，需联系管理员开通权限
+  <view class="contact-us" bindtap="onShowEWM">
+      <text>联系管理员</text>
+  </view>
+</view>
+
+<view wx:if="{{!isLogin}}" class="login-wrapper">
   <image src="../../images/grzxbj.png" class="userinfo-bg" mode="widthFix"></image>
   <view class="login" bindtap="getUserProfile">
     <image src="../../images/user-unlogin.png" class="default-avatar" ></image>

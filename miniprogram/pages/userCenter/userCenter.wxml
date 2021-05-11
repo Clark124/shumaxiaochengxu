@@ -16,7 +16,7 @@
 </view>
 
 
-<view class="nav-list">
+<view class="nav-list" wx:if="{{userInfo.userLevel!==4&&isLogin}}">
 
   <navigator class="nav-my-publish" url="/pages/myStock/myStock" hover-class="null">
     <view class="nav-text">
@@ -34,7 +34,7 @@
     <image src="../../images/arrow.png" class="arrow-icon"></image>
   </navigator>
 
-  <navigator class="nav-my-publish" url="/pages/myQuotedPrice/myQuotedPrice" hover-class="null">
+  <navigator class="nav-my-publish" url="/pages/myQuotedPrice/myQuotedPrice" hover-class="null" wx:if="{{userInfo.userLevel!==3}}">
     <view class="nav-text">
       <image src="../../images/wdbj.png" class="nav-icon"></image>
       <text>我的报价</text>
@@ -43,9 +43,10 @@
   </navigator>
 
 </view>
+<view class="nav-list" wx:if="{{userInfo.userLevel===4||!isLogin}}"></view>
 
 <view class="nav-block">
-  <view class="contact-us" bindtap="onShowEWM">
+  <view class="contact-us" bindtap="navMyVip">
     <view class="nav-text">
       <image src="../../images/icon_vip.png" class="nav-icon"></image>
       <text>我的会员</text>

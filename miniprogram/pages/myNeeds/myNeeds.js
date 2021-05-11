@@ -23,8 +23,13 @@ Page({
   onLoad: function (options) {
     const openid = app.globalData.openid
     this.setData({ openid })
+    const userInfo = app.globalData.userInfo
+    const {businessType} = userInfo
     const db = wx.cloud.database()
-    db.collection('needsType').orderBy('index', 'asc').get({
+    const _ = db.command
+    db.collection('needsType').orderBy('index', 'asc').where({
+      type: _.in(businessType)
+    }).get({
       success: (res) => {
         this.setData({
           typeList: [...this.data.typeList,...res.data]

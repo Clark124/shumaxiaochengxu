@@ -23,7 +23,8 @@
     "pages/businessList/businessList",
     "pages/register/register",
     "pages/manageUser/manageUser",
-    "pages/manageUserDetail/manageUserDetail"
+    "pages/manageUserDetail/manageUserDetail",
+    "pages/userVip/userVip"
   ],
   "tabBar": {
     "color": "#777777",

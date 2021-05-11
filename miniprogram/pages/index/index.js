@@ -1,6 +1,8 @@
 //index.js
 const app = getApp()
 const moment = require('../../utils/moment')
+import {filterUserLevel} from '../../utils/index'
+
 Page({
   data: {
     imgList:[
@@ -15,10 +17,11 @@ Page({
   },
 
   onLoad: function() {
-    this.login()
+    this.login().then(res=>{
+      this.getDataList()
+    })
   },
   onShow:function(){
-    this.getDataList()
     this.onGetBanner()
   },
   onPullDownRefresh:function(){
@@ -32,9 +35,14 @@ Page({
     },1000)
   },
   getDataList(){
+   
+    const filterWhere = filterUserLevel()
     const db = wx.cloud.database()
+  
     db.collection('needs').orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').limit(3).where({
-      isOffShelf:false
+      isOffShelf:false,
+      ...filterWhere
+
     }).get({
       success:res=>{
         let dataList = res.data
@@ -45,7 +53,7 @@ Page({
       }
     })
     db.collection('stock').orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').limit(3).where({
-      isOffShelf:false
+      isOffShelf:false, ...filterWhere
     }).get({
       success:res=>{
         let dataList = res.data
@@ -56,7 +64,7 @@ Page({
       }
     })
     db.collection('quotedPrice').orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').limit(3).where({
-      isOffShelf:false
+      isOffShelf:false, ...filterWhere
     }).get({
       success:res=>{
         let dataList = res.data
@@ -142,8 +150,12 @@ Page({
             success:res=>{
               wx.hideLoading()
               if(res.data.length>0){
+                const userInfo = res.data[0]
                 app.globalData.isLogin = true
-                app.globalData.userInfo = res.data[0]
+                if(userInfo.userLevel!==1&&userInfo.vipExpireDate<new Date()){
+                  userInfo.userLevel = 4
+                }
+                app.globalData.userInfo = userInfo
               }
               resolve()
             }

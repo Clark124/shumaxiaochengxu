@@ -1,2 +1,46 @@
 <!--miniprogram/pages/manageUserDetail/manageUserDetail.wxml-->
-<text>miniprogram/pages/manageUserDetail/manageUserDetail.wxml</text>
+<view class="username">
+  <image src="{{avatarUrl}}" class="avatar"></image>
+  <view class="nickname">{{nickName}}</view>
+</view>
+
+<view class="vip-list">
+  <radio-group bindchange="radioChange">
+    <label class="vip-item" wx:for="{{vipLeverList}}" wx:key="item">
+      <radio value="{{index+1}}" checked="{{userLevel===(index+1)}}" />
+      <text>{{item}}</text>
+    </label>
+  </radio-group>
+</view>
+
+<view class="region-list">
+  <text>领域：</text>
+  <checkbox-group bindchange="checkboxChange">
+    <label wx:for="{{typeList}}" wx:key="item" class="region-item">
+      <checkbox value="{{item.name}}" checked="{{item.checked}}" />
+      <text>{{item.name}}</text>
+    </label>
+  </checkbox-group>
+</view>
+
+<view class="region-list">
+  <text>区域：</text>
+  <checkbox-group bindchange="changeArea">
+    <label wx:for="{{regionList}}" wx:key="item" class="region-item">
+      <checkbox value="{{item.name}}" checked="{{item.checked}}" />
+      <text>{{item.name}}</text>
+    </label>
+  </checkbox-group>
+</view>
+
+<view class="vip-date">
+  <text>vip到期时间：</text>
+  <picker mode="date" bindchange="changeVipDate" value="{{vipDate}}" class="vip-date-picker">
+    <view class="vip-date-value">
+      <text>{{vipDate}}</text>
+      <image src="../../images/arrow.png" class="arrow-icon"></image>
+    </view>
+  </picker>
+</view>
+
+<view bindtap="onSubmit" class="submit-btn" hover-class="submit-btn-active">提交</view>

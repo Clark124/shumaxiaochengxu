@@ -1,6 +1,7 @@
 const moment = require('../../utils/moment')
 const COLLECTION = 'stock'
 const app = getApp()
+import {filterUserLevel,filterType} from '../../utils/index'
 
 Page({
   data: {
@@ -24,7 +25,8 @@ Page({
     //   app.globalData.typeIndex = ""
     // }
     const db = wx.cloud.database()
-    db.collection('stockType').orderBy('index', 'asc').get({
+    const filterTypeWhere = filterType()
+    db.collection('stockType').orderBy('index', 'asc').where({...filterTypeWhere}).get({
       success: (res) => {
         this.setData({
           typeList: [...this.data.typeList,...res.data]
@@ -47,10 +49,11 @@ Page({
       typeList,
       typeIndex
     } = this.data
+    const filterWhere = filterUserLevel()
     db.collection(COLLECTION).orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       typeId: typeList[typeIndex]._id,
       expireDate: _.gte(new Date()),
-      isOffShelf:false
+      isOffShelf:false,...filterWhere
     }).get({
       success: (res) => {
         let dataList = res.data
@@ -134,10 +137,11 @@ Page({
     })
     const db = wx.cloud.database()
     const _ = db.command
+    const filterWhere = filterUserLevel()
     db.collection(COLLECTION).orderBy('topExpireDate', 'desc').orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       typeId: typeList[typeIndex]._id,
       expireDate: _.gte(new Date()),
-      isOffShelf:false
+      isOffShelf:false,...filterWhere
     }).get({
       success: (res) => {
         let dataList = res.data

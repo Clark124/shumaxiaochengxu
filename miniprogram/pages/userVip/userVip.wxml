@@ -1,0 +1,20 @@
+<!--miniprogram/pages/userVip/userVip.wxml-->
+<view class="info-wrapper">
+  <image src="../../images/cbg.png" class="info-bg"></image>
+  <view class="userinfo">
+      <image src="{{avatarUrl}}" class="avatar"></image>
+      <view class="info">
+        <view class="nikcname">
+          <text class="name">{{nickName}}</text>
+          <text class="status">{{vipLever}}</text>
+          <image src="../../images/vip.png" class="vip-icon" wx:if="{{isVip}}"></image>
+        </view>
+        <view class="vip-date">
+            {{dateText}}
+        </view>
+      </view>
+  </view>
+
+</view>
+
+<image src="../../images/hyglbg.png" class="table" mode="widthFix" bindtap="preview"></image>

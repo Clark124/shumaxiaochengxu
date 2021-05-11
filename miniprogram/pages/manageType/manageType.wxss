@@ -103,7 +103,7 @@ page{
 .add-modal{
   position: absolute;
   width: 600rpx;
-  height: 300rpx;
+  height: 320rpx;
   background: #fff;
   border: 1rpx solid #eee;
   border-radius: 20rpx;
@@ -114,14 +114,20 @@ page{
 }
 .modal-title{
   text-align: center;
-  font-size:32rpx;
+  font-size:28rpx;
   margin-top: 20rpx;
 }
 .modal-input-wrapper{
-  margin-top: 60rpx;
-  padding-bottom: 30rpx;
   border-bottom: 1rpx solid #eee;
-  text-align: center;
+  padding-bottom: 20rpx;
+}
+.modal-input-item{
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+  padding: 15rpx 40rpx;
 }
 .add-input{
   font-size: 28rpx;

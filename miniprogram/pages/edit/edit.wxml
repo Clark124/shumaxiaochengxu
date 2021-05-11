@@ -1,6 +1,6 @@
 
 <view  class="container">
-  <picker bindchange="onChangeTarget" value="{{index}}" range="{{targetArray}}" disabled="true">
+  <picker bindchange="onChangeTarget" value="{{targetIndex}}" range="{{targetArray}}" disabled="true">
     <view class="picker-item">
       <view class="title-wrapper">
         <text class="public-title">发布：</text>
@@ -12,7 +12,7 @@
 
 
   <!-- 库存类目 -->
-  <picker bindchange="onChangeType" value="{{index}}" range="{{stockType}}" range-key="name" data-type="stockTypeIndex">
+  <picker bindchange="onChangeType" value="{{stockTypeIndex}}" range="{{stockType}}" range-key="name" data-type="stockTypeIndex" disabled="true">
     <view class="picker-item" wx:if="{{targetIndex==0}}">
       <view class="title-wrapper">
         <text class="public-title">类目：</text>
@@ -23,7 +23,7 @@
   </picker>
 
   <!-- 需求类目 -->
-  <picker bindchange="onChangeType" value="{{index}}" range="{{needsType}}" range-key="name" data-type='needsTypeIndex'>
+  <picker bindchange="onChangeType" value="{{needsTypeIndex}}" range="{{needsType}}" range-key="name" data-type='needsTypeIndex' disabled="true">
     <view class="picker-item" wx:if="{{targetIndex==1}}">
       <view class="title-wrapper">
         <text class="public-title">类目：</text>
@@ -34,8 +34,8 @@
   </picker>
 
   <!-- 报价类目 -->
-  <picker bindchange="onChangeType" value="{{index}}" range="{{quotedPirceType}}" range-key="name"
-    data-type='quotedPirceTypeIndex'>
+  <picker bindchange="onChangeType" value="{{quotedPirceTypeIndex}}" range="{{quotedPirceType}}" range-key="name"
+    data-type='quotedPirceTypeIndex' disabled="true">
     <view class="picker-item" wx:if="{{targetIndex==2}}">
       <view class="title-wrapper">
         <text class="public-title">类目：</text>
@@ -46,7 +46,7 @@
   </picker>
 
 
-  <picker bindchange="onChangeType" value="{{index}}" range="{{regionList}}" range-key="name" data-type="regionIndex">
+  <picker bindchange="onChangeType" value="{{regionIndex}}" range="{{regionList}}" range-key="name" data-type="regionIndex">
     <view class="picker-item">
       <view class="title-wrapper">
         <text class="public-title">区域：</text>

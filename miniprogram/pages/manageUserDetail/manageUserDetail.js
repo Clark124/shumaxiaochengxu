@@ -1,72 +1,136 @@
 // miniprogram/pages/manageUserDetail/manageUserDetail.js
+const moment = require('../../utils/moment')
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    vipLeverList: ['管理员', '批发商', '零售商', '个人'],
+    typeList: [{
+      name: '手机',
+      checked: false
+    }, {
+      name: '电脑',
+      checked: false
+    }],
+    regionList:[],
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
+
   onLoad: function (options) {
-    const {id } = options
-    const db = wx.cloud.database() 
-    db.collection('user').doc(id).get({
-      success:res=>{
-        console.log(res)
+    const {
+      id
+    } = options
+    const db = wx.cloud.database()
+    
+    //区域列表
+    db.collection('region').get({
+      success: (ret) => {
+       
+        const regionList = ret.data
+        //获取用户信息
+        db.collection('user').doc(id).get({
+          success: res => {
+            let data = res.data
+            data.vipDate = moment(data.vipExpireDate).format('YYYY-MM-DD')
+            const {
+              typeList
+            } = this.data
+            typeList.forEach(item => {
+              if (data.businessType.includes(item.name)) {
+                item.checked = true
+              }
+            })
+            regionList.forEach(item=>{
+              data.region.forEach(regionItem=>{
+                if(item._id === regionItem._id){
+                  item.checked = true
+                }
+              })
+            })
+            this.setData({
+              ...this.data,
+              ...data,
+              regionList
+            })
+          }
+        })
+       
       }
     })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  radioChange(e) {
+    this.setData({
+      userLevel: Number(e.detail.value)
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  checkboxChange(e) {
+    let {typeList} = this.data
+    const value = e.detail.value
+    typeList.forEach(item=>{
+      if(value.includes(item.name)){
+        item.checked = true
+      }else{
+        item.checked = false
+      }
+    })
+    this.setData({
+      businessType: value,typeList
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  changeArea(e){
+    const value = e.detail.value
+    let {regionList} = this.data
+    let region = []
+    regionList.forEach(item=>{
+      if(value.includes(item.name)){
+        item.checked = true
+        region.push(item)
+      }else{
+        item.checked = false
+      }
+    })
+    this.setData({regionList,region})
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  changeVipDate(e){
+    this.setData({vipDate:e.detail.value})
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
+  onSubmit(){
+    const {userLevel,businessType,region,vipDate} = this.data
 
-  },
+    wx.showLoading({
+      title: '加载中...',
+    })
+    wx.cloud.callFunction({
+      name: 'managePublic',
+      data: {
+        type: "update", //指定操作是insert  
+        collection: 'user', //指定操作的数据表
+        id: this.data._id,
+        data:{
+          userLevel,businessType,region,vipExpireDate:new Date(vipDate)
+        }
+      },
+      success: (res) => {
+        
+        wx.hideLoading()
+        wx.showToast({
+          title: '提交成功',
+          icon: "success"
+        })
+      },
+      fail: err => {
+        wx.hideLoading()
+        console.error('[云函数] [insertDB] 增加失败', err)
+      }
+    })
+   
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
   }
+
+
+
 })

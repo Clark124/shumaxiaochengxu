@@ -19,12 +19,12 @@
       </view>
       <view class="region">
         <text>区域：</text>
-        <text wx:for="{{item.region}}" wx:for-item="itemName"  wx:key="*this">{{itemName.name}}</text>
+        <text wx:for="{{item.region}}" wx:for-item="itemName"  wx:key="*this" class="region-item">{{itemName.name}}</text>
       </view>
       <view class="region type">
         <view>
           <text>领域：</text>
-          <text wx:for="{{item.businessType}}" wx:for-item="itemName"  wx:key="*this">{{itemName}}</text>
+          <text wx:for="{{item.businessType}}" wx:for-item="itemName"  wx:key="*this" class="region-item">{{itemName}}</text>
         </view>
         <view>
           <text class="expire-date">vip到期时间：</text>
@@ -38,7 +38,7 @@
 
 
 
-  <view class="not-more" wx:if="{{isDataOver&&stockList.length>5}}">
+  <view class="not-more" wx:if="{{isDataOver&&userList.length>5}}">
     达到底部了
   </view>
 </scroll-view>

@@ -160,3 +160,16 @@ page {
   color: #FF1616;
   padding-bottom: 20rpx;
 }
+
+.contact-wrapper{
+  color: #333;
+  font-size: 28rpx;
+  padding: 30rpx;
+  text-align: center;
+}
+
+.contact-us{
+  color: #0983F6;
+  margin-top: 30rpx;
+  font-size: 32rpx;
+}

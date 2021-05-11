@@ -21,6 +21,8 @@ Page({
     editType:{
       name:"",
     },
+    regionList:['手机','电脑'],
+    regionIndex:-1,
   },
 
   onLoad: function (options) {
@@ -223,14 +225,26 @@ Page({
   inputTypeName(e){
     this.setData({typeName:e.detail.value})
   },
+
+  onChangeRegion(e){
+    this.setData({regionIndex:Number(e.detail.value)})
+  },
+
   hideModal(){
     this.setData({showAddModal:false})
   },
   onAddType(){
-    const {typeName,tabIndex,lastIndex} = this.data
+    const {typeName,tabIndex,lastIndex,regionList,regionIndex} = this.data
     if(typeName.trim()===""){
       wx.showToast({
         title: '请输入类目名称',
+        icon:'none'
+      })
+      return
+    }
+    if(regionIndex<0){
+      wx.showToast({
+        title: '请选择领域',
         icon:'none'
       })
       return
@@ -252,7 +266,8 @@ Page({
     db.collection(collection).add({
       data:{
         name:typeName,
-        index:lastIndex+1
+        index:lastIndex+1,
+        type:regionList[regionIndex]
       },
       success:res=>{
         wx.hideLoading()
@@ -260,7 +275,7 @@ Page({
           title: '添加成功！'
         })
         this.onGetTypeList()
-        this.setData({showAddModal:false,typeName:""})
+        this.setData({showAddModal:false,typeName:"",regionIndex:-1})
       }
     })
   },
@@ -268,11 +283,19 @@ Page({
   //显示修改modal
   onShowEditModal(e){
     const index = e.currentTarget.dataset.index
-    const {typeList} = this.data
-    this.setData({showEditModal:true,editType:typeList[index]})
+    const {typeList,regionList} = this.data
+    let regionIndex = -1
+    if(typeList[index].type){
+      regionList.forEach((item,itemIndex)=>{
+        if(item===typeList[index].type){
+          regionIndex = itemIndex
+        }
+      })
+    }
+    this.setData({showEditModal:true,editType:typeList[index],regionIndex})
   },
   hideEditModal(){
-    this.setData({showEditModal:false})
+    this.setData({showEditModal:false,regionIndex:-1})
   },
   inputEditTypeName(e){
     const {editType} = this.data
@@ -280,10 +303,17 @@ Page({
     this.setData({editType})
   },
   onEditTypeName(){
-    const {editType,tabIndex} = this.data
+    const {editType,tabIndex,regionList,regionIndex} = this.data
     if(editType.name.trim()===""){
       wx.showToast({
         title: '请输入类目名称',
+        icon:'none'
+      })
+      return
+    }
+    if(regionIndex<0){
+      wx.showToast({
+        title: '请选择领域',
         icon:'none'
       })
       return
@@ -304,6 +334,7 @@ Page({
     db.collection(collection).doc(editType._id).update({
       data:{
         name:editType.name,
+        type:regionList[regionIndex]
       },
       success:res=>{
         wx.hideLoading()
@@ -311,7 +342,7 @@ Page({
           title: '修改成功！'
         })
         this.onGetTypeList()
-        this.setData({showEditModal:false})
+        this.setData({showEditModal:false,regionIndex:-1})
       }
     })
 

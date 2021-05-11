@@ -81,6 +81,19 @@
         {
           "name": "会员管理",
           "pathName": "pages/manageUser/manageUser",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "会员详情",
+          "pathName": "pages/manageUserDetail/manageUserDetail",
+          "query": "id=79550af2609788a9157084c70c71ccad",
+          "scene": null
+        },
+        {
+          "name": "我的会员",
+          "pathName": "pages/userVip/userVip",
+          "query": "id=79550af2609788a9157084c70c71ccad",
           "scene": null
         }
       ]

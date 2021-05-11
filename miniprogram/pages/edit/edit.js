@@ -1,5 +1,7 @@
 // miniprogram/pages/edit/edit.js
 const moment = require('../../utils/moment')
+const app = getApp()
+
 Page({
 
   data: {
@@ -76,10 +78,14 @@ Page({
 
   getSelectList(callback) {
     const db = wx.cloud.database()
-    
+    const _ = db.command
+    const userInfo = app.globalData.userInfo
+    const {region,businessType} = userInfo
     //需求类目
     const promise1= new Promise((resolve,reject)=>{
-      db.collection('needsType').orderBy('index', 'asc').get({
+      db.collection('needsType').orderBy('index', 'asc').where({
+        type: _.in(businessType)
+      }).get({
         success: (res) => {
           this.setData({
             needsType: res.data
@@ -90,7 +96,9 @@ Page({
     })
     //库存类目
     const promise2 = new Promise((resolve,reject)=>{
-      db.collection('stockType').orderBy('index', 'asc').get({
+      db.collection('stockType').orderBy('index', 'asc').where({
+        type: _.in(businessType)
+      }).get({
         success: (res) => {
           this.setData({
             stockType: res.data
@@ -101,7 +109,9 @@ Page({
     })
     //报价类目
     const promise3 = new Promise((resolve,reject)=>{
-      db.collection('quotedPriceType').orderBy('index', 'asc').get({
+      db.collection('quotedPriceType').orderBy('index', 'asc').where({
+        type: _.in(businessType)
+      }).get({
         success: (res) => {
           this.setData({
             quotedPirceType: res.data
@@ -112,15 +122,12 @@ Page({
     })
     
     //区域列表
+    
     const promise4 = new Promise((resolve,reject)=>{
-      db.collection('region').get({
-        success: (res) => {
-          this.setData({
-            regionList: res.data
-          })
-          resolve()
-        }
+      this.setData({
+        regionList: region
       })
+      resolve()
     })
     
     const task = [promise1,promise2,promise3,promise4]
