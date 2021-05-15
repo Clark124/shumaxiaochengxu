@@ -38,7 +38,7 @@ Page({
   },
   preview(){
     wx.previewImage({
-      urls: ['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/hyglbg.png'],
+      urls: ['cloud://test-4g4qvj3hf2e69c63.7465-test-4g4qvj3hf2e69c63-1305399772/hygl.png'],
     })
   },
 

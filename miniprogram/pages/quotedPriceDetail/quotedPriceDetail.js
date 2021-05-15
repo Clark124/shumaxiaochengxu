@@ -64,7 +64,7 @@ Page({
       success: res => {
         if (res.confirm) {
           const data = {
-            totalFee: "1",
+            totalFee: "500",
             body: "5元置顶",
             spbillCreateIp: "127.0.0.1",
           }
@@ -165,8 +165,8 @@ Page({
   },
   //去商家列表
   toBusiness() {
-    const { businessName } = this.data
-    const url = `/pages/businessList/businessList?key=${businessName}&collection=${'quotedPrice'}`
+    const { businessName ,_openid} = this.data
+    const url = `/pages/businessList/businessList?key=${businessName}&collection=${'quotedPrice'}&openid=${_openid}`
     wx.navigateTo({
       url,
     })

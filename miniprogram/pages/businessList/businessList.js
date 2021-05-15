@@ -20,6 +20,7 @@ Page({
     const {
       collection,
       key,
+      openid,
     } = options
     let collectionText
     if (collection === 'stock') {
@@ -35,6 +36,7 @@ Page({
     this.setData({
       collection,
       key,
+      openid,
     })
 
   },
@@ -53,7 +55,7 @@ Page({
       page,
       pageSize,
       collection,
-      key,
+      openid,
     } = this.data
     const db = wx.cloud.database()
     const _ = db.command
@@ -61,7 +63,7 @@ Page({
     db.collection(collection).orderBy('createDate', 'desc').skip((page - 1) * pageSize).limit(pageSize).where({
       expireDate: _.gte(new Date()),
       isOffShelf: false,
-      businessName: key,...filterUserPublic
+      _openid: openid,...filterUserPublic
     }).get({
       success: res => {
         let dataList = res.data
@@ -131,7 +133,7 @@ Page({
       page,
       pageSize,
       collection,
-      key
+      openid
     } = this.data
     if (page === 1 || !isDataArrive || isDataOver) {
       return
@@ -146,7 +148,7 @@ Page({
       {
         expireDate: _.gte(new Date()),
         isOffShelf: false,
-        businessName: key,...filterUserPublic
+        _openid: openid,...filterUserPublic
       }
     ).get({
       success: (res) => {
