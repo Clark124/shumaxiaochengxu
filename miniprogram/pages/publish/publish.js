@@ -29,6 +29,7 @@ Page({
     hasPhone: false,
     imgList: [{}], //产品图片
     productDetailImg: [{}], //商品细节图片
+    isDataArrive:true
   },
 
   onLoad: function (options) {
@@ -106,6 +107,10 @@ Page({
     wx.getUserProfile({
       desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
+        const {isDataArrive} = this.data
+        if(!isDataArrive){
+          return
+        }
         const db = wx.cloud.database()
         let userLevel = 3
         if (new Date() > new Date('2021/06/01')) {
@@ -122,6 +127,7 @@ Page({
           }],
           businessType: ['手机']
         }
+        this.setData({isDataArrive:false})
         db.collection('user').add({
           data: userInfo,
           success: ret => {
@@ -137,12 +143,16 @@ Page({
             this.setData({
               isLogin: true,
               userLevel,
-              userInfo
+              userInfo,
+              isDataArrive:true
             })
             app.globalData.isLogin = true
             app.globalData.userInfo = userInfo
             this.getSelectList(userInfo.businessType)
 
+          },
+          fail:err=>{
+            this.setData({isDataArrive:true})
           }
         })
 
