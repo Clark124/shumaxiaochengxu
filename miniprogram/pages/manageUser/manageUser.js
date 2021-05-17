@@ -153,7 +153,7 @@ Page({
         })
 
         this.setData({
-          stockList: [...userList, ...dataList],
+          userList: [...userList, ...dataList],
           page: page + 1,
           isDataArrive: true
         })

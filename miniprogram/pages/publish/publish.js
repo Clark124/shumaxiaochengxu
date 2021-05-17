@@ -29,13 +29,13 @@ Page({
     hasPhone: false,
     imgList: [{}], //产品图片
     productDetailImg: [{}], //商品细节图片
-    isDataArrive:true
+    isDataArrive:true,
   },
 
   onLoad: function (options) {
     const isLogin = app.globalData.isLogin
     const userInfo = app.globalData.userInfo
-  
+    this.isShowModal = true
     if (isLogin) {
       this.setData({
         isLogin: true,
@@ -104,6 +104,13 @@ Page({
   },
 
   getUserProfile() {
+    if(!this.isShowModal){
+      return
+    }
+    this.isShowModal = false
+    setTimeout(()=>{
+      this.isShowModal = true
+    },1000)
     wx.getUserProfile({
       desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
