@@ -30,7 +30,7 @@
         配置：{{item.productConfig}}
       </view>
       <view class="info-row">
-        <view>
+        <view class="info-row-condition">
           <text class="condition">{{item.productCondition}}</text>
           <text class="tip" wx:if="{{item.isTop}}">已置顶</text>
         </view>

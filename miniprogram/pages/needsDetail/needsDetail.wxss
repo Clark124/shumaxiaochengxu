@@ -108,7 +108,7 @@ page{
 }
 .info-item-footer{
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin-top: 28rpx;
 }
@@ -117,6 +117,7 @@ page{
   color: #0983F6;
   background: rgba(61, 149, 246, 0.1);
   padding: 0 8rpx;
+  max-width: 520rpx;
 }
 .count{
   font-size: 28rpx;

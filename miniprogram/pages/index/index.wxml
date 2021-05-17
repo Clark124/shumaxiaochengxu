@@ -13,13 +13,13 @@
 </view>
 
 <view class="content-wrapper">
-  <view class="title">
+  <view class="title" wx:if="{{needsList.length>0}}">
     <text class="title-text">最新需求</text>
     <text class="to-more" bindtap="navToNeedsList">更多＞</text>
   </view>
 
   <view class="stock-item" data-index="{{index}}" bindtap="navToNeedsDetail" wx:for="{{needsList}}" wx:key="index"
-    data-id="{{item._id}}">
+    data-id="{{item._id}}" wx:if="{{needsList.length>0}}">
     <view class="block-head">
       <view>
         <text class="block-head-text">型号</text>

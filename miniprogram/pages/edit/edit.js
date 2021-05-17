@@ -507,12 +507,12 @@ Page({
       })
       return false
     }
-    if (!phone) {
+    if (!(/^1[3456789]\d{9}$/.test(Number(phone)))) {
       wx.showToast({
-        title: '请输入联系电话',
+        title: '手机号码有误',
         icon: "none"
       })
-      return false
+      return false;
     }
     if (imgList.length < 2) {
       wx.showToast({
@@ -663,12 +663,12 @@ Page({
       })
       return false
     }
-    if (!phone) {
+    if (!(/^1[3456789]\d{9}$/.test(Number(phone)))) {
       wx.showToast({
-        title: '请输入联系电话',
+        title: '手机号码有误',
         icon: "none"
       })
-      return false
+      return false;
     }
     return true
   },
@@ -769,12 +769,12 @@ Page({
       })
       return false
     }
-    if (!phone) {
+    if (!(/^1[3456789]\d{9}$/.test(Number(phone)))) {
       wx.showToast({
-        title: '请输入联系电话',
+        title: '手机号码有误',
         icon: "none"
       })
-      return false
+      return false;
     }
     if (imgList.length < 2) {
       wx.showToast({

@@ -34,7 +34,7 @@ page{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size:36rpx;
+  font-size:32rpx;
   color: #222;
 }
 
@@ -112,8 +112,10 @@ page{
   text-align: right;
 }
 .stock-name{
-  font-size: 36rpx;
+  font-size: 34rpx;
   color: #222;
+  flex: 1;
+  margin-right: 20rpx;
 }
 .stock-head{
   display: flex;

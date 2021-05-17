@@ -91,11 +91,12 @@ page{
   width: 30rpx;
   height: 30rpx;
   margin-right: 14rpx;
+  margin-top: 6rpx;
 }
 
 .product-name-wrapper{
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 .product-name-text{
   font-size: 28rpx;
@@ -109,6 +110,7 @@ page{
 .product-name{
   font-size: 33rpx;
   color: #222;
+  flex: 1;
 }
 .price-unit{
   font-size: 28rpx;
